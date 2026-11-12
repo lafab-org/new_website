@@ -66,7 +66,8 @@ export function derivesFromBase(root, page) {
 }
 
 // Invariants of /model, on the pages of src/.
-// /model/page/markdown, /model/page/titre, /model/site/page-accueil
+// /model/page/markdown, /model/page/titre, /model/site/page-accueil,
+// /model/site/page-metallerie
 export function checkInvariants(assert, root = SRC) {
   const all = pages(root);
   for (const p of all) {
@@ -75,6 +76,7 @@ export function checkInvariants(assert, root = SRC) {
     assert.notEqual(title, "", `${p} has an empty title`);
   }
   assert.ok(all.includes("index.md"), "no page index.md");
+  assert.ok(all.includes("ateliers/metallerie.md"), "no page ateliers/metallerie.md");
 }
 
 // Builds the real site, once, with `npm run build`.
@@ -93,4 +95,17 @@ export function readBuilt(file) {
 
 export function readSource(file) {
   return readFileSync(join(SRC, file), "utf8");
+}
+
+// Visible text of a built page: tags removed, entities decoded,
+// spaces (non-breaking included) collapsed.
+export function builtText(file) {
+  return readBuilt(file)
+    .replace(/<(script|style)[\s\S]*?<\/\1>/g, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&#39;|&apos;|&rsquo;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/&nbsp;/g, " ")
+    .replace(/[\u00a0\u202f\u2019]/g, (c) => (c === "\u2019" ? "'" : " "))
+    .replace(/\s+/g, " ");
 }
