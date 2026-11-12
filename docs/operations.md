@@ -15,8 +15,6 @@ d'une page.
 Inputs: aucune.
 
 Cases:
-- [generee] Toujours : pour chaque page, une page HTML est écrite sous
-  `_site/`, avec `lang="fr"`, le titre de la page comme titre du
-  navigateur et son corps rendu depuis le Markdown ; `index.md` donne
-  `_site/index.html`, et tout autre `<nom>.md` donne
-  `_site/<nom>/index.html`.
+- [generee] Toujours : chaque page est écrite sous `_site/` en HTML,
+  son corps rendu depuis le Markdown ; `index.md` donne
+  `_site/index.html`.

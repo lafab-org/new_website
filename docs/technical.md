@@ -8,9 +8,12 @@
 - Styles : CSS simple, sans étape de construction.
 - Organisation : sources dans `src/`, site généré dans `_site/`.
 - Une page est un fichier de `src/` : son URL est formée de son dossier
-  et de son nom de fichier, sans extension, si bien que deux pages ne
-  partagent jamais la même URL : `topic/page.md` est à `/topic/page`,
-  `index.md` à `/`.
+  et de son nom de fichier, sans extension. `index.md` est écrit dans
+  `_site/index.html` et sert `/` ; `topic/page.md` est écrit dans
+  `_site/topic/page/index.html` et sert `/topic/page`.
+- Toute page dérive, directement ou indirectement, du gabarit de base
+  `src/_includes/base.njk`, qui porte `lang="fr"`, la balise viewport
+  et le titre du navigateur, pris dans le `title` de la page.
 - Commandes : `npm run build` génère le site ; `npm start` le sert en
   local avec rechargement, sur `http://localhost:8080`.
 - Les messages vus par l'utilisateur ne sont pas spécifiés.
@@ -20,17 +23,14 @@
 - Outil : le lanceur de tests intégré de Node.js (`node:test`), dans
   `tests/`, sans dépendance supplémentaire.
 - `npm test` lance les tests ; il n'a pas besoin du réseau.
-- Niveau : chaque test construit le site avec `npm run build`, sur une
-  copie de `src/` placée dans un dossier temporaire, puis lit les
-  fichiers HTML générés. Il ne démarre aucun serveur et n'ouvre aucun
+- Le gabarit de base est vérifié une fois : il déclare `lang="fr"`, la
+  balise viewport et le titre.
+- Chaque page de `src/` est vérifiée pour dériver du gabarit de base.
+- Une seule construction, par `npm run build`, de la vraie `src/` ; les
+  tests lisent ensuite les fichiers générés. Aucun serveur, aucun
   navigateur.
-- Une page absente de `src/` mais utile à un test (par exemple
-  `topic/page.md`) est ajoutée à la copie, jamais à `src/`.
-- Les invariants du modèle sont vérifiés par une seule fonction, qui lit
-  les pages de `src/` ; elle est appelée à la suite des tests de
-  construction.
-- Les tests vérifient les fichiers générés (présence, `lang`, titre,
-  contenu rendu), pas leur mise en forme exacte ni le CSS.
+- Les invariants du modèle sont vérifiés directement sur les pages de
+  `src/`.
 - Les règles d'apparence de `design.md` ne sont pas testées : elles sont
   vérifiées à l'œil.
 - Aucun outil de qualité de code (linter, formateur) n'est imposé.
