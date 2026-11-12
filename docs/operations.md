@@ -2,8 +2,8 @@
 
 ## Initial state
 
-- [pages] Le site contient les pages décrites dans /ui, et aucune
-  autre.
+Les pages sont les fichiers Markdown de `src/`, hors `_includes/`, tels
+qu'ils sont dans le dépôt.
 
 ## Construire le site
 

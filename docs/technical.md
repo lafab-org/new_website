@@ -20,17 +20,14 @@
 
 ## Politique de tests et de qualité
 
-- Outil : le lanceur de tests intégré de Node.js (`node:test`), dans
-  `tests/`, sans dépendance supplémentaire.
-- `npm test` lance les tests ; il n'a pas besoin du réseau.
-- Le gabarit de base est vérifié une fois : il déclare `lang="fr"`, la
-  balise viewport et le titre.
-- Chaque page de `src/` est vérifiée pour dériver du gabarit de base.
-- Une seule construction, par `npm run build`, de la vraie `src/` ; les
-  tests lisent ensuite les fichiers générés. Aucun serveur, aucun
-  navigateur.
-- Les invariants du modèle sont vérifiés directement sur les pages de
-  `src/`.
-- Les règles d'apparence de `design.md` ne sont pas testées : elles sont
-  vérifiées à l'œil.
-- Aucun outil de qualité de code (linter, formateur) n'est imposé.
+- Outil : `node:test`, dans `tests/`, sans dépendance supplémentaire ;
+  `npm test` n'a pas besoin du réseau.
+- Les tests construisent le site une fois par `npm run build`, puis
+  lisent `_site/` : ni serveur, ni navigateur. Les chemins des pages
+  sont vérifiés sur `src/`.
+- Chaque page construite est vérifiée : `lang="fr"`, balise viewport,
+  titre non vide, et chaque lien interne de son texte mène à une page du
+  site. Les liens externes ne sont pas vérifiés.
+- Le reste se vérifie à la relecture : le contenu par `contents.md`,
+  l'apparence par `design.md`.
+- Aucun linter ni formateur n'est imposé.
