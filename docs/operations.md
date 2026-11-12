@@ -3,7 +3,7 @@
 ## Initial state
 
 - [accueil] Le site ne contient que la page `index.md`, telle que
-  /ui/page-d-accueil la décrit.
+  /ui/page-daccueil la décrit.
 
 ## Construire le site
 
