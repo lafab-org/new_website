@@ -17,5 +17,20 @@
 
 ## Politique de tests et de qualité
 
-- Un test construit le site et vérifie les fichiers générés.
+- Outil : le lanceur de tests intégré de Node.js (`node:test`), dans
+  `tests/`, sans dépendance supplémentaire.
 - `npm test` lance les tests ; il n'a pas besoin du réseau.
+- Niveau : chaque test construit le site avec `npm run build`, sur une
+  copie de `src/` placée dans un dossier temporaire, puis lit les
+  fichiers HTML générés. Il ne démarre aucun serveur et n'ouvre aucun
+  navigateur.
+- Une page absente de `src/` mais utile à un test (par exemple
+  `topic/page.md`) est ajoutée à la copie, jamais à `src/`.
+- Les invariants du modèle sont vérifiés par une seule fonction, qui lit
+  les pages de `src/` ; elle est appelée à la suite des tests de
+  construction.
+- Les tests vérifient les fichiers générés (présence, `lang`, titre,
+  contenu rendu), pas leur mise en forme exacte ni le CSS.
+- Les règles d'apparence de `design.md` ne sont pas testées : elles sont
+  vérifiées à l'œil.
+- Aucun outil de qualité de code (linter, formateur) n'est imposé.
