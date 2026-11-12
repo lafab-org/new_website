@@ -4,6 +4,11 @@ Le site vitrine public de La Fabrique, un atelier partagé à
 Strasbourg. Il s'adresse aux personnes qui ne connaissent pas encore
 le lieu. Il est écrit en français uniquement.
 
+Il a deux buts : attirer des usagers et animer le bénévolat. Un
+atelier est présenté par une page, écrite pour trois visiteurs : le curieux, qui veut
+comprendre l'atelier ; l'usager, qui veut s'y former ; le bénévole, qui
+veut aider.
+
 ## Hors périmètre
 
 - Aucune autre langue.

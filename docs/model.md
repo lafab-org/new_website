@@ -17,3 +17,4 @@ L'état : tout ce dont le site est fait.
 
 - `pages: set of /model/page`, toutes les pages.
   - [page-accueil] Une page a pour chemin `index.md`.
+  - [page-metallerie] Une page a pour chemin `ateliers/metallerie.md`.
