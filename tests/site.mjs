@@ -149,7 +149,7 @@ function layoutChain(page) {
 }
 
 const EXPRESSION = /\{\{[\s\S]*?\}\}|\{%[\s\S]*?%\}|\{#[\s\S]*?#\}/;
-const CONTENT = /\{\{\s*content\b[^}]*\}\}/;
+const CONTENT = /\{\{-?\s*content\b[^}]*\}\}/;
 
 // The rendered text of a page (its `body`), its layouts' text removed:
 // each layout is peeled off at the fixed text just around its content.
