@@ -8,4 +8,3 @@
 - Page de l'agenda : liste les évènements selon la charte graphique du site, construite en interrogeant l'API de TiBillet (tags par atelier) ; la réservation et le paiement se font sur TiBillet ; les pages d'atelier y renverront, avec leurs prochains évènements.
 - Photos des ateliers : intégrer aux pages une sélection de photos (redimensionnées, avec texte alternatif) ; la page métallerie les recevra.
 - Design général du site : navigation (dont le retour vers l'accueil) et apparence commune, une fois plusieurs pages spécifiées.
-- Politique de tests du site statique : sens et utilité réelle du banc de test automatisé, ce qu'il vérifie et ce qui relève de la relecture (sujet à discuter).
