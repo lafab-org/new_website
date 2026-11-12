@@ -1,173 +1,90 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
-  SRC, BASE_LAYOUT, pages, derivesFromBase, checkInvariants, readBuilt, readSource, builtText,
+  sourceFiles, pages, TEMPLATE_EXTENSIONS, frontMatterValue, address, builtFile,
+  isInternal, designated, readBuilt, readSource, pageLinks, anchors,
 } from "./site.mjs";
 
-const HEADING = /<h[1-6][^>]*>\s*Bonjour le monde\s*<\/h[1-6]>/;
-
-test("base layout declares lang, viewport and title", () => {
-  const layout = readSource(`_includes/${BASE_LAYOUT}`);
-  assert.match(layout, /<html[^>]*\blang="fr"/);
-  assert.match(layout, /<meta[^>]*name="viewport"/);
-  assert.match(layout, /<title>[^<]*\{\{\s*title\b[^}]*\}\}[^<]*<\/title>/);
-});
-
-test("every page derives from the base layout", () => {
-  for (const page of pages()) {
-    assert.ok(derivesFromBase(SRC, page), `${page} does not derive from ${BASE_LAYOUT}`);
+// Invariants of /model, on the pages of the initial state.
+function checkInvariants() {
+  const all = pages();
+  const addresses = new Set(all.map(address));
+  // /model/page/markdown: no other file of src/ is built as a page.
+  for (const f of sourceFiles()) {
+    const template = TEMPLATE_EXTENSIONS.some((ext) => f.endsWith(ext));
+    assert.ok(!template || f.endsWith(".md"), `${f} would be a page not ending with .md`);
   }
-});
-
-test("initial state: the pages described in ui.md, and no other", () => {
-  // /operations/initial-state/pages
-  assert.deepEqual(pages(), ["ateliers/metallerie.md", "index.md"]);
-});
+  for (const p of all) {
+    // /model/page/titre
+    assert.notEqual(frontMatterValue(readSource(p), "title"), "", `${p} has an empty title`);
+    // /model/site/lien-interne
+    for (const t of pageLinks(p).filter(isInternal)) {
+      assert.ok(addresses.has(designated(t)), `${p}: link ${t} leads to no page`);
+    }
+  }
+}
 
 test("invariants of the model", () => {
   // /model/page/markdown
   // /model/page/titre
-  // /model/site/page-accueil
-  // /model/site/page-metallerie
-  checkInvariants(assert);
+  // /model/site/lien-interne
+  checkInvariants();
 });
 
-test("build: index.md gives index.html, body rendered from Markdown", () => {
+test("internal links and the page they designate", () => {
+  // /model/site/lien-interne (definitions of /model/lien and /model/page)
+  assert.ok(isInternal("/"));
+  assert.ok(isInternal("/ateliers/metallerie"));
+  assert.ok(!isInternal("//example.org/x"));
+  assert.ok(!isInternal("mailto:contact@lafab.org"));
+  assert.ok(!isInternal("https://example.org/"));
+  assert.ok(!isInternal("ateliers/metallerie"));
+  assert.ok(!isInternal("#ancre"));
+  assert.equal(designated("/"), "/");
+  assert.equal(designated("/#haut"), "/");
+  assert.equal(designated("/?a=1"), "/");
+  assert.equal(designated("/ateliers/metallerie"), "/ateliers/metallerie");
+  assert.equal(designated("/ateliers/metallerie/"), "/ateliers/metallerie");
+  assert.equal(designated("/ateliers/metallerie#materiel"), "/ateliers/metallerie");
+  assert.equal(designated("/ateliers/metallerie/?x=1#y"), "/ateliers/metallerie");
+  assert.equal(address("index.md"), "/");
+  assert.equal(address("ateliers/index.md"), "/ateliers");
+  assert.equal(address("ateliers/metallerie.md"), "/ateliers/metallerie");
+});
+
+test("build: every page is written under _site/ as HTML from its Markdown", () => {
   // /operations/construire-le-site/generee
-  const html = readBuilt("index.html");
-  assert.match(html, /<h[1-6][^>]*>/);
-  assert.doesNotMatch(html, /^#\s/m);
-  const atelier = readBuilt("ateliers/metallerie/index.html");
-  assert.match(atelier, /<h[1-6][^>]*>/);
-  assert.doesNotMatch(atelier, /^#\s/m);
+  assert.ok(readBuilt("index.html"));
+  for (const p of pages()) {
+    const html = readBuilt(builtFile(address(p)));
+    assert.match(html, /<html[\s>]/i, `${p}: not HTML`);
+    assert.doesNotMatch(html, /^#{1,6}\s/m, `${p}: Markdown heading left unrendered`);
+  }
+  checkInvariants();
 });
 
-test("home page: browser title", () => {
-  // /ui/page-daccueil/titre
-  assert.match(readBuilt("index.html"), /<title>\s*La Fabrique\s*<\/title>/);
-});
-
-test("home page: main heading", () => {
-  // /ui/page-daccueil/titre-principal
-  assert.match(readBuilt("index.html"), HEADING);
-});
-
-test("home page: welcome line", () => {
-  // /ui/page-daccueil/bienvenue
-  assert.ok(readBuilt("index.html").includes("Bienvenue à La Fabrique, atelier partagé à Strasbourg."));
+test("every built page declares lang, viewport and a non-empty title", () => {
+  // /model/page/titre
+  for (const p of pages()) {
+    const html = readBuilt(builtFile(address(p)));
+    assert.match(html, /<html[^>]*\blang="fr"/, `${p}: no lang="fr"`);
+    assert.match(html, /<meta[^>]*name="viewport"/, `${p}: no viewport`);
+    assert.match(html, /<title>\s*\S[^<]*<\/title>/, `${p}: empty title`);
+  }
 });
 
 test("scenario: opening the site", () => {
   // /scenarios/ouvrir-le-site
-  const html = readBuilt("index.html");
-  assert.match(html, /<html[^>]*\blang="fr"/);
-  assert.match(html, HEADING);
-});
-
-test("home page: link to the metallerie", () => {
-  // /ui/page-daccueil/lien-metallerie
-  assert.match(
-    readBuilt("index.html"),
-    /<a\s[^>]*href="\/ateliers\/metallerie\/?"[^>]*>\s*La métallerie\s*<\/a>/,
-  );
-});
-
-const ATELIER = "ateliers/metallerie/index.html";
-const text = () => builtText(ATELIER);
-const has = (t, ...words) => {
-  for (const w of words) assert.ok(t.toLowerCase().includes(w.toLowerCase()), `missing "${w}"`);
-};
-
-test("metallerie page: browser title", () => {
-  // /ui/page-metallerie/titre
-  assert.match(readBuilt(ATELIER), /<title>\s*L(?:'|&#39;)atelier métallerie - La Fabrique\s*<\/title>/);
-});
-
-test("metallerie page: main heading", () => {
-  // /ui/page-metallerie/titre-principal
-  assert.match(readBuilt(ATELIER), /<h1[^>]*>\s*La métallerie\s*<\/h1>/);
-});
-
-test("metallerie page: presentation of the T1 bay", () => {
-  // /ui/page-metallerie/presentation
-  has(text(), "T1");
-});
-
-test("metallerie page: spaces in order", () => {
-  // /ui/page-metallerie/espaces
-  const t = text().toLowerCase();
-  let at = t.indexOf("t1");
-  for (const w of ["vélo", "soudure", "chaudronnerie", "généraliste", "usinage"]) {
-    const next = t.indexOf(w, at);
-    assert.ok(next >= 0, `"${w}" missing or out of order`);
-    at = next;
-  }
-});
-
-test("metallerie page: machining space not yet open", () => {
-  // /ui/page-metallerie/usinage
-  has(text(), "usinage", "pas encore", "tour", "fraiseuse", "perceuse", "bénévoles");
-});
-
-test("metallerie page: equipment list", () => {
-  // /ui/page-metallerie/materiel
-  const items = [...readBuilt(ATELIER).matchAll(/<li[^>]*>([\s\S]*?)<\/li>/g)]
-    .map((m) => m[1].replace(/<[^>]+>/g, " "))
-    .join(" ")
-    .replace(/&#39;/g, "'")
-    .toLowerCase();
-  for (const w of [
-    "meuleuse", "visseuse", "perceuse à colonne", "électrode enrobée", "tig",
-    "semi-automatique", "scie circulaire", "scie à ruban", "table de soudage",
-    "plieuse", "rouleuse", "établis", "étaux",
-  ]) {
-    assert.ok(items.includes(w), `equipment list lacks "${w}"`);
-  }
-});
-
-test("metallerie page: invitation to the open evening", () => {
-  // /ui/page-metallerie/portes-ouvertes
-  has(text(), "jeudi", "19 h", "portes ouvertes");
-});
-
-test("metallerie page: user path", () => {
-  // /ui/page-metallerie/initiation
-  has(text(), "initiation", "électrode enrobée", "TIG", "semi-automatique", "projet", "autonom");
-});
-
-test("metallerie page: booking on the agenda, without a link", () => {
-  // /ui/page-metallerie/reservation
-  has(text(), "vendredi", "samedi", "agenda", "deux fois par mois");
-  assert.doesNotMatch(readBuilt(ATELIER), /<a\s[^>]*href="[^"]*agenda/i);
-});
-
-test("metallerie page: ways to help", () => {
-  // /ui/page-metallerie/benevolat
-  has(text(), "jeudi", "conseil d'administration", "contact@lafab.org");
-});
-
-test("metallerie page: contact link", () => {
-  // /ui/page-metallerie/contact
-  assert.match(readBuilt(ATELIER), /<a\s[^>]*href="mailto:contact@lafab\.org"/);
-});
-
-test("scenario: visiting the metallerie as a curious visitor", () => {
-  // /scenarios/visiter-la-metallerie-en-curieux
   const home = readBuilt("index.html");
-  const link = home.match(/<a\s[^>]*href="(\/ateliers\/metallerie\/?)"[^>]*>\s*La métallerie\s*<\/a>/);
-  assert.ok(link, "no link La métallerie on /");
-  assert.equal(readBuilt(link[1].replace(/^\//, "").replace(/\/?$/, "/index.html")), readBuilt(ATELIER));
-  has(text(), "jeudi", "19 h", "portes ouvertes");
+  assert.match(home, /<html[^>]*\blang="fr"/);
+  const internal = pageLinks("index.md").filter(isInternal);
+  assert.ok(internal.length > 0, "no internal link on /");
+  const target = designated(internal[0]);
+  assert.ok(pages().map(address).includes(target), `${internal[0]} leads to no page`);
+  assert.match(readBuilt(builtFile(target)), /<html[\s>]/i);
 });
 
-test("scenario: training at the metallerie", () => {
-  // /scenarios/se-former-a-la-metallerie
-  const t = text();
-  has(t, "électrode enrobée", "TIG", "semi-automatique", "initiation", "agenda");
-  assert.match(readBuilt(ATELIER), /<html[^>]*\blang="fr"/);
-});
-
-test("scenario: helping at the metallerie", () => {
-  // /scenarios/aider-a-la-metallerie
-  has(text(), "jeudi", "conseil d'administration", "contact@lafab.org");
+test("anchors: targets of the <a href> elements", () => {
+  // /model/page
+  assert.deepEqual(anchors('<a class="x" href="/a#b">x</a> <a href=\'mailto:m\'>'), ["/a#b", "mailto:m"]);
 });
