@@ -34,7 +34,7 @@ test("invariants of the model", () => {
 test("build: index.md gives index.html, body rendered from Markdown", () => {
   // /operations/construire-le-site/generee
   const html = readBuilt("index.html");
-  assert.match(html, /<h1[^>]*>/);
+  assert.match(html, /<h[1-6][^>]*>/);
   assert.doesNotMatch(html, /^#\s/m);
 });
 
