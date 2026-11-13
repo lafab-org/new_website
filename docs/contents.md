@@ -10,7 +10,7 @@ backticks (`comme ceci`), qui figurent tels quels dans la page.
 ## Page d'accueil
 
 Objectif : souhaiter la bienvenue et mener le visiteur vers les pages
-d'atelier.
+d'atelier et d'évènement.
 
 Contenu :
 - Titre du navigateur : `La Fabrique`
@@ -18,6 +18,7 @@ Contenu :
 - Ligne de bienvenue : `Bienvenue à La Fabrique, atelier partagé à
   Strasbourg.`
 - Lien interne `La métallerie`, vers `/ateliers/metallerie`
+- Lien interne `L'atelier Répar'Action`, vers `/evenements/repar-action`
 
 ## Page métallerie
 
@@ -64,5 +65,48 @@ Contenu :
   - Donner un coup de main : les façons d'aider
     - venir un jeudi soir
     - venir à la réunion mensuelle du conseil d'administration
+    - écrire à `contact@lafab.org`, un lien externe
+      `mailto:contact@lafab.org`
+
+## Page Répar'Action
+
+Objectifs :
+- le curieux comprend le principe de l'atelier : réparer ensemble ;
+- l'usager sait quand venir et quoi apporter, et ose venir avec un
+  objet en panne ;
+- le bénévole, bricoleur en électronique ou autre, veut rejoindre les bénévoles
+  qui partagent leur savoir-faire.
+
+Contenu :
+- Titre du navigateur : `Répar'Action - La Fabrique`
+- Titre : `Atelier Répar'Action`
+  - Accroche : `Redonnez une deuxième vie à vos objets ! Plutôt que de
+    jeter, ici on répare !`
+  - Les informations pratiques, en liste
+    - `Rendez-vous : tous les premiers jeudis du mois`
+    - `Horaire : 18h - 20h`
+    - `Lieu : La Fabrique, Parc Gruber, 91 Route des Romains - 67200
+      Strasbourg`
+    - `Activité : gratuite et ouverte à tous`
+  - Le principe
+    - dans la mouvance des Repair Cafés, un lieu collaboratif d'échange
+      de savoirs
+    - des bénévoles passionnés de bricolage ou d'électronique partagent
+      leur savoir-faire avec les personnes qui apportent leurs objets
+      en panne, pour les réparer ensemble
+    - la recherche de panne et la réparation se font avec les
+      compétences de chacun, dans une ambiance détendue
+  - Quoi apporter : cafetières, aspirateurs, sèche-cheveux, et autres
+    petits appareils ou objets hors service
+  - Pourquoi réparer
+    - consommer moins et redonner vie aux objets : on économise, on
+      limite son empreinte carbone, vers une décroissance soutenable
+    - on apprend, on se rencontre, on échange : un moment convivial,
+      qui crée du lien dans la ville et rend chacun plus autonome
+  - La participation : l'atelier est gratuit, et l'on peut laisser une
+    pièce dans la tirelire
+  - Rejoindre les bénévoles : invitation aux bricoleurs et bricoleuses
+    à venir partager leur savoir-faire
+    - venir un premier jeudi du mois
     - écrire à `contact@lafab.org`, un lien externe
       `mailto:contact@lafab.org`

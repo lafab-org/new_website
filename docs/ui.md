@@ -18,3 +18,9 @@ dans /contents/page-daccueil.
 À `/ateliers/metallerie` : la page `ateliers/metallerie.md`, telle que
 /operations/construire-le-site/generee la rend. Son contenu est décrit
 dans /contents/page-metallerie.
+
+## Page Répar'Action
+
+À `/evenements/repar-action` : la page `evenements/repar-action.md`,
+telle que /operations/construire-le-site/generee la rend. Son contenu
+est décrit dans /contents/page-reparaction.
