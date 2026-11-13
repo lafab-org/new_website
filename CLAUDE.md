@@ -21,3 +21,7 @@ besides the usual documents:
   by eye, never by tests.
 - Tests cover only what can be checked mechanically: the model, links
   included (every internal link leads to a page), and the build.
+
+A content page that adds no tag (only `ui.md` and `contents.md`) is
+planned without a Tests phase (Specification, Implementation): the
+existing tests already run over every page.
