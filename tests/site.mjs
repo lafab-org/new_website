@@ -60,6 +60,15 @@ export function isInternal(target) {
   return target.startsWith("/") && !target.startsWith("//");
 }
 
+// Kind of a link target: "internal", "fragment", "external", or null
+// for any other target.
+export function linkKind(target) {
+  if (isInternal(target)) return "internal";
+  if (target.startsWith("#")) return "fragment";
+  if (target.startsWith("//") || /^[A-Za-z][A-Za-z0-9+.-]*:/.test(target)) return "external";
+  return null;
+}
+
 // The address a link target designates: no fragment, no query, no
 // final "/" except for "/" itself.
 export function designated(target) {

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   sourceFiles, pages, TEMPLATE_EXTENSIONS, frontMatterValue, withoutFrontMatter, address,
-  builtFile, builtPage, isInternal, designated, brokenLinks, readBuilt, readSource,
+  builtFile, builtPage, isInternal, linkKind, designated, brokenLinks, readBuilt, readSource,
   renderedBody, pageLinks, anchors,
 } from "./site.mjs";
 
@@ -18,6 +18,10 @@ function checkInvariants() {
   for (const p of all) {
     assert.notEqual(frontMatterValue(readSource(p), "title"), "", `${p} has an empty title`);
   }
+  // /model/lien/forme
+  for (const p of all) {
+    for (const t of pageLinks(p)) assert.notEqual(linkKind(t), null, `${p}: link ${t} of no kind`);
+  }
   // /model/site/lien-interne
   const links = Object.fromEntries(all.map((p) => [p, pageLinks(p)]));
   assert.deepEqual(brokenLinks(links, all.map(address)), [], "internal links leading to no page");
@@ -25,6 +29,7 @@ function checkInvariants() {
 
 test("invariants of the model", () => {
   // /model/page/markdown
+  // /model/lien/forme
   // /model/page/titre
   // /model/site/lien-interne
   checkInvariants();
@@ -50,6 +55,32 @@ test("internal links and the page they designate", () => {
   assert.equal(address("index.md"), "/");
   assert.equal(address("ateliers/index.md"), "/ateliers");
   assert.equal(address("ateliers/metallerie.md"), "/ateliers/metallerie");
+});
+
+test("kinds of links: internal, fragment, external, or none", () => {
+  // /model/lien/forme (definition of the kinds in /model/lien)
+  const kinds = {
+    "/": "internal",
+    "/ateliers/metallerie#x": "internal",
+    "#": "fragment",
+    "#horaires": "fragment",
+    "//ailleurs.org/x": "external",
+    "https://ailleurs.org/": "external",
+    "mailto:contact@lafab.org": "external",
+    "tel:+33388000000": "external",
+    "a+b.c-9:x": "external",
+    "ateliers/metallerie": null,
+    "./metallerie": null,
+    "../index": null,
+    "?a=1": null,
+    "": null,
+    "9http://x": null,
+    "+a:x": null,
+    "mail to:x": null,
+  };
+  for (const [target, kind] of Object.entries(kinds)) {
+    assert.equal(linkKind(target), kind, `kind of ${JSON.stringify(target)}`);
+  }
 });
 
 test("broken internal links are found, external ones ignored", () => {
@@ -89,18 +120,27 @@ test("build: every page is written under _site/ as HTML from its Markdown", () =
   checkInvariants();
 });
 
-test("every built page declares lang, viewport and a non-empty title", () => {
-  // /model/page/titre
+test("every built page declares French, viewport and its title as browser title", () => {
+  // /ui/page/francais
+  // /model/page/titre (title is the browser title)
   for (const p of pages()) {
     const html = builtPage(p);
     assert.match(html, /<html[^>]*\blang="fr"/, `${p}: no lang="fr"`);
     assert.match(html, /<meta[^>]*name="viewport"/, `${p}: no viewport`);
-    assert.match(html, /<title>\s*\S[^<]*<\/title>/, `${p}: empty title`);
+    const shown = html.match(/<title>([^<]*)<\/title>/);
+    assert.ok(shown, `${p}: no browser title`);
+    assert.equal(unescape(shown[1]).trim(), frontMatterValue(readSource(p), "title"), `${p}: browser title`);
   }
 });
 
+function unescape(s) {
+  return s.replace(/&#39;|&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+}
+
 test("scenario: opening the site", () => {
   // /scenarios/ouvrir-le-site
+  // /ui/page/francais
   const home = readBuilt("index.html");
   assert.match(home, /<html[^>]*\blang="fr"/);
   const internal = pageLinks("index.md").filter(isInternal);
