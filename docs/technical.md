@@ -26,8 +26,9 @@
   lisent `_site/` : ni serveur, ni navigateur. Les chemins des pages
   sont vérifiés sur `src/`.
 - Chaque page construite est vérifiée : `lang="fr"`, balise viewport,
-  titre non vide, et chaque lien interne de son texte mène à une page du
-  site. Les liens externes ne sont pas vérifiés.
+  titre non vide, chaque lien de son texte est interne, un fragment ou
+  externe, et chaque lien interne mène à une page du site. Les liens
+  externes et les fragments ne sont pas vérifiés.
 - Le reste se vérifie à la relecture : le contenu par `contents.md`,
   l'apparence par `design.md`.
 - Aucun linter ni formateur n'est imposé.

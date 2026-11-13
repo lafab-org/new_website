@@ -15,6 +15,6 @@ d'une page.
 Inputs: aucune.
 
 Cases:
-- [generee] Toujours : chaque page est écrite sous `_site/` en HTML,
-  son corps rendu depuis le Markdown ; `index.md` donne
-  `_site/index.html`.
+- [generee] Toujours : le résultat est le site généré sous `_site/`, où
+  chaque page est écrite en HTML, son corps rendu depuis le Markdown ;
+  `index.md` donne `_site/index.html`.
