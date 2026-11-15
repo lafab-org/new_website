@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {
   sourceFiles, pages, TEMPLATE_EXTENSIONS, frontMatterValue, withoutFrontMatter, address,
   builtFile, builtPage, isInternal, linkKind, designated, brokenLinks, readBuilt, readSource,
-  renderedBody, pageLinks, anchors,
+  renderedBody, pageLinks, anchors, events, EVENT_FIELDS, textOf,
 } from "./site.mjs";
 
 // Invariants of /model, on the pages of the initial state.
@@ -18,6 +18,18 @@ function checkInvariants() {
   for (const p of all) {
     assert.notEqual(frontMatterValue(readSource(p), "title"), "", `${p} has an empty title`);
   }
+  // /model/page/sans-titre-principal
+  for (const p of all) {
+    const body = withoutFrontMatter(readSource(p));
+    assert.doesNotMatch(body, /^ {0,3}#(\s|$)/m, `${p}: level-1 heading in body`);
+    assert.doesNotMatch(body, /\S.*\r?\n {0,3}=+\s*$/m, `${p}: level-1 heading in body`);
+  }
+  // /model/evenement/renseigne
+  for (const p of events(all)) {
+    for (const [key] of EVENT_FIELDS) {
+      assert.notEqual(frontMatterValue(readSource(p), key), "", `${p}: empty ${key}`);
+    }
+  }
   // /model/lien/forme
   for (const p of all) {
     for (const t of pageLinks(p)) assert.notEqual(linkKind(t), null, `${p}: link ${t} of no kind`);
@@ -29,6 +41,8 @@ function checkInvariants() {
 
 test("invariants of the model", () => {
   // /model/page/markdown
+  // /model/page/sans-titre-principal
+  // /model/evenement/renseigne
   // /model/lien/forme
   // /model/page/titre
   // /model/site/lien-interne
@@ -120,16 +134,67 @@ test("build: every page is written under _site/ as HTML from its Markdown", () =
   checkInvariants();
 });
 
-test("every built page declares French, viewport and its title as browser title", () => {
+test("every built page declares French, viewport and its browser title", () => {
   // /ui/page/francais
-  // /model/page/titre (title is the browser title)
+  // /ui/page/navigateur
   for (const p of pages()) {
     const html = builtPage(p);
     assert.match(html, /<html[^>]*\blang="fr"/, `${p}: no lang="fr"`);
     assert.match(html, /<meta[^>]*name="viewport"/, `${p}: no viewport`);
     const shown = html.match(/<title>([^<]*)<\/title>/);
     assert.ok(shown, `${p}: no browser title`);
-    assert.equal(unescape(shown[1]).trim(), frontMatterValue(readSource(p), "title"), `${p}: browser title`);
+    const expected = p === "index.md"
+      ? "La Fabrique"
+      : `${frontMatterValue(readSource(p), "title")} - La Fabrique`;
+    assert.equal(unescape(shown[1]).trim(), expected, `${p}: browser title`);
+  }
+});
+
+test("every built page starts with its title as its only <h1>, then its body", () => {
+  // /ui/page/titre
+  for (const p of pages()) {
+    const html = builtPage(p);
+    const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/gi)];
+    assert.equal(h1s.length, 1, `${p}: ${h1s.length} <h1>`);
+    assert.equal(textOf(h1s[0][1]), frontMatterValue(readSource(p), "title"), `${p}: <h1> text`);
+    const main = html.slice(html.search(/<body[\s>]/i));
+    assert.equal(textOf(main.slice(0, main.indexOf(h1s[0][0]))), "", `${p}: text before the <h1>`);
+    const body = renderedBody(p);
+    assert.ok(html.indexOf(body) > html.indexOf(h1s[0][0]), `${p}: body before the <h1>`);
+  }
+});
+
+test("events are the pages directly in evenements/, except its index", () => {
+  // /model/site/pages-evenements
+  assert.deepEqual(
+    events([
+      "index.md", "evenements/index.md", "evenements/repar-action.md", "evenements/a/b.md",
+      "ateliers/metallerie.md", "evenements/autre.md",
+    ]),
+    ["evenements/repar-action.md", "evenements/autre.md"],
+  );
+  assert.ok(events(pages()).includes("evenements/repar-action.md"));
+  checkInvariants();
+});
+
+test("an event page shows its catchphrase then its practical information, between title and body", () => {
+  // /ui/page-devenement/accroche
+  // /ui/page-devenement/informations
+  const list = events(pages());
+  assert.ok(list.length > 0, "no event page");
+  for (const p of list) {
+    const source = readSource(p);
+    const html = builtPage(p);
+    const h1 = html.match(/<h1[^>]*>[\s\S]*?<\/h1>/i);
+    assert.ok(h1, `${p}: no <h1>`);
+    const from = html.indexOf(h1[0]) + h1[0].length;
+    const between = html.slice(from, html.indexOf(renderedBody(p), from));
+    const accroche = frontMatterValue(source, "accroche");
+    const info = EVENT_FIELDS.map(([key, label]) => `${label} : ${frontMatterValue(source, key)}`);
+    const expected = [accroche, ...info].filter((t) => t !== "").join(" ");
+    assert.equal(textOf(between), expected, `${p}: text between title and body`);
+    const items = [...between.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)].map((m) => textOf(m[1]));
+    assert.deepEqual(items, info, `${p}: practical information list`);
   }
 });
 

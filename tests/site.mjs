@@ -40,6 +40,29 @@ export function frontMatterValue(text, key) {
   return m ? m[1].replace(/^["']|["']$/g, "").trim() : "";
 }
 
+// Events among page paths: the pages directly in evenements/, except
+// evenements/index.md.
+export function events(list) {
+  return list.filter((p) => /^evenements\/[^/]+\.md$/.test(p) && p !== "evenements/index.md");
+}
+
+// Practical information fields of an event, in display order, with
+// their labels.
+export const EVENT_FIELDS = [
+  ["rendez-vous", "Rendez-vous"],
+  ["horaire", "Horaire"],
+  ["lieu", "Lieu"],
+  ["prix", "Activité"],
+];
+
+// The text of an HTML fragment, tags removed, entities decoded, blanks
+// collapsed.
+export function textOf(html) {
+  return html.replace(/<[^>]*>/g, " ").replace(/&#39;|&#x27;/g, "'").replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&nbsp;|&#160;/g, " ")
+    .replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+}
+
 export function withoutFrontMatter(text) {
   return text.replace(FRONT_MATTER, "");
 }
