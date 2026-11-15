@@ -1,37 +1,25 @@
 # Modèle
 
-## Lien
-
-Un lien d'une page vers une adresse.
-
-- `target: string`, l'adresse visée.
-
-Un lien est interne si son adresse commence par un seul `/`, un
-fragment si elle commence par `#`, externe si elle commence par `//` ou
-par un schéma d'URI : une lettre, puis des lettres, chiffres, `+`, `-`
-ou `.`, puis `:` (`https:`, `mailto:`…).
-
-- [forme] Un lien est interne, un fragment ou externe.
-
 ## Page
 
 Une page du site web, écrite sous forme de fichier source Markdown.
 
 - `path: string`, l'emplacement du fichier sous `src/`, par exemple
   `index.md`.
-  - [markdown] Il se termine par `.md`.
 - `title: string`, le titre de la page.
   - [titre] Non vide.
 - `body: string`, le texte Markdown de la page.
-  - [sans-titre-principal] Il n'a aucun titre de niveau 1.
-- `links: set of /model/lien`, les éléments `<a href>` du texte
-  (`body`) une fois rendu, à l'exclusion du gabarit.
+- `links: set of string`, les adresses des éléments `<a href>` de la
+  page une fois construite, gabarit compris.
 
 L'adresse d'une page est celle qui la sert : `/` pour `index.md`,
 `/dossier` pour `dossier/index.md`, `/dossier/nom` pour
-`dossier/nom.md`. Un lien interne désigne une page quand son adresse,
-sans fragment `#…`, sans paramètres `?…` et sans `/` final autre que
-celui de `/`, est celle de la page.
+`dossier/nom.md`. Un lien est interne si son adresse commence par un
+seul `/` ; il désigne une page quand son adresse, sans fragment `#…`,
+sans paramètres `?…` et sans `/` final autre que celui de `/`, est
+celle de la page. Un lien est un fragment si son adresse commence par
+`#`. Le fragment d'un lien, `#…`, désigne un identifiant (`id`) d'une
+page construite.
 
 ## Évènement
 
@@ -52,9 +40,10 @@ L'état : tout ce dont le site est fait.
 
 - `pages: set of /model/page`, toutes les pages.
   - [lien-interne] Chaque lien interne d'une page désigne une page de
-    `pages`.
-- `evenements: set of /model/evenement`, tous les évènements.
-  - [pages-evenements] Les pages des évènements sont exactement les
-    pages de `pages` dont le fichier est directement dans
-    `evenements/`, hors `evenements/index.md`, chacune
-    celle d'un seul évènement.
+    `pages` ; s'il a un fragment, cette page porte l'identifiant.
+  - [fragment] Chaque lien fragment d'une page désigne un identifiant
+    de cette page.
+- `evenements: set of /model/evenement`, tous les évènements. Leurs
+  pages sont les pages de `pages` dont le fichier est directement dans
+  `evenements/`, hors `evenements/index.md`, chacune celle d'un seul
+  évènement.

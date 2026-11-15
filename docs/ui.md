@@ -9,8 +9,9 @@ lien en cliquant dessus.
 - [navigateur] Le titre du navigateur est `<titre> - La Fabrique`, où
   `<titre>` est le `title` de la page, et `La Fabrique` pour la page
   d'accueil.
-- [titre] La page commence par son `title`, en titre principal
-  (`<h1>`), le seul de la page ; son corps vient ensuite.
+- [titre] La page a un seul titre principal (`<h1>`) : son `title`.
+- Le titre principal vient en premier, puis le corps de la page (not
+  testable).
 
 ## Page d'accueil
 
@@ -32,11 +33,10 @@ telle que /operations/construire-le-site/generee la rend. Le contenu de
 chaque page d'évènement est décrit dans sa section de `contents.md` :
 /contents/page-reparaction.
 
-Entre le titre et le corps, la page montre :
-- [accroche] l'accroche de l'évènement, s'il en a une ;
-- [informations] puis ses informations pratiques, en liste, dans cet
-  ordre :
-  - `Rendez-vous : <rendez-vous>`
-  - `Horaire : <horaire>`
-  - `Lieu : <lieu>`
-  - `Activité : <prix>`
+Entre le titre et le corps, la page montre l'accroche de l'évènement,
+s'il en a une, puis ses informations pratiques, en liste, dans cet
+ordre (not testable) :
+- `Rendez-vous : <rendez-vous>`
+- `Horaire : <horaire>`
+- `Lieu : <lieu>`
+- `Activité : <prix>`
