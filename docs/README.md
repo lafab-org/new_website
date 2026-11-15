@@ -6,4 +6,4 @@
 - [operations.md](operations.md) : la construction du site.
 - [design.md](design.md) : les règles d'apparence, vérifiées à l'œil.
 - [ui.md](ui.md) : les pages.
-- [contents.md](contents.md) : le contenu des pages, vérifié à la relecture.
+- [contents.md](contents.md) : les objectifs éditoriaux des pages, dont le texte est dans `src/`, vérifié à la relecture.

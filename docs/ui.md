@@ -16,23 +16,20 @@ lien en cliquant dessus.
 ## Page d'accueil
 
 À `/` : la page `index.md`, telle que
-/operations/construire-le-site/generee la rend. Son contenu est décrit
-dans /contents/page-daccueil.
+/operations/construire-le-site/generee la rend. Ses objectifs éditoriaux
+sont dans /contents/page-daccueil.
 
 ## Page d'atelier
 
 À `/ateliers/<nom>` : la page `ateliers/<nom>.md`, telle que
-/operations/construire-le-site/generee la rend. Le contenu de chaque
-page d'atelier est décrit dans sa section de `contents.md` :
-/contents/page-metallerie et
-/contents/page-menuiserie.
+/operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
+pages d'atelier sont dans /contents/page-datelier.
 
 ## Page d'évènement
 
 À `/evenements/<nom>` : la page `evenements/<nom>.md` d'un évènement,
-telle que /operations/construire-le-site/generee la rend. Le contenu de
-chaque page d'évènement est décrit dans sa section de `contents.md` :
-/contents/page-reparaction.
+telle que /operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
+pages d'évènement sont dans /contents/page-devenement.
 
 Entre le titre et le corps, la page montre l'accroche de l'évènement,
 s'il en a une, puis ses informations pratiques, en liste, dans cet

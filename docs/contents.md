@@ -1,163 +1,41 @@
 # Contenus
 
-Le contenu éditorial des pages.
+Les objectifs éditoriaux des pages. Le texte lui-même est la source
+Markdown de la page dans `src/`, relue à la revue finale.
 
-Chaque page a une section, rattachée à son genre de page dans `ui.md` :
-d'abord ses objectifs de communication,
-puis la structure de la page, en liste hiérarchique, dans l'ordre où
-elle se lit. Les formulations sont libres, sauf les textes entre
-backticks (`comme ceci`), qui figurent tels quels dans la page.
+Chaque genre de page de `ui.md` a une section, et une page a la sienne
+si elle a des objectifs ou des contraintes propres. Une section donne
+les objectifs de communication, puis les contraintes éditoriales qui
+s'imposent au texte, s'il y en a. Les textes entre backticks (`comme
+ceci`) figurent tels quels dans la page.
+
+Contraintes communes :
+- Aucun lien vers l'agenda.
+- Le seul moyen de contact donné est `contact@lafab.org`, en lien
+  `mailto:`.
 
 ## Page d'accueil
 
 Objectif : souhaiter la bienvenue et mener le visiteur vers les pages
 d'atelier et d'évènement.
 
-Contenu :
-- Titre : `La Fabrique`
-- Ligne de bienvenue : `Bienvenue à La Fabrique, atelier partagé à
-  Strasbourg.`
-- Lien interne `La métallerie`, vers `/ateliers/metallerie`
-- Lien interne `La menuiserie`, vers `/ateliers/menuiserie`
-- Lien interne `L'atelier Répar'Action`, vers `/evenements/repar-action`
+Contraintes :
+- Titre : `La Fabrique`.
+- Un lien vers chaque page d'atelier et d'évènement.
 
-## Page métallerie
+## Page d'atelier
 
-Objectifs :
+Objectifs, pour chaque page d'atelier :
 - le curieux comprend ce qu'est l'atelier et veut venir le visiter ;
-- l'usager voit le matériel et le parcours pour se former, et sait que
-  les initiations se réservent sur l'agenda ;
-- le bénévole voit comment aider.
-
-Contenu :
-- Titre : `La métallerie`
-  - Présentation en deux ou trois phrases : la métallerie occupe la
-    travée T1.
-  - Les espaces, dans l'ordre où on les rencontre dans la travée
-    - mécanique vélo
-    - soudure
-    - chaudronnerie
-    - un espace généraliste avec des plans de travail
-    - usinage métal : pas encore ouvert, des bénévoles le finalisent ;
-      tour, fraiseuse, perceuse-fraiseuse à colonne
-  - Le matériel, en liste
-    - électroportatif courant : meuleuse, visseuse
-    - perceuse à colonne
-    - postes à souder : électrode enrobée, TIG, semi-automatique
-    - scie circulaire à métaux, à lubrification
-    - scie à ruban pour métaux
-    - table de soudage
-    - plieuse
-    - rouleuse à tôle
-    - établis et étaux
-  - Venir visiter
-    - invitation à venir un jeudi soir à 19 h, pendant les portes
-      ouvertes
-  - Apprendre à souder
-    - une initiation au soudage à l'électrode enrobée
-    - puis un parcours selon le besoin : initiation au soudage TIG,
-      initiation au soudage semi-automatique, accompagnement d'un
-      projet
-    - puis l'autonomie
-    - les initiations ont lieu deux fois par mois, un vendredi et un
-      samedi après-midi, et se réservent sur l'agenda ; pas de lien
-      vers l'agenda
-  - Donner un coup de main : les façons d'aider
-    - venir un jeudi soir
-    - venir à la réunion mensuelle du conseil d'administration
-    - écrire à `contact@lafab.org`, un lien externe
-      `mailto:contact@lafab.org`
-
-## Page menuiserie
-
-Objectifs :
-- le curieux comprend ce qu'est l'atelier et veut venir le visiter ;
-- l'usager voit le matériel, sait quelles machines exigent une
-  initiation avant usage, et sait que les initiations se réservent sur
+- l'usager voit le matériel, sait quelles initiations sont requises
+  avant d'utiliser une machine, et sait qu'elles se réservent sur
   l'agenda ;
 - le bénévole voit comment aider.
 
-Contenu :
-- Titre : `La menuiserie`
-  - Présentation en deux ou trois phrases : la menuiserie occupe les
-    travées T2 et T3.
-  - Les espaces
-    - la travée T2 : principalement des machines-outils
-    - la travée T3 : principalement des établis et le stockage du bois
-  - Le matériel, en liste, par travée
-    - T2 : scie à format, dégauchisseuse, raboteuse, scie à ruban, scie
-      à panneaux verticale, toupie
-    - T3 : deux tours à bois, scies radiales, perceuse à colonne,
-      établis, stockage du bois
-    - électroportatif : perceuses-visseuses, scie circulaire plongeante,
-      scie sauteuse, ponceuse orbitale, défonceuse, machine à lamelles
-      (Lamello)
-  - Les règles d'usage
-    - on n'utilise que ce que l'on maîtrise
-    - certaines machines exigent une initiation avant usage : la scie à
-      format et la scie à ruban (initiation scier, débiter), la
-      dégauchisseuse et la raboteuse (initiation travailler le bois
-      massif), les tours (initiation tournage sur bois)
-    - la toupie n'est accessible que pendant les accompagnements
-  - Venir visiter
-    - invitation à venir un jeudi soir à 19 h, pendant les portes
-      ouvertes
-  - Apprendre
-    - les initiations obligatoires : scier, débiter ; travailler le
-      bois massif ; elles ont lieu deux fois par mois, un vendredi et
-      un samedi après-midi, et se réservent sur l'agenda ; pas de lien
-      vers l'agenda
-    - le tournage sur bois, aussi obligatoire : sur demande, en
-      écrivant à `contact@lafab.org`
-    - les initiations non obligatoires, aux dates variables, sur
-      l'agenda
-      - électroportatifs niveau 1 : scie plongeante, scie radiale
-      - électroportatifs niveau 2 : perceuse à colonne, défonceuse
-      - assemblage à la main : tenon et mortaise
-  - Donner un coup de main : les façons d'aider
-    - venir un jeudi soir
-    - venir à la réunion mensuelle du conseil d'administration
-    - écrire à `contact@lafab.org`, un lien externe
-      `mailto:contact@lafab.org`
+## Page d'évènement
 
-## Page Répar'Action
-
-Objectifs :
-- le curieux comprend le principe de l'atelier : réparer ensemble ;
-- l'usager sait quand venir et quoi apporter, et ose venir avec un
-  objet en panne ;
-- le bénévole, bricoleur en électronique ou autre, veut rejoindre les bénévoles
-  qui partagent leur savoir-faire.
-
-Contenu :
-- Titre : `Atelier Répar'Action`
-  - Accroche : `Redonnez une deuxième vie à vos objets ! Plutôt que de
-    jeter, ici on répare !`
-  - Les informations pratiques
-    - rendez-vous : `tous les premiers jeudis du mois`
-    - horaire : `18h - 20h`
-    - lieu : `La Fabrique, Parc Gruber, 91 Route des Romains - 67200
-      Strasbourg`
-    - prix : `gratuite et ouverte à tous`
-  - Le principe
-    - dans la mouvance des Repair Cafés, un lieu collaboratif d'échange
-      de savoirs
-    - des bénévoles passionnés de bricolage ou d'électronique partagent
-      leur savoir-faire avec les personnes qui apportent leurs objets
-      en panne, pour les réparer ensemble
-    - la recherche de panne et la réparation se font avec les
-      compétences de chacun, dans une ambiance détendue
-  - Quoi apporter : cafetières, aspirateurs, sèche-cheveux, et autres
-    petits appareils ou objets hors service
-  - Pourquoi réparer
-    - consommer moins et redonner vie aux objets : on économise, on
-      limite son empreinte carbone, vers une décroissance soutenable
-    - on apprend, on se rencontre, on échange : un moment convivial,
-      qui crée du lien dans la ville et rend chacun plus autonome
-  - La participation : l'atelier est gratuit, et l'on peut laisser une
-    pièce dans la tirelire
-  - Rejoindre les bénévoles : invitation aux bricoleurs et bricoleuses
-    à venir partager leur savoir-faire
-    - venir un premier jeudi du mois
-    - écrire à `contact@lafab.org`, un lien externe
-      `mailto:contact@lafab.org`
+Objectifs, pour chaque page d'évènement :
+- le curieux comprend le principe de l'évènement et a envie de venir ;
+- l'usager sait quand venir, comment participer et quoi apporter ou
+  prévoir ;
+- le bénévole voit comment aider.

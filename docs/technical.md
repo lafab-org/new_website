@@ -37,6 +37,6 @@
 - Une affirmation de la spécification porte une étiquette seulement si
   le contrôle de forme peut la vérifier ; les autres se terminent par
   `(not testable)`. Elles se vérifient à la relecture, comme le contenu
-  par `contents.md` et l'apparence par `design.md`.
+  des pages selon `contents.md` et l'apparence par `design.md`.
 - Les tests ne testent pas leurs propres fonctions d'aide.
 - Aucun linter ni formateur n'est imposé.

@@ -10,15 +10,16 @@ plugin from https://github.com/joris-r/dev43
 
 # Project instructions
 
-For a content-heavy project, the specification includes `docs/contents.md`
-besides the usual documents:
+For a content-heavy project, the specification includes `docs/contents.md`:
 
-- It describes the editorial content of each page, one section per page,
-  attached to its kind of page in `ui.md`, with no tags and no test. A section gives the
-  communication objectives of the page, then its structure as a
-  hierarchical list, with notes where they matter.
-- This content is checked by reviewing the pages, as `design.md` is checked
-  by eye, never by tests.
+- It gives the editorial objectives of the pages, one section per kind
+  of page in `ui.md`, and one per page with objectives or constraints
+  of its own, with no tags and no test. A section gives the communication objectives of the page, then the
+  editorial constraints on its text, if any. It never describes the
+  structure or the text of the page beyond the few strings a constraint
+  fixes: the page source in `src/` is the content.
+- The content is checked by reading the pages in `src/` against their
+  objectives, as `design.md` is checked by eye, never by tests.
 - Tests are the form check of the built site that `technical.md`
   describes. A statement about a page gets a tag only if that check
   can verify it on `_site/`; otherwise it ends with `(not testable)`.
