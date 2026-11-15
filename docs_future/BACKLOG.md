@@ -1,7 +1,6 @@
 # Backlog
 
 - Hébergement et déploiement du site : où et comment il est publié.
-- Atelier menuiserie : sa page de présentation, sur le modèle de la métallerie.
 - Atelier matériaux souples : sa page de présentation, sur le modèle de la métallerie.
 - Atelier numérique et électronique : sa page de présentation, sur le modèle de la métallerie.
 - Page de l'association : sa présentation, l'adresse du lieu et la description des portes ouvertes ; les pages d'atelier y renverront.
