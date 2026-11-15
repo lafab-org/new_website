@@ -3,7 +3,7 @@
 ## Initial state
 
 Les pages sont les fichiers Markdown de `src/`, hors `_includes/`, tels
-qu'ils sont dans le dépôt.
+qu'ils sont dans le dépôt, front matter compris.
 
 ## Construire le site
 

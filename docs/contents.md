@@ -2,7 +2,8 @@
 
 Le contenu éditorial des pages.
 
-Chaque page a une section : d'abord ses objectifs de communication,
+Chaque page a une section, rattachée à son genre de page dans `ui.md` :
+d'abord ses objectifs de communication,
 puis la structure de la page, en liste hiérarchique, dans l'ordre où
 elle se lit. Les formulations sont libres, sauf les textes entre
 backticks (`comme ceci`), qui figurent tels quels dans la page.
@@ -13,7 +14,6 @@ Objectif : souhaiter la bienvenue et mener le visiteur vers les pages
 d'atelier et d'évènement.
 
 Contenu :
-- Titre du navigateur : `La Fabrique`
 - Titre : `Bonjour le monde`
 - Ligne de bienvenue : `Bienvenue à La Fabrique, atelier partagé à
   Strasbourg.`
@@ -29,7 +29,6 @@ Objectifs :
 - le bénévole voit comment aider.
 
 Contenu :
-- Titre du navigateur : `L'atelier métallerie - La Fabrique`
 - Titre : `La métallerie`
   - Présentation en deux ou trois phrases : la métallerie occupe la
     travée T1.
@@ -78,16 +77,15 @@ Objectifs :
   qui partagent leur savoir-faire.
 
 Contenu :
-- Titre du navigateur : `Répar'Action - La Fabrique`
 - Titre : `Atelier Répar'Action`
   - Accroche : `Redonnez une deuxième vie à vos objets ! Plutôt que de
     jeter, ici on répare !`
-  - Les informations pratiques, en liste
-    - `Rendez-vous : tous les premiers jeudis du mois`
-    - `Horaire : 18h - 20h`
-    - `Lieu : La Fabrique, Parc Gruber, 91 Route des Romains - 67200
+  - Les informations pratiques
+    - rendez-vous : `tous les premiers jeudis du mois`
+    - horaire : `18h - 20h`
+    - lieu : `La Fabrique, Parc Gruber, 91 Route des Romains - 67200
       Strasbourg`
-    - `Activité : gratuite et ouverte à tous`
+    - prix : `gratuite et ouverte à tous`
   - Le principe
     - dans la mouvance des Repair Cafés, un lieu collaboratif d'échange
       de savoirs

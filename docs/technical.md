@@ -11,9 +11,8 @@
   et de son nom de fichier, sans extension. `index.md` est écrit dans
   `_site/index.html` et sert `/` ; `topic/page.md` est écrit dans
   `_site/topic/page/index.html` et sert `/topic/page`.
-- Toute page dérive, directement ou indirectement, du gabarit de base
-  `src/_includes/base.njk`, qui porte `lang="fr"`, la balise viewport
-  et le titre du navigateur, pris dans le `title` de la page.
+- Les pages sont mises en page par des gabarits Nunjucks, dans
+  `src/_includes/`.
 - Commandes : `npm run build` génère le site ; `npm start` le sert en
   local avec rechargement, sur `http://localhost:8080`.
 - Les messages vus par l'utilisateur ne sont pas spécifiés.
@@ -28,7 +27,10 @@
 - Chaque page construite est vérifiée : `lang="fr"`, balise viewport,
   titre non vide, chaque lien de son texte est interne, un fragment ou
   externe, et chaque lien interne mène à une page du site. Les liens
-  externes et les fragments ne sont pas vérifiés.
+  externes et les fragments ne sont pas vérifiés. Elle a aussi son
+  titre principal et son titre du navigateur, et un évènement, ses
+  informations pratiques, non vides et telles que `ui.md` les
+  montre.
 - Le reste se vérifie à la relecture : le contenu par `contents.md`,
   l'apparence par `design.md`.
 - Aucun linter ni formateur n'est imposé.

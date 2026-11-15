@@ -14,7 +14,7 @@ For a content-heavy project, the specification includes `docs/contents.md`
 besides the usual documents:
 
 - It describes the editorial content of each page, one section per page,
-  named as in `ui.md`, with no tags and no test. A section gives the
+  attached to its kind of page in `ui.md`, with no tags and no test. A section gives the
   communication objectives of the page, then its structure as a
   hierarchical list, with notes where they matter.
 - This content is checked by reviewing the pages, as `design.md` is checked
