@@ -9,6 +9,6 @@
 - Photos des ateliers : intégrer aux pages une sélection de photos (redimensionnées, avec texte alternatif) ; les pages métallerie et Répar'Action les recevront.
 - Design général du site : navigation (dont le retour vers l'accueil) et apparence commune, une fois plusieurs pages spécifiées.
 - Ligne éditoriale : relire les pages d'accueil et métallerie pour présenter La Fabrique comme un lieu où l'on participe, non comme un service.
-- Gabarit des évènements : les informations pratiques (rendez-vous, horaire, lieu, prix) dans le front matter, mises en page par un gabarit dédié ; la page Répar'Action l'adoptera.
 - Données structurées des évènements : balisage `schema.org/Event`, récurrence comprise, pour les moteurs de recherche.
 - Adresse du lieu partagée : une donnée Eleventy (par exemple `_data/lieu.json`) reprise par les pages qui la citent.
+- Typographie française : une espace insécable avant `?`, `!`, `:` et `;`, pour qu'aucun de ces signes ne passe seul à la ligne.

@@ -14,7 +14,7 @@ Objectif : souhaiter la bienvenue et mener le visiteur vers les pages
 d'atelier et d'évènement.
 
 Contenu :
-- Titre : `Bonjour le monde`
+- Titre : `La Fabrique`
 - Ligne de bienvenue : `Bienvenue à La Fabrique, atelier partagé à
   Strasbourg.`
 - Lien interne `La métallerie`, vers `/ateliers/metallerie`

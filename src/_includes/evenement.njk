@@ -1,0 +1,16 @@
+---
+layout: base.njk
+---
+{%- set parts = page.filePathStem.split("/") -%}
+{%- if parts.length == 3 and parts[1] == "evenements" and parts[2] != "index" %}
+{% if accroche %}<p class="accroche"><strong>{{ accroche }}</strong></p>{% endif %}
+<ul class="informations">
+  <li><strong>Rendez-vous :</strong> {{ "rendez-vous" | champ }}</li>
+  <li><strong>Horaire :</strong> {{ "horaire" | champ }}</li>
+  <li><strong>Lieu :</strong> {{ "lieu" | champ }}</li>
+  <li><strong>Activité :</strong> {{ "prix" | champ }}</li>
+</ul>
+{%- endif %}
+<div class="corps">
+{{ content | safe }}
+</div>

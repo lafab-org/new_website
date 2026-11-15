@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ title }}</title>
+  <title>{% if page.url == "/" %}La Fabrique{% else %}{{ title }} - La Fabrique{% endif %}</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <main>
+    <h1>{{ title }}</h1>
     {{ content | safe }}
   </main>
 </body>

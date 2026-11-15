@@ -1,8 +1,6 @@
 ---
-title: "L'atelier métallerie - La Fabrique"
+title: "La métallerie"
 ---
-
-# La métallerie
 
 La métallerie occupe la travée T1 de La Fabrique. On y découpe, on y
 soude, on y plie et on y assemble le métal, pour réparer, fabriquer ou
