@@ -24,7 +24,8 @@ dans /contents/page-daccueil.
 À `/ateliers/<nom>` : la page `ateliers/<nom>.md`, telle que
 /operations/construire-le-site/generee la rend. Le contenu de chaque
 page d'atelier est décrit dans sa section de `contents.md` :
-/contents/page-metallerie.
+/contents/page-metallerie et
+/contents/page-menuiserie.
 
 ## Page d'évènement
 

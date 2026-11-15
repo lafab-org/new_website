@@ -18,6 +18,7 @@ Contenu :
 - Ligne de bienvenue : `Bienvenue à La Fabrique, atelier partagé à
   Strasbourg.`
 - Lien interne `La métallerie`, vers `/ateliers/metallerie`
+- Lien interne `La menuiserie`, vers `/ateliers/menuiserie`
 - Lien interne `L'atelier Répar'Action`, vers `/evenements/repar-action`
 
 ## Page métallerie
@@ -61,6 +62,58 @@ Contenu :
     - les initiations ont lieu deux fois par mois, un vendredi et un
       samedi après-midi, et se réservent sur l'agenda ; pas de lien
       vers l'agenda
+  - Donner un coup de main : les façons d'aider
+    - venir un jeudi soir
+    - venir à la réunion mensuelle du conseil d'administration
+    - écrire à `contact@lafab.org`, un lien externe
+      `mailto:contact@lafab.org`
+
+## Page menuiserie
+
+Objectifs :
+- le curieux comprend ce qu'est l'atelier et veut venir le visiter ;
+- l'usager voit le matériel, sait quelles machines exigent une
+  initiation avant usage, et sait que les initiations se réservent sur
+  l'agenda ;
+- le bénévole voit comment aider.
+
+Contenu :
+- Titre : `La menuiserie`
+  - Présentation en deux ou trois phrases : la menuiserie occupe les
+    travées T2 et T3.
+  - Les espaces
+    - la travée T2 : principalement des machines-outils
+    - la travée T3 : principalement des établis et le stockage du bois
+  - Le matériel, en liste, par travée
+    - T2 : scie à format, dégauchisseuse, raboteuse, scie à ruban, scie
+      à panneaux verticale, toupie
+    - T3 : deux tours à bois, scies radiales, perceuse à colonne,
+      établis, stockage du bois
+    - électroportatif : perceuses-visseuses, scie circulaire plongeante,
+      scie sauteuse, ponceuse orbitale, défonceuse, machine à lamelles
+      (Lamello)
+  - Les règles d'usage
+    - on n'utilise que ce que l'on maîtrise
+    - certaines machines exigent une initiation avant usage : la scie à
+      format et la scie à ruban (initiation scier, débiter), la
+      dégauchisseuse et la raboteuse (initiation travailler le bois
+      massif), les tours (initiation tournage sur bois)
+    - la toupie n'est accessible que pendant les accompagnements
+  - Venir visiter
+    - invitation à venir un jeudi soir à 19 h, pendant les portes
+      ouvertes
+  - Apprendre
+    - les initiations obligatoires : scier, débiter ; travailler le
+      bois massif ; elles ont lieu deux fois par mois, un vendredi et
+      un samedi après-midi, et se réservent sur l'agenda ; pas de lien
+      vers l'agenda
+    - le tournage sur bois, aussi obligatoire : sur demande, en
+      écrivant à `contact@lafab.org`
+    - les initiations non obligatoires, aux dates variables, sur
+      l'agenda
+      - électroportatifs niveau 1 : scie plongeante, scie radiale
+      - électroportatifs niveau 2 : perceuse à colonne, défonceuse
+      - assemblage à la main : tenon et mortaise
   - Donner un coup de main : les façons d'aider
     - venir un jeudi soir
     - venir à la réunion mensuelle du conseil d'administration
