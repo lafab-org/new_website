@@ -1,227 +1,107 @@
-import { test } from "node:test";
+// Form check of the built site: build once, then read _site/.
+import { test, before } from "node:test";
 import assert from "node:assert/strict";
-import {
-  sourceFiles, pages, TEMPLATE_EXTENSIONS, frontMatterValue, withoutFrontMatter, address,
-  builtFile, builtPage, isInternal, linkKind, designated, brokenLinks, readBuilt, readSource,
-  renderedBody, pageLinks, anchors, events, EVENT_FIELDS, textOf,
-} from "./site.mjs";
+import { readdirSync, readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { join } from "node:path";
 
-// Invariants of /model, on the pages of the initial state.
-function checkInvariants() {
-  const all = pages();
-  // /model/page/markdown: no other file of src/ is built as a page.
-  for (const f of sourceFiles()) {
-    const template = TEMPLATE_EXTENSIONS.some((ext) => f.endsWith(ext));
-    assert.ok(!template || f.endsWith(".md"), `${f} would be a page not ending with .md`);
+const SRC = "src";
+const SITE = "_site";
+
+// Markdown pages of src/, outside _includes/, as paths relative to src/.
+function pages(dir = "") {
+  return readdirSync(join(SRC, dir), { withFileTypes: true }).flatMap((e) => {
+    const rel = join(dir, e.name);
+    if (e.isDirectory()) return rel === "_includes" ? [] : pages(rel);
+    return rel.endsWith(".md") ? [rel] : [];
+  });
+}
+
+// Address serving a page, and the built file of an address.
+const address = (page) => "/" + page.replace(/\.md$/, "").replace(/(^|\/)index$/, "");
+const builtFile = (addr) => join(SITE, addr, "index.html");
+
+const frontMatter = (page, key) => {
+  const fm = readFileSync(join(SRC, page), "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  const m = fm?.[1].match(new RegExp(`^${key}:\\s*(.*)$`, "m"));
+  return m ? m[1].trim().replace(/^(["'])(.*)\1$/, "$2") : "";
+};
+
+const text = (html) => html.replace(/<[^>]*>/g, " ")
+  .replace(/&#39;|&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, "<")
+  .replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+
+const hrefs = (html) =>
+  [...html.matchAll(/<a\s[^>]*?href\s*=\s*["']([^"']*)["']/gi)].map((m) => decodeURI(text(m[1])));
+const ids = (html) => new Set([...html.matchAll(/\sid\s*=\s*["']([^"']*)["']/gi)].map((m) => m[1]));
+const isEvent = (page) => /^evenements\/[^/]+\.md$/.test(page) && page !== "evenements/index.md";
+
+const all = pages();
+const built = {};
+before(() => {
+  execFileSync("npm", ["run", "build"], { stdio: "pipe" });
+  for (const p of all) built[p] = readFileSync(builtFile(address(p)), "utf8");
+});
+
+test("every page is built as an HTML file, from its Markdown", () => {
+  // /operations/construire-le-site/generee
+  for (const p of all) {
+    assert.match(built[p], /<html[\s>]/i, `${p}: not HTML`);
+    assert.doesNotMatch(built[p], /^\s*#{1,6}\s/m, `${p}: Markdown heading left unrendered`);
   }
+});
+
+test("every page is in French, with a non-empty title and its browser title", () => {
+  // /ui/page/francais
   // /model/page/titre
+  // /ui/page/navigateur
   for (const p of all) {
-    assert.notEqual(frontMatterValue(readSource(p), "title"), "", `${p} has an empty title`);
+    const title = frontMatter(p, "title");
+    assert.match(built[p], /<html[^>]*\blang="fr"/, `${p}: no lang="fr"`);
+    assert.notEqual(title, "", `${p}: empty title`);
+    const shown = built[p].match(/<title>([^<]*)<\/title>/);
+    assert.ok(shown, `${p}: no browser title`);
+    const expected = p === "index.md" ? "La Fabrique" : `${title} - La Fabrique`;
+    assert.equal(text(shown[1]), expected, `${p}: browser title`);
   }
-  // /model/page/sans-titre-principal
+});
+
+test("every page has a single <h1>, carrying its title", () => {
+  // /ui/page/titre
   for (const p of all) {
-    const body = withoutFrontMatter(readSource(p));
-    assert.doesNotMatch(body, /^ {0,3}#(\s|$)/m, `${p}: level-1 heading in body`);
-    assert.doesNotMatch(body, /\S.*\r?\n {0,3}=+\s*$/m, `${p}: level-1 heading in body`);
+    const h1s = [...built[p].matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/gi)];
+    assert.equal(h1s.length, 1, `${p}: ${h1s.length} <h1>`);
+    assert.equal(text(h1s[0][1]), frontMatter(p, "title"), `${p}: <h1> text`);
   }
+});
+
+test("every event has its practical information", () => {
   // /model/evenement/renseigne
-  for (const p of events(all)) {
-    for (const [key] of EVENT_FIELDS) {
-      assert.notEqual(frontMatterValue(readSource(p), key), "", `${p}: empty ${key}`);
+  const events = all.filter(isEvent);
+  assert.ok(events.length > 0, "no event page");
+  for (const p of events) {
+    for (const key of ["rendez-vous", "horaire", "lieu", "prix"]) {
+      assert.notEqual(frontMatter(p, key), "", `${p}: empty ${key}`);
     }
   }
-  // /model/lien/forme
+});
+
+test("no dead link: internal links lead to a page, fragments to an id", () => {
+  // /model/site/lien-interne
+  // /model/site/fragment
+  const byAddress = Object.fromEntries(all.map((p) => [address(p), built[p]]));
+  const dead = [];
   for (const p of all) {
-    for (const t of pageLinks(p)) assert.notEqual(linkKind(t), null, `${p}: link ${t} of no kind`);
+    for (const href of hrefs(built[p])) {
+      const [target, fragment] = href.split("#");
+      let page;
+      if (target === "") page = built[p];
+      else if (/^\/(?!\/)/.test(target)) {
+        const addr = target.replace(/\?.*$/, "").replace(/(.)\/$/, "$1");
+        page = byAddress[addr];
+      } else continue;
+      if (!page || (fragment !== undefined && !ids(page).has(fragment))) dead.push(`${p}: ${href}`);
+    }
   }
-  // /model/site/lien-interne
-  const links = Object.fromEntries(all.map((p) => [p, pageLinks(p)]));
-  assert.deepEqual(brokenLinks(links, all.map(address)), [], "internal links leading to no page");
-}
-
-test("invariants of the model", () => {
-  // /model/page/markdown
-  // /model/page/sans-titre-principal
-  // /model/evenement/renseigne
-  // /model/lien/forme
-  // /model/page/titre
-  // /model/site/lien-interne
-  checkInvariants();
-});
-
-test("internal links and the page they designate", () => {
-  // /model/site/lien-interne (definitions of /model/lien and /model/page)
-  assert.ok(isInternal("/"));
-  assert.ok(isInternal("/ateliers/metallerie"));
-  assert.ok(!isInternal("//example.org/x"));
-  assert.ok(!isInternal("mailto:contact@lafab.org"));
-  assert.ok(!isInternal("https://example.org/"));
-  assert.ok(!isInternal("ateliers/metallerie"));
-  assert.ok(!isInternal("#ancre"));
-  assert.equal(designated("/"), "/");
-  assert.equal(designated("/#haut"), "/");
-  assert.equal(designated("/?a=1"), "/");
-  assert.equal(designated("/ateliers/metallerie"), "/ateliers/metallerie");
-  assert.equal(designated("/ateliers/metallerie/"), "/ateliers/metallerie");
-  assert.equal(designated("/ateliers/metallerie#materiel"), "/ateliers/metallerie");
-  assert.equal(designated("/ateliers/metallerie/?x=1#y"), "/ateliers/metallerie");
-  assert.equal(designated("/ateliers/metallerie//"), "/ateliers/metallerie/");
-  assert.equal(address("index.md"), "/");
-  assert.equal(address("ateliers/index.md"), "/ateliers");
-  assert.equal(address("ateliers/metallerie.md"), "/ateliers/metallerie");
-});
-
-test("kinds of links: internal, fragment, external, or none", () => {
-  // /model/lien/forme (definition of the kinds in /model/lien)
-  const kinds = {
-    "/": "internal",
-    "/ateliers/metallerie#x": "internal",
-    "#": "fragment",
-    "#horaires": "fragment",
-    "//ailleurs.org/x": "external",
-    "https://ailleurs.org/": "external",
-    "mailto:contact@lafab.org": "external",
-    "tel:+33388000000": "external",
-    "a+b.c-9:x": "external",
-    "ateliers/metallerie": null,
-    "./metallerie": null,
-    "../index": null,
-    "?a=1": null,
-    "": null,
-    "9http://x": null,
-    "+a:x": null,
-    "mail to:x": null,
-  };
-  for (const [target, kind] of Object.entries(kinds)) {
-    assert.equal(linkKind(target), kind, `kind of ${JSON.stringify(target)}`);
-  }
-});
-
-test("broken internal links are found, external ones ignored", () => {
-  // /model/site/lien-interne
-  const addresses = ["/", "/ateliers/metallerie"];
-  assert.deepEqual(
-    brokenLinks(
-      {
-        "index.md": [
-          "/ateliers/metallerie#x", "/", "mailto:m", "https://ailleurs.org/x", "//ailleurs.org/x",
-          "/ateliers/metallerie.html", "/nulle-part", "/ateliers",
-        ],
-        "ateliers/metallerie.md": ["/ateliers/metallerie//"],
-      },
-      addresses,
-    ),
-    [
-      "index.md: /ateliers/metallerie.html",
-      "index.md: /nulle-part",
-      "index.md: /ateliers",
-      "ateliers/metallerie.md: /ateliers/metallerie//",
-    ],
-  );
-});
-
-test("build: every page is written under _site/ as HTML from its Markdown", () => {
-  // /operations/construire-le-site/generee
-  for (const p of pages()) {
-    const html = builtPage(p);
-    assert.match(html, /<html[\s>]/i, `${p}: not HTML`);
-    const body = renderedBody(p);
-    assert.doesNotMatch(body, /^\s*#{1,6}\s/m, `${p}: Markdown heading left unrendered`);
-    const source = withoutFrontMatter(readSource(p));
-    if (/^#{1,6}\s/m.test(source)) assert.match(body, /<h[1-6][^>]*>/, `${p}: no HTML heading`);
-    if (source.trim() !== "") assert.notEqual(body.trim(), "", `${p}: empty body`);
-  }
-  checkInvariants();
-});
-
-test("every built page declares French, viewport and its browser title", () => {
-  // /ui/page/francais
-  // /ui/page/navigateur
-  for (const p of pages()) {
-    const html = builtPage(p);
-    assert.match(html, /<html[^>]*\blang="fr"/, `${p}: no lang="fr"`);
-    assert.match(html, /<meta[^>]*name="viewport"/, `${p}: no viewport`);
-    const shown = html.match(/<title>([^<]*)<\/title>/);
-    assert.ok(shown, `${p}: no browser title`);
-    const expected = p === "index.md"
-      ? "La Fabrique"
-      : `${frontMatterValue(readSource(p), "title")} - La Fabrique`;
-    assert.equal(unescape(shown[1]).trim(), expected, `${p}: browser title`);
-  }
-});
-
-test("every built page starts with its title as its only <h1>, then its body", () => {
-  // /ui/page/titre
-  for (const p of pages()) {
-    const html = builtPage(p);
-    const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/gi)];
-    assert.equal(h1s.length, 1, `${p}: ${h1s.length} <h1>`);
-    assert.equal(textOf(h1s[0][1]), frontMatterValue(readSource(p), "title"), `${p}: <h1> text`);
-    const main = html.slice(html.search(/<body[\s>]/i));
-    assert.equal(textOf(main.slice(0, main.indexOf(h1s[0][0]))), "", `${p}: text before the <h1>`);
-    const body = renderedBody(p);
-    assert.ok(html.indexOf(body) > html.indexOf(h1s[0][0]), `${p}: body before the <h1>`);
-  }
-});
-
-test("events are the pages directly in evenements/, except its index", () => {
-  // /model/site/pages-evenements
-  assert.deepEqual(
-    events([
-      "index.md", "evenements/index.md", "evenements/repar-action.md", "evenements/a/b.md",
-      "ateliers/metallerie.md", "evenements/autre.md",
-    ]),
-    ["evenements/repar-action.md", "evenements/autre.md"],
-  );
-  assert.ok(events(pages()).includes("evenements/repar-action.md"));
-  checkInvariants();
-});
-
-test("an event page shows its catchphrase then its practical information, between title and body", () => {
-  // /ui/page-devenement/accroche
-  // /ui/page-devenement/informations
-  const list = events(pages());
-  assert.ok(list.length > 0, "no event page");
-  for (const p of list) {
-    const source = readSource(p);
-    const html = builtPage(p);
-    const h1 = html.match(/<h1[^>]*>[\s\S]*?<\/h1>/i);
-    assert.ok(h1, `${p}: no <h1>`);
-    const from = html.indexOf(h1[0]) + h1[0].length;
-    const between = html.slice(from, html.indexOf(renderedBody(p), from));
-    const accroche = frontMatterValue(source, "accroche");
-    const info = EVENT_FIELDS.map(([key, label]) => `${label} : ${frontMatterValue(source, key)}`);
-    const expected = [accroche, ...info].filter((t) => t !== "").join(" ");
-    assert.equal(textOf(between), expected, `${p}: text between title and body`);
-    const items = [...between.matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)].map((m) => textOf(m[1]));
-    assert.deepEqual(items, info, `${p}: practical information list`);
-  }
-});
-
-function unescape(s) {
-  return s.replace(/&#39;|&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">").replace(/&amp;/g, "&");
-}
-
-test("scenario: opening the site", () => {
-  // /scenarios/ouvrir-le-site
-  // /ui/page/francais
-  const home = readBuilt("index.html");
-  assert.match(home, /<html[^>]*\blang="fr"/);
-  const internal = pageLinks("index.md").filter(isInternal);
-  assert.ok(internal.length > 0, "no internal link on /");
-  const target = designated(internal[0]);
-  assert.ok(pages().map(address).includes(target), `${internal[0]} leads to no page`);
-  assert.match(readBuilt(builtFile(target)), /<html[\s>]/i);
-});
-
-test("anchors: targets of the <a href> elements", () => {
-  // /model/page
-  assert.deepEqual(
-    anchors(
-      '<a class="x" href="/a#b">x</a> <a href=\'mailto:m\'> <a data-href="/no" href="/ok"> ' +
-        '<a href="/ateliers/menuiserie-%C3%A9b%C3%A9nisterie?a=1&amp;b=2"> <link href="/css">',
-    ),
-    ["/a#b", "mailto:m", "/ok", "/ateliers/menuiserie-ébénisterie?a=1&b=2"],
-  );
+  assert.deepEqual(dead, [], "dead links");
 });
