@@ -44,6 +44,9 @@ Objectifs, pour chaque page d'atelier :
   l'agenda ;
 - le bénévole voit comment aider.
 
+Contraintes :
+- Un lien vers la page de l'association.
+
 ## Page d'évènement
 
 Objectifs, pour chaque page d'évènement :
