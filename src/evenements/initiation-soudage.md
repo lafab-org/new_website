@@ -3,7 +3,7 @@ title: "Initiation au soudage à l'électrode enrobée"
 accroche: "Initiation au soudage pour les débutants : principes généraux et pratique."
 rendez-vous: "date variable"
 horaire: "14h - 17h"
-lieu: "La Fabrique, Parc Gruber, 91 Route des Romains - 67200 Strasbourg"
+atelier: "métal"
 prix: "30 €"
 ---
 

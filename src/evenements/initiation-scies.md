@@ -3,7 +3,7 @@ title: "Initiation : débiter du bois, les scies"
 accroche: "Initiation obligatoire pour utiliser la scie à format en autonomie."
 rendez-vous: "date variable"
 horaire: "18h45 - 21h15"
-lieu: "La Fabrique, Parc Gruber, 91 Route des Romains - 67200 Strasbourg"
+atelier: "bois"
 prix: "30 €"
 ---
 

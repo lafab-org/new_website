@@ -3,7 +3,7 @@ title: "Auto-réparation en cordonnerie"
 accroche: "Venez apprendre à réparer vos chaussures et accessoires en cuir avec l'aide d'une professionnelle !"
 rendez-vous: "tous les jeudis"
 horaire: "18h - 20h"
-lieu: "La Fabrique, Parc Gruber, 91 Route des Romains - 67200 Strasbourg"
+atelier: "matériaux-souples"
 prix: "1 ticket La Fabrique"
 ---
 

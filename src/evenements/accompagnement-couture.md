@@ -2,7 +2,7 @@
 title: "Accompagnement en couture"
 rendez-vous: "sur demande"
 horaire: "à convenir"
-lieu: "La Fabrique, Parc Gruber, 91 Route des Romains - 67200 Strasbourg"
+atelier: "matériaux-souples"
 prix: "55 €"
 ---
 

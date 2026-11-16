@@ -2,7 +2,7 @@
 title: "Accompagnement en menuiserie"
 rendez-vous: "sur demande, les jeudis"
 horaire: "13h - 16h"
-lieu: "La Fabrique, Parc Gruber, 91 Route des Romains - 67200 Strasbourg"
+atelier: "bois"
 prix: "30 €"
 ---
 

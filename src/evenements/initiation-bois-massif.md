@@ -3,7 +3,7 @@ title: "Initiation travail du bois massif : dégauchisseuse et raboteuse"
 accroche: "Initiation obligatoire pour pouvoir utiliser la dégauchisseuse et la raboteuse en autonomie."
 rendez-vous: "date variable"
 horaire: "18h45 - 21h15"
-lieu: "La Fabrique, Parc Gruber, 91 Route des Romains - 67200 Strasbourg"
+atelier: "bois"
 prix: "30 €"
 ---
 

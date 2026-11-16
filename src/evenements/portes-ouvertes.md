@@ -3,7 +3,7 @@ title: "Soirée portes ouvertes"
 accroche: "Venez découvrir La Fabrique !"
 rendez-vous: "tous les jeudis soirs"
 horaire: "19h - 20h"
-lieu: "La Fabrique, Parc Gruber, 91 Route des Romains - 67200 Strasbourg"
+atelier: "association"
 prix: "gratuite et ouverte à tous"
 ---
 

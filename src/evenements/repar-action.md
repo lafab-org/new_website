@@ -3,7 +3,7 @@ title: "Atelier Répar'Action"
 accroche: "Redonnez une deuxième vie à vos objets ! Plutôt que de jeter, ici on répare !"
 rendez-vous: "tous les premiers jeudis du mois"
 horaire: "18h - 20h"
-lieu: "La Fabrique, Parc Gruber, 91 Route des Romains - 67200 Strasbourg"
+atelier: "numérique-électronique"
 prix: "gratuite et ouverte à tous"
 ---
 
