@@ -37,7 +37,7 @@ La toupie n'est accessible que pendant les accompagnements.
 ## Venir visiter
 
 Curieux de voir l'atelier ? Venez le visiter un jeudi soir à 19 h,
-pendant les portes ouvertes.
+pendant les portes ouvertes, que propose [l'association](/association).
 
 ## Apprendre
 

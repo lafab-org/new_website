@@ -34,7 +34,7 @@ pas encore ouvert : une équipe de bénévoles le finalise.
 ## Venir visiter
 
 Curieux de voir l'atelier ? Venez le visiter un jeudi soir à 19 h,
-pendant les portes ouvertes.
+pendant les portes ouvertes, que propose [l'association](/association).
 
 ## Apprendre à souder
 
