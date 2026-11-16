@@ -34,7 +34,8 @@
   ensemble, chacun avec sa page. Les liens externes ne sont pas
   vérifiés. Sur chaque source
   d'évènement, il vérifie que les informations pratiques sont
-  renseignées.
+  renseignées et que sa catégorie est une catégorie du site ; sur
+  chaque source de page, que ses catégories en sont.
 - Une affirmation de la spécification porte une étiquette seulement si
   le contrôle de forme peut la vérifier ; les autres se terminent par
   `(not testable)`. Elles se vérifient à la relecture, comme le contenu

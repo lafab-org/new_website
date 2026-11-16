@@ -11,6 +11,11 @@ Une page du site web, écrite sous forme de fichier source Markdown.
 - `body: string`, le texte Markdown de la page.
 - `links: set of string`, les adresses des éléments `<a href>` de la
   page une fois construite, gabarit compris.
+- `catégories: set of string`, les identifiants des catégories dont la
+  page montre les évènements ; vide si son front matter n'en donne pas.
+  - [categories] Chacun est l'identifiant d'une catégorie du site.
+
+Les évènements d'une page sont ceux de ses catégories.
 
 L'adresse d'une page est celle qui la sert : `/` pour `index.md`,
 `/dossier` pour `dossier/index.md`, `/dossier/nom` pour
@@ -21,20 +26,15 @@ celle de la page. Un lien est un fragment si son adresse commence par
 `#`. Le fragment d'un lien, `#…`, désigne un identifiant (`id`) d'une
 page construite.
 
-## Atelier
+## Catégorie
 
-Un atelier de La Fabrique, ou l'association, avec la page qui le
-présente.
+Une catégorie d'évènements, selon leur domaine.
 
-- `identifiant: string`, ce que désigne l'`atelier` d'un évènement.
-- `page: /model/page`, sa page, une page du site.
-  - Deux ateliers n'ont pas le même identifiant (not testable).
-  - Les pages d'atelier (fichiers directement dans `ateliers/`, hors
-    `ateliers/index.md`) et la page de l'association (`association.md`)
-    sont chacune la page d'un seul atelier, et aucune autre page n'est
-    celle d'un atelier (not testable).
+- `identifiant: string`, ce que désigne la `catégorie` d'un évènement.
+- `nom: string`, son nom affiché.
+  - Deux catégories n'ont pas le même identifiant (not testable).
 
-Les évènements d'un atelier sont ceux dont l'`atelier` est son
+Les évènements d'une catégorie sont ceux dont la `catégorie` est son
 identifiant.
 
 ## Évènement
@@ -47,8 +47,8 @@ Une page qui présente un évènement, avec ses informations pratiques.
 - `horaire: string`, à quelle heure.
 - `prix: string`, ce qu'il coûte et à qui il est ouvert.
   - [renseigne] `rendez-vous`, `horaire` et `prix` sont non vides.
-- `atelier: string`, l'atelier dont il relève, ou l'association.
-  - [atelier] L'identifiant d'un atelier du site.
+- `catégorie: string`, la catégorie dont il relève.
+  - [categorie] L'identifiant d'une catégorie du site.
 
 ## Site
 
@@ -61,10 +61,15 @@ L'état : tout ce dont le site est fait.
     `pages` ; s'il a un fragment, cette page porte l'identifiant.
   - [fragment] Chaque lien fragment d'une page désigne un identifiant
     de cette page.
-- `ateliers: list of /model/atelier`, tous les ateliers, dans l'ordre où
-  le site les présente. Ils sont dans le fichier
-  `src/_data/ateliers.json`, qui donne pour chacun son identifiant et
-  l'adresse de sa page, dans cet ordre.
+- `catégories: list of /model/categorie`, toutes les catégories, dans
+  l'ordre où le site les présente. Elles sont dans le fichier
+  `src/_data/categories.json`, qui donne pour chacune son identifiant et
+  son nom, dans cet ordre.
+- `ateliers: list of /model/page`, les pages d'atelier, dans l'ordre où
+  le site les présente. Le fichier `src/_data/ateliers.json` en donne
+  les adresses, dans cet ordre.
+  - Ce sont les pages dont le fichier est directement dans `ateliers/`,
+    hors `ateliers/index.md`, chacune une fois (not testable).
 - `evenements: set of /model/evenement`, tous les évènements. Leurs
   pages sont les pages de `pages` dont le fichier est directement dans
   `evenements/`, hors `evenements/index.md`, chacune celle d'un seul

@@ -24,12 +24,12 @@ Contraintes :
 - Un lien vers la page de l'association, dans le corps de la page, avant
   ceux des ateliers et des évènements.
 - Un lien vers chaque page d'atelier et d'évènement.
-- Les pages d'atelier, sans celle de l'association, sont listées sous
-  `Les ateliers`, dans l'ordre des `ateliers` du site.
-- Les évènements sont groupés sous `Les évènements`, un groupe par page
-  d'atelier ou de l'association qui a des évènements, dans l'ordre des
-  `ateliers` du site : le titre de la page en sous-titre, puis un
-  lien vers chacun de ses évènements, triés par titre.
+- Les pages d'atelier sont listées sous `Les ateliers`, dans l'ordre
+  des `ateliers` du site.
+- Les évènements sont groupés sous `Les évènements`, un groupe par
+  catégorie qui a des évènements, dans l'ordre des `catégories` du
+  site : le nom de la catégorie en sous-titre, puis un lien vers chacun
+  de ses évènements, triés par titre.
 
 ## Page de l'association
 
@@ -54,7 +54,7 @@ Objectifs, pour chaque page d'atelier :
   avant d'utiliser une machine, et sait qu'elles se réservent sur
   l'agenda ;
 - le bénévole voit comment aider ;
-- l'usager et le curieux voient les évènements de l'atelier.
+- l'usager et le curieux voient les évènements de la page.
 
 Contraintes :
 - Un lien vers la page de l'association.
