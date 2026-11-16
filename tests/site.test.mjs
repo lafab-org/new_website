@@ -86,17 +86,47 @@ test("every event has its practical information", () => {
   }
 });
 
-test("every event belongs to an atelier of the site", () => {
-  // /model/evenement/atelier
-  const file = join(SRC, "_data", "ateliers.json");
-  assert.ok(existsSync(file), "no src/_data/ateliers.json");
-  const ateliers = JSON.parse(readFileSync(file, "utf8"));
-  assert.ok(Array.isArray(ateliers), "ateliers.json is not a list");
-  const identifiers = ateliers.map((a) => a.atelier);
+// Identifiers of the categories of the site, from src/_data/categories.json.
+const categoryIds = () => {
+  const file = join(SRC, "_data", "categories.json");
+  assert.ok(existsSync(file), "no src/_data/categories.json");
+  const categories = JSON.parse(readFileSync(file, "utf8"));
+  assert.ok(Array.isArray(categories), "categories.json is not a list");
+  return categories.map((c) => c.identifiant);
+};
+
+// The strings of a front matter list, written inline (`[a, "b"]`) or as
+// block items (`- a`); a single value gives a list of one.
+const frontMatterList = (page, key) => {
+  const fm = readFileSync(join(SRC, page), "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  const m = fm?.[1].match(new RegExp(`^${key}:[ \t]*(.*)((?:\\r?\\n[ \t]*-.*)*)`, "m"));
+  if (!m) return [];
+  const unquote = (v) => v.trim().replace(/^(["'])(.*)\1$/, "$2");
+  const inline = m[1].trim();
+  if (inline.startsWith("[")) {
+    return inline.replace(/^\[|\]$/g, "").split(",").map(unquote).filter((v) => v !== "");
+  }
+  if (inline !== "") return [unquote(inline)];
+  return m[2].split(/\r?\n/).filter((l) => l.trim() !== "").map((l) => unquote(l.replace(/^\s*-/, "")));
+};
+
+test("every event belongs to a category of the site", () => {
+  // /model/evenement/categorie
+  const identifiers = categoryIds();
   const events = all.filter(isEvent);
   assert.ok(events.length > 0, "no event page");
   for (const p of events) {
-    assert.ok(identifiers.includes(frontMatter(p, "atelier")), `${p}: atelier`);
+    assert.ok(identifiers.includes(frontMatter(p, "catégorie")), `${p}: catégorie`);
+  }
+});
+
+test("every category a page shows is a category of the site", () => {
+  // /model/page/categories
+  const identifiers = categoryIds();
+  const shown = all.flatMap((p) => frontMatterList(p, "catégories").map((c) => [p, c]));
+  assert.ok(shown.length > 0, "no page shows a category");
+  for (const [p, c] of shown) {
+    assert.ok(identifiers.includes(c), `${p}: catégorie ${c}`);
   }
 });
 
