@@ -2,7 +2,7 @@
 title: "Projet libre en cordonnerie"
 rendez-vous: "sur demande"
 horaire: "à convenir"
-atelier: "matériaux-souples"
+catégorie: "matériaux-souples"
 prix: "55 €"
 ---
 

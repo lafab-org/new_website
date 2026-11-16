@@ -3,7 +3,7 @@ title: "Initiation au soudage à l'électrode enrobée"
 accroche: "Initiation au soudage pour les débutants : principes généraux et pratique."
 rendez-vous: "date variable"
 horaire: "14h - 17h"
-atelier: "métal"
+catégorie: "métal"
 prix: "30 €"
 ---
 

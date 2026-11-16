@@ -12,8 +12,8 @@ Bienvenue à La Fabrique, atelier partagé à Strasbourg, que fait vivre
 - [{{ p.data.title }}]({{ p.url }})
 {% endfor %}
 ## Les évènements
-{% for groupe in collections.evenementsParAtelier %}
-### {{ groupe.titre }}
+{% for groupe in collections.evenementsParCategorie %}
+### {{ groupe.nom }}
 
 {% for p in groupe.pages -%}
 - [{{ p.data.title }}]({{ p.url }})

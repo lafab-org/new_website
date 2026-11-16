@@ -3,7 +3,7 @@ title: "Adieu Windows"
 accroche: "Venez faire revivre votre ordinateur sous Windows en le passant à Linux !"
 rendez-vous: "tous les premiers jeudis du mois"
 horaire: "18h - 21h"
-atelier: "numérique-électronique"
+catégorie: "numérique-électronique"
 prix: "gratuite, sur inscription préalable obligatoire"
 ---
 

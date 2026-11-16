@@ -3,7 +3,7 @@ title: "Initiation : débiter du bois, les scies"
 accroche: "Initiation obligatoire pour utiliser la scie à format en autonomie."
 rendez-vous: "date variable"
 horaire: "18h45 - 21h15"
-atelier: "bois"
+catégorie: "bois"
 prix: "30 €"
 ---
 

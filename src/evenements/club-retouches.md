@@ -3,7 +3,7 @@ title: "Club retouches"
 accroche: "Faites-vous aider à retoucher vos vêtements !"
 rendez-vous: "tous les troisièmes jeudis du mois"
 horaire: "18h - 21h"
-atelier: "matériaux-souples"
+catégorie: "matériaux-souples"
 prix: "1 ticket La Fabrique"
 ---
 

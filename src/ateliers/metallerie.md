@@ -1,5 +1,6 @@
 ---
 title: "La métallerie"
+catégories: ["métal"]
 ---
 
 La métallerie occupe la travée T1 de La Fabrique. On y découpe, on y

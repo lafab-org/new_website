@@ -1,5 +1,6 @@
 ---
 title: "Atelier matériaux souples"
+catégories: ["matériaux-souples"]
 ---
 
 L'atelier des matériaux souples occupe la cabane C3 de La Fabrique, dans

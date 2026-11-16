@@ -2,7 +2,7 @@
 title: "Accompagnement en menuiserie"
 rendez-vous: "sur demande, les jeudis"
 horaire: "13h - 16h"
-atelier: "bois"
+catégorie: "bois"
 prix: "30 €"
 ---
 

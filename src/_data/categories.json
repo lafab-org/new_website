@@ -1,0 +1,7 @@
+[
+  { "identifiant": "association", "nom": "Vie de l'association" },
+  { "identifiant": "bois", "nom": "Bois" },
+  { "identifiant": "métal", "nom": "Métal" },
+  { "identifiant": "matériaux-souples", "nom": "Matériaux souples" },
+  { "identifiant": "numérique-électronique", "nom": "Numérique et électronique" }
+]

@@ -1,5 +1,6 @@
 ---
 title: "La menuiserie"
+catégories: ["bois"]
 ---
 
 La menuiserie occupe les travées T2 et T3 de La Fabrique. On y scie, on y

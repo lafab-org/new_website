@@ -2,7 +2,7 @@
 title: "Initiation au tournage sur bois"
 rendez-vous: "sur demande"
 horaire: "à convenir"
-atelier: "bois"
+catégorie: "bois"
 prix: "30 €"
 ---
 

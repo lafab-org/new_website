@@ -1,7 +1,6 @@
 [
-  { "atelier": "association", "page": "/association" },
-  { "atelier": "bois", "page": "/ateliers/menuiserie" },
-  { "atelier": "métal", "page": "/ateliers/metallerie" },
-  { "atelier": "matériaux-souples", "page": "/ateliers/materiaux-souples" },
-  { "atelier": "numérique-électronique", "page": "/ateliers/numerique-electronique" }
+  "/ateliers/menuiserie",
+  "/ateliers/metallerie",
+  "/ateliers/materiaux-souples",
+  "/ateliers/numerique-electronique"
 ]

@@ -3,7 +3,7 @@ title: "Initiation : fabrication d'un jeu de Tock"
 accroche: "Découvrez l'atelier menuiserie en fabriquant un jeu de Tock, et repartez avec !"
 rendez-vous: "date variable"
 horaire: "18h - 21h"
-atelier: "bois"
+catégorie: "bois"
 prix: "45 €"
 ---
 

@@ -3,7 +3,7 @@ title: "Initiation à l'électroportatif (niveau 1)"
 accroche: "Découvrez l'atelier menuiserie et apprenez à utiliser l'outillage électroportatif !"
 rendez-vous: "date variable"
 horaire: "18h30 - 21h30"
-atelier: "bois"
+catégorie: "bois"
 prix: "30 €"
 ---
 

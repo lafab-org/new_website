@@ -7,31 +7,33 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("champ", function (name) {
     return this.ctx[name];
   });
-  // The ateliers of the site, in their order, each with its page, from
-  // the data file `ateliers.json`.
-  const ateliers = (api) => {
+  const events = (api) => api.getFilteredByGlob("src/evenements/*.md").sort(byTitle);
+  // A value of the front matter as a list: a single value gives a list of
+  // one, none an empty list.
+  const asList = (v) => (v == null ? [] : [].concat(v));
+  // The atelier pages, in the order of the addresses of `ateliers.json`.
+  eleventyConfig.addCollection("pagesAtelier", (api) => {
     const pages = api.getAll();
-    const list = pages[0]?.data.ateliers ?? [];
-    return list
-      .map((a) => ({
-        id: a.atelier,
-        page: pages.find((p) => p.url.replace(/\/$/, "") === a.page),
-      }))
-      .filter((a) => a.page);
-  };
-  eleventyConfig.addCollection("pagesAtelier", (api) =>
-    ateliers(api)
-      .filter((a) => a.page.url.startsWith("/ateliers/"))
-      .map((a) => a.page));
-  // Event pages grouped by atelier, in the order of the ateliers, without
-  // the empty groups.
-  eleventyConfig.addCollection("evenementsParAtelier", (api) => {
-    const events = api.getFilteredByGlob("src/evenements/*.md").sort(byTitle);
-    return ateliers(api).map((a) => ({
-      titre: a.page.data.title,
-      url: a.page.url,
-      pages: events.filter((e) => e.data.atelier === a.id),
+    const addresses = pages[0]?.data.ateliers ?? [];
+    return addresses
+      .map((a) => pages.find((p) => p.url.replace(/\/$/, "") === a))
+      .filter((p) => p);
+  });
+  // Event pages grouped by category, in the order of `categories.json`,
+  // without the empty groups.
+  eleventyConfig.addCollection("evenementsParCategorie", (api) => {
+    const all = events(api);
+    const categories = api.getAll()[0]?.data.categories ?? [];
+    return categories.map((c) => ({
+      nom: c.nom,
+      pages: all.filter((e) => e.data["catégorie"] === c.identifiant),
     })).filter((g) => g.pages.length > 0);
+  });
+  eleventyConfig.addCollection("evenements", events);
+  // The events of the given categories.
+  eleventyConfig.addFilter("deCategories", (list, categories) => {
+    const ids = asList(categories);
+    return (list ?? []).filter((e) => ids.includes(e.data["catégorie"]));
   });
   return {
     dir: { input: "src", output: "_site", includes: "_includes" },

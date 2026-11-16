@@ -1,5 +1,6 @@
 ---
 title: "Le numérique et l'électronique"
+catégories: ["numérique-électronique"]
 ---
 
 L'atelier numérique et électronique occupe les cabanes C1 et C2 et la

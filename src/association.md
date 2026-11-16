@@ -1,5 +1,6 @@
 ---
 title: "L'association"
+catégories: ["association"]
 layout: atelier.njk
 templateEngineOverride: njk,md
 ---

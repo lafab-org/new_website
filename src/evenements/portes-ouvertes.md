@@ -3,7 +3,7 @@ title: "Soirée portes ouvertes"
 accroche: "Venez découvrir La Fabrique !"
 rendez-vous: "tous les jeudis soirs"
 horaire: "19h - 20h"
-atelier: "association"
+catégorie: "association"
 prix: "gratuite et ouverte à tous"
 ---
 

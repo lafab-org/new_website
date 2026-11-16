@@ -2,13 +2,12 @@
 layout: base.njk
 ---
 {{ content | safe }}
-{%- for groupe in collections.evenementsParAtelier %}
-{%- if groupe.url == page.url %}
+{%- set evenements = collections.evenements | deCategories("catégories" | champ) %}
+{%- if evenements.length %}
 <h2>Les évènements</h2>
 <ul>
-{%- for p in groupe.pages %}
+{%- for p in evenements %}
   <li><a href="{{ p.url }}">{{ p.data.title }}</a></li>
 {%- endfor %}
 </ul>
 {%- endif %}
-{%- endfor %}

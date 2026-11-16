@@ -2,7 +2,7 @@
 title: "Accompagnement en couture"
 rendez-vous: "sur demande"
 horaire: "à convenir"
-atelier: "matériaux-souples"
+catégorie: "matériaux-souples"
 prix: "55 €"
 ---
 
