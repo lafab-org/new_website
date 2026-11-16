@@ -19,6 +19,12 @@ lien en cliquant dessus.
 /operations/construire-le-site/generee la rend. Ses objectifs éditoriaux
 sont dans /contents/page-daccueil.
 
+## Page de l'association
+
+À `/association` : la page `association.md`, telle que
+/operations/construire-le-site/generee la rend. Les objectifs éditoriaux de
+la page de l'association sont dans /contents/page-de-lassociation.
+
 ## Page d'atelier
 
 À `/ateliers/<nom>` : la page `ateliers/<nom>.md`, telle que

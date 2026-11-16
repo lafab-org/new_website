@@ -23,6 +23,18 @@ Contraintes :
 - Titre : `La Fabrique`.
 - Un lien vers chaque page d'atelier et d'évènement.
 
+## Page de l'association
+
+Objectifs :
+- le curieux comprend ce qu'est l'association et où se trouve le lieu ;
+- il sait qu'il peut venir visiter pendant les portes ouvertes ;
+- l'usager sait comment adhérer ;
+- le bénévole voit comment aider.
+
+Contraintes :
+- L'adresse est celle de La Fabrique, `lieu` du site.
+- Un lien vers la page de l'évènement portes ouvertes.
+
 ## Page d'atelier
 
 Objectifs, pour chaque page d'atelier :
