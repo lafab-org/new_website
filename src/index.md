@@ -3,7 +3,8 @@ title: "La Fabrique"
 templateEngineOverride: njk,md
 ---
 
-Bienvenue à La Fabrique, atelier partagé à Strasbourg.
+Bienvenue à La Fabrique, atelier partagé à Strasbourg, que fait vivre
+[l'association](/association).
 
 ## Les ateliers
 
