@@ -2,8 +2,9 @@
 
 ## Initial state
 
-Les pages sont les fichiers Markdown de `src/`, hors `_includes/`, tels
-qu'ils sont dans le dépôt, front matter compris.
+Le site est tel que les fichiers de `src/`, hors `_includes/`, sont dans
+le dépôt : ses pages sont les fichiers Markdown, front matter compris,
+et ses autres champs sont lus dans les fichiers de données.
 
 ## Construire le site
 

@@ -36,5 +36,5 @@ s'il en a une, puis ses informations pratiques, en liste, dans cet
 ordre (not testable) :
 - `Rendez-vous : <rendez-vous>`
 - `Horaire : <horaire>`
-- `Lieu : <lieu>`
+- `Lieu : <lieu>`, où `<lieu>` est le `lieu` du site
 - `Activité : <prix>`

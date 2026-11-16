@@ -13,6 +13,7 @@
   `_site/topic/page/index.html` et sert `/topic/page`.
 - Les pages sont mises en page par des gabarits Nunjucks, dans
   `src/_includes/`. Le gabarit de base porte la balise viewport.
+- Les informations communes du site sont dans le répertoire `src/_data`
 - Commandes : `npm run build` génère le site ; `npm start` le sert en
   local avec rechargement, sur `http://localhost:8080`.
 - Les messages vus par l'utilisateur ne sont pas spécifiés.

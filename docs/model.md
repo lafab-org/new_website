@@ -29,15 +29,18 @@ Une page qui présente un évènement, avec ses informations pratiques.
 - `accroche: optional string`, une phrase d'appel.
 - `rendez-vous: string`, quand il a lieu.
 - `horaire: string`, à quelle heure.
-- `lieu: string`, où.
 - `prix: string`, ce qu'il coûte et à qui il est ouvert.
-  - [renseigne] `rendez-vous`, `horaire`, `lieu` et `prix` sont non
-    vides.
+  - [renseigne] `rendez-vous`, `horaire` et `prix` sont non vides.
+- `atelier: string`, l'atelier dont il relève, ou l'association.
+  - [atelier] L'une des valeurs `bois`, `métal`, `matériaux-souples`,
+    `numérique-électronique` ou `association`.
 
 ## Site
 
 L'état : tout ce dont le site est fait.
 
+- `lieu: string`, l'adresse de La Fabrique, la même pour tous les
+  évènements. Elle est dans le fichier `src/_data/site.json`.
 - `pages: set of /model/page`, toutes les pages.
   - [lien-interne] Chaque lien interne d'une page désigne une page de
     `pages` ; s'il a un fragment, cette page porte l'identifiant.
