@@ -80,9 +80,19 @@ test("every event has its practical information", () => {
   const events = all.filter(isEvent);
   assert.ok(events.length > 0, "no event page");
   for (const p of events) {
-    for (const key of ["rendez-vous", "horaire", "lieu", "prix"]) {
+    for (const key of ["rendez-vous", "horaire", "prix"]) {
       assert.notEqual(frontMatter(p, key), "", `${p}: empty ${key}`);
     }
+  }
+});
+
+test("every event belongs to one of the five ateliers", () => {
+  // /model/evenement/atelier
+  const ateliers = ["bois", "métal", "matériaux-souples", "numérique-électronique", "association"];
+  const events = all.filter(isEvent);
+  assert.ok(events.length > 0, "no event page");
+  for (const p of events) {
+    assert.ok(ateliers.includes(frontMatter(p, "atelier")), `${p}: atelier`);
   }
 });
 
