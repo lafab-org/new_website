@@ -16,11 +16,13 @@ Contraintes communes :
 
 ## Page d'accueil
 
-Objectif : souhaiter la bienvenue et mener le visiteur vers les pages
-d'atelier et d'évènement.
+Objectif : souhaiter la bienvenue et mener le visiteur vers la page de
+l'association, puis vers les pages d'atelier et d'évènement.
 
 Contraintes :
 - Titre : `La Fabrique`.
+- Un lien vers la page de l'association, dans le corps de la page, avant
+  ceux des ateliers et des évènements.
 - Un lien vers chaque page d'atelier et d'évènement.
 
 ## Page de l'association
