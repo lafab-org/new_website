@@ -1,7 +1,7 @@
 // Form check of the built site: build once, then read _site/.
 import { test, before } from "node:test";
 import assert from "node:assert/strict";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 
@@ -86,13 +86,17 @@ test("every event has its practical information", () => {
   }
 });
 
-test("every event belongs to one of the five ateliers", () => {
+test("every event belongs to an atelier of the site", () => {
   // /model/evenement/atelier
-  const ateliers = ["bois", "métal", "matériaux-souples", "numérique-électronique", "association"];
+  const file = join(SRC, "_data", "ateliers.json");
+  assert.ok(existsSync(file), "no src/_data/ateliers.json");
+  const ateliers = JSON.parse(readFileSync(file, "utf8"));
+  assert.ok(Array.isArray(ateliers), "ateliers.json is not a list");
+  const identifiers = ateliers.map((a) => a.atelier);
   const events = all.filter(isEvent);
   assert.ok(events.length > 0, "no event page");
   for (const p of events) {
-    assert.ok(ateliers.includes(frontMatter(p, "atelier")), `${p}: atelier`);
+    assert.ok(identifiers.includes(frontMatter(p, "atelier")), `${p}: atelier`);
   }
 });
 
