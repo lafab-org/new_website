@@ -1,11 +1,3 @@
-const ATELIERS = [
-  ["bois", "Bois"],
-  ["métal", "Métal"],
-  ["matériaux-souples", "Matériaux souples"],
-  ["numérique-électronique", "Numérique et électronique"],
-  ["association", "Association"],
-];
-
 const byTitle = (a, b) => a.data.title.localeCompare(b.data.title, "fr");
 
 export default function (eleventyConfig) {
@@ -15,15 +7,30 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("champ", function (name) {
     return this.ctx[name];
   });
+  // The ateliers of the site, in their order, each with its page, from
+  // the data file `ateliers.json`.
+  const ateliers = (api) => {
+    const pages = api.getAll();
+    const list = pages[0]?.data.ateliers ?? [];
+    return list
+      .map((a) => ({
+        id: a.atelier,
+        page: pages.find((p) => p.url.replace(/\/$/, "") === a.page),
+      }))
+      .filter((a) => a.page);
+  };
   eleventyConfig.addCollection("pagesAtelier", (api) =>
-    api.getFilteredByGlob("src/ateliers/*.md").sort(byTitle));
-  // Event pages grouped by atelier, in the order of ATELIERS, without
+    ateliers(api)
+      .filter((a) => a.page.url.startsWith("/ateliers/"))
+      .map((a) => a.page));
+  // Event pages grouped by atelier, in the order of the ateliers, without
   // the empty groups.
   eleventyConfig.addCollection("evenementsParAtelier", (api) => {
     const events = api.getFilteredByGlob("src/evenements/*.md").sort(byTitle);
-    return ATELIERS.map(([id, titre]) => ({
-      titre,
-      pages: events.filter((e) => e.data.atelier === id),
+    return ateliers(api).map((a) => ({
+      titre: a.page.data.title,
+      url: a.page.url,
+      pages: events.filter((e) => e.data.atelier === a.id),
     })).filter((g) => g.pages.length > 0);
   });
   return {
