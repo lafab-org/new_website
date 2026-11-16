@@ -21,6 +21,22 @@ celle de la page. Un lien est un fragment si son adresse commence par
 `#`. Le fragment d'un lien, `#…`, désigne un identifiant (`id`) d'une
 page construite.
 
+## Atelier
+
+Un atelier de La Fabrique, ou l'association, avec la page qui le
+présente.
+
+- `identifiant: string`, ce que désigne l'`atelier` d'un évènement.
+- `page: /model/page`, sa page, une page du site.
+  - Deux ateliers n'ont pas le même identifiant (not testable).
+  - Les pages d'atelier (fichiers directement dans `ateliers/`, hors
+    `ateliers/index.md`) et la page de l'association (`association.md`)
+    sont chacune la page d'un seul atelier, et aucune autre page n'est
+    celle d'un atelier (not testable).
+
+Les évènements d'un atelier sont ceux dont l'`atelier` est son
+identifiant.
+
 ## Évènement
 
 Une page qui présente un évènement, avec ses informations pratiques.
@@ -32,8 +48,7 @@ Une page qui présente un évènement, avec ses informations pratiques.
 - `prix: string`, ce qu'il coûte et à qui il est ouvert.
   - [renseigne] `rendez-vous`, `horaire` et `prix` sont non vides.
 - `atelier: string`, l'atelier dont il relève, ou l'association.
-  - [atelier] L'une des valeurs `bois`, `métal`, `matériaux-souples`,
-    `numérique-électronique` ou `association`.
+  - [atelier] L'identifiant d'un atelier du site.
 
 ## Site
 
@@ -46,6 +61,10 @@ L'état : tout ce dont le site est fait.
     `pages` ; s'il a un fragment, cette page porte l'identifiant.
   - [fragment] Chaque lien fragment d'une page désigne un identifiant
     de cette page.
+- `ateliers: list of /model/atelier`, tous les ateliers, dans l'ordre où
+  le site les présente. Ils sont dans le fichier
+  `src/_data/ateliers.json`, qui donne pour chacun son identifiant et
+  l'adresse de sa page, dans cet ordre.
 - `evenements: set of /model/evenement`, tous les évènements. Leurs
   pages sont les pages de `pages` dont le fichier est directement dans
   `evenements/`, hors `evenements/index.md`, chacune celle d'un seul

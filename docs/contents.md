@@ -24,6 +24,12 @@ Contraintes :
 - Un lien vers la page de l'association, dans le corps de la page, avant
   ceux des ateliers et des évènements.
 - Un lien vers chaque page d'atelier et d'évènement.
+- Les pages d'atelier, sans celle de l'association, sont listées sous
+  `Les ateliers`, dans l'ordre des `ateliers` du site.
+- Les évènements sont groupés sous `Les évènements`, un groupe par page
+  d'atelier ou de l'association qui a des évènements, dans l'ordre des
+  `ateliers` du site : le titre de la page en sous-titre, puis un
+  lien vers chacun de ses évènements, triés par titre.
 
 ## Page de l'association
 
@@ -31,10 +37,13 @@ Objectifs :
 - le curieux comprend ce qu'est l'association et où se trouve le lieu ;
 - il sait qu'il peut venir visiter pendant les portes ouvertes ;
 - l'usager sait comment adhérer ;
-- le bénévole voit comment aider.
+- le bénévole voit comment aider ;
+- le curieux voit les évènements de l'association.
 
 Contraintes :
 - L'adresse est celle de La Fabrique, `lieu` du site.
+- Après son corps, la section `Les évènements` de ses évènements,
+  comme celle de la page d'atelier.
 - Un lien vers la page de l'évènement portes ouvertes.
 
 ## Page d'atelier
@@ -44,10 +53,14 @@ Objectifs, pour chaque page d'atelier :
 - l'usager voit le matériel, sait quelles initiations sont requises
   avant d'utiliser une machine, et sait qu'elles se réservent sur
   l'agenda ;
-- le bénévole voit comment aider.
+- le bénévole voit comment aider ;
+- l'usager et le curieux voient les évènements de l'atelier.
 
 Contraintes :
 - Un lien vers la page de l'association.
+- Après son corps, une section `Les évènements` liste un lien vers
+  chacun des évènements de la page, triés par titre ;
+  sans évènement, la page n'a pas cette section.
 
 ## Page d'évènement
 
