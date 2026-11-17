@@ -1,0 +1,54 @@
+name: Déploiement
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: lts/*
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Construire avec TiBillet
+        env:
+          TIBILLET_URL: ${{ vars.TIBILLET_URL }}
+          TIBILLET_API_KEY: ${{ secrets.TIBILLET_API_KEY }}
+        run: |
+          if [ -z "$TIBILLET_URL" ] || [ -z "$TIBILLET_API_KEY" ]; then
+            echo "::error::TIBILLET_URL ou TIBILLET_API_KEY manque."
+            exit 1
+          fi
+          rm -rf _site
+          npm run build
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  publier:
+    needs: construire
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - id: deploiement
+        uses: actions/deploy-pages@v4
