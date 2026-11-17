@@ -2,13 +2,19 @@
 layout: base.njk
 ---
 {{ content | safe }}
+<div class="galerie">
 {% for r in collections.realisations %}
 <section class="realisation">
+  <div class="photos" style="--n: {{ r.data.photos | length }}">
+    {% for photo in r.data.photos %}
+    <img style="--i: {{ loop.index0 }}" src="{{ r.page.filePathStem | replace('/index', '') }}/{{ photo.fichier }}" alt="{{ photo.description }}">
+    {% endfor %}
+  </div>
+  {% if r.data.photos | length > 1 %}
+  <p class="nombre-photos">{{ r.data.photos | length }} photos</p>
+  {% endif %}
   <h2>{{ r.data.titre }}</h2>
-  {% for photo in r.data.photos %}
-  <img src="{{ r.page.filePathStem | replace('/index', '') }}/{{ photo.fichier }}" alt="{{ photo.description }}">
-  {% endfor %}
-  <p>Par {{ r.data.auteur }}</p>
-  <p>{{ r.data.date | moisAnnee }}</p>
+  <p class="credit">Par {{ r.data.auteur }} · <span class="date">{{ r.data.date | moisAnnee }}</span></p>
 </section>
 {% endfor %}
+</div>
