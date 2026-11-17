@@ -13,8 +13,6 @@
 - Section « Les évènements » : la décrire dans `ui.md` (pages d'atelier et de l'association) plutôt que dans `contents.md`.
 - Séances à plusieurs catégories : un évènement TiBillet portant plusieurs catégories apparaît sur chacune des pages concernées, pas seulement la première.
 - Réalisations sur les pages d'atelier : quelques réalisations de ses catégories, avec un lien vers la page des réalisations.
-- Cache des images : garder entre deux constructions les photos déjà produites par `eleventy-img`, y compris dans la CI, qui les régénère toutes à chaque déploiement.
-- Construction propre des tests : vider `_site/` avant de construire, pour qu'aucun fichier périmé ne fasse passer un test ; le workflow de déploiement le fait déjà pour la vraie construction.
 - Transfert des images : ajuster `sizes` et les largeurs produites pour ne pas télécharger plus que l'écran n'affiche.
 - Données personnelles des photos : métadonnées, visages et noms d'auteurs des réalisations.
 - Pagination de la page des réalisations.

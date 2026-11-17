@@ -1,17 +1,29 @@
+import { cpSync, existsSync } from "node:fs";
+import { join } from "node:path";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+
+// Where eleventy-img writes the reduced copies, kept between builds so
+// that a photo already reduced is not reduced again.
+const IMAGES_CACHE = ".cache/@11ty/img/";
 
 const byTitle = (a, b) => a.data.title.localeCompare(b.data.title, "fr");
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
   // Each <img> of the built pages becomes a <picture> of reduced copies,
-  // written under _site/img/.
+  // served under /img/: written to the cache, then the whole cache is
+  // copied into _site/img/ after each build.
   eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+    outputDir: IMAGES_CACHE,
+    urlPath: "/img/",
     formats: ["webp", "jpeg"],
     widths: [400, 800, 1600],
     htmlOptions: {
       imgAttributes: { loading: "lazy", decoding: "async", sizes: "(min-width: 40rem) 36rem, 100vw" },
     },
+  });
+  eleventyConfig.on("eleventy.after", ({ directories }) => {
+    if (existsSync(IMAGES_CACHE)) cpSync(IMAGES_CACHE, join(directories.output, "img"), { recursive: true });
   });
   // The réalisations, most recent first.
   eleventyConfig.addCollection("realisations", (api) =>
