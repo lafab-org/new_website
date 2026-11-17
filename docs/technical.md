@@ -21,6 +21,8 @@
   constructions gardent : une photo déjà produite n'est pas refaite.
   Chaque construction copie dans `_site/img/` les fichiers de ce cache
   que les pages construites utilisent.
+  Chaque image annonce par `sizes` la largeur où elle s'affiche, et les
+  largeurs produites en sont proches, jusqu'à une densité d'écran de 3.
   Une photo entre dans le dépôt réduite à 2000 px au plus sur son grand
   côté, en JPEG.
 - Commandes : `npm run build` génère le site ; `npm start` le sert en

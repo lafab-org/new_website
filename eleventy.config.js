@@ -18,9 +18,15 @@ export default function (eleventyConfig) {
     outputDir: IMAGES_CACHE,
     urlPath: "/img/",
     formats: ["webp", "jpeg"],
-    widths: [400, 800, 1600],
+    // Widths close to what the pages display, at 1x to 3x: the gallery
+    // and summary thumbnails (about 13rem wide, or half a phone screen)
+    // and the full text width (40rem, or a phone screen).
+    widths: [300, 450, 650, 900, 1300],
     htmlOptions: {
-      imgAttributes: { loading: "lazy", decoding: "async", sizes: "(min-width: 40rem) 36rem, 100vw" },
+      // By default an image spans the text column (main is 40rem wide,
+      // with 1rem padding on each side); the templates of thumbnails
+      // give their own `sizes`.
+      imgAttributes: { loading: "lazy", decoding: "async", sizes: "(min-width: 42rem) 40rem, calc(100vw - 2rem)" },
     },
   });
   // Only the reduced copies the built pages use are copied, so that the
