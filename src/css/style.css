@@ -8,6 +8,12 @@
   --filet: 3px;
 }
 
+/* La place de la barre de défilement est toujours réservée : le
+   contenu centré ne se décale pas entre une page courte et une longue. */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
