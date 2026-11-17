@@ -7,7 +7,7 @@ le dépôt : ses pages sont les fichiers Markdown, front matter compris,
 hors ceux des réalisations ; ses réalisations sont lues dans ceux-ci, ses articles
 dans leurs pages ;
 ses autres champs sont lus dans les fichiers de données.
-Il n'a aucune séance.
+Il n'a aucune séance ; son `jour` est libre.
 
 ## Construire le site
 
@@ -43,7 +43,8 @@ Then:
   sous `_site/`, où chaque page est écrite en HTML, son corps rendu
   depuis le Markdown, et chaque photo des réalisations et des articles en fichiers
   image ; `index.md` donne `_site/index.html`. Les
-  `séances` du site sont les séances lues.
+  `séances` du site sont les séances lues, et son `jour` celui de la
+  construction, à Paris.
 - Un évènement de TiBillet donne une séance quand l'un de ses
   `keywords` est l'identifiant d'une catégorie du site ; les autres sont
   ignorés. Sa séance a, aux dates et heures de Paris :

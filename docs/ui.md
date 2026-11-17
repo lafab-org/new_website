@@ -19,6 +19,11 @@ lien en cliquant dessus.
 /operations/construire-le-site/generee la rend. Ses objectifs éditoriaux
 sont dans /contents/page-daccueil.
 
+Entre le titre et le corps, la section /ui/articles-en-avant, pour les
+articles en avant sur la page d'accueil (not testable).
+- [en-avant] Un lien vers la page de chaque article en avant sur la page
+  d'accueil.
+
 ## Page de l'association
 
 À `/association` : la page `association.md`, telle que
@@ -81,7 +86,11 @@ Montre une séance, dans cet ordre (not testable) :
 /operations/construire-le-site/generee la rend. Ses objectifs
 éditoriaux sont dans /contents/page-de-lagenda.
 
-Après le corps de la page :
+Après le corps de la page, dans cet ordre :
+- La section /ui/articles-en-avant, pour les articles en avant sur la
+  page de l'agenda (not testable).
+- [en-avant] Un lien vers la page de chaque article en avant sur la
+  page de l'agenda.
 - [seances] Le nom de chaque séance du site.
 - Les séances sont groupées par jour, chaque jour en sous-titre, ses
   séances sous la forme de /ui/seance, dans l'ordre des `séances` du
@@ -131,6 +140,14 @@ Entre le titre et le corps, sa date, comme sur
 /ui/page-des-actualites, puis sa couverture s'il en a une, avec sa
 description pour texte alternatif ; après le corps, un lien
 `Toutes les actualités` vers `/actualites` (not testable).
+
+## Articles en avant
+
+Une section, montrée par une page pour une liste d'articles (not
+testable) :
+- sans article, rien ;
+- sinon, chaque article de la liste, dans son ordre, comme sur
+  /ui/page-des-actualites.
 
 ## Prochaines séances
 

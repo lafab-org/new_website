@@ -112,8 +112,8 @@ par élément de `photos`.
 
 Une actualité de La Fabrique. Chaque fichier
 `actualites/<dossier>/index.md` de `src/` est la page d'un article, avec
-ses photos dans le même dossier. Son front matter donne `résumé` et
-`couverture` sous leurs noms. Le corps de sa page peut montrer des
+ses photos dans le même dossier. Son front matter donne `résumé`,
+`couverture` et `mise-en-avant` sous leurs noms. Le corps de sa page peut montrer des
 photos de son dossier, chacune par son nom de fichier, avec sa
 description pour texte alternatif (not testable).
 
@@ -125,6 +125,27 @@ description pour texte alternatif (not testable).
     suivie de `-`.
 - `résumé: optional string`, ce dont il parle, en une ou deux phrases.
 - `couverture: optional /model/photo`, la photo qui le représente.
+- `mise-en-avant: optional /model/mise-en-avant`, où et quand d'autres
+  pages le présentent.
+
+Les articles en avant sur la page d'accueil, ou sur celle de l'agenda,
+sont, dans l'ordre des `articles` du site, ceux dont la mise en avant
+a `accueil`, ou `agenda`, dans ses `pages`, et dont le `jour` du site
+n'est ni avant le `début`, s'il y en a un, ni après la `fin`.
+
+## Mise en avant
+
+La présentation d'un article sur d'autres pages que la sienne, pour un
+temps. Le front matter de l'article donne ses champs sous leurs noms.
+
+- `pages: set of one of accueil, agenda`, les pages qui le présentent :
+  la page d'accueil, la page de l'agenda.
+- `début: optional date`, le premier jour où elles le présentent ; sans
+  début, dès qu'il est sur le site.
+- `fin: date`, le dernier jour où elles le présentent.
+- [valide] `pages` a au moins une page, chacune `accueil` ou `agenda` ;
+  `fin` et, s'il y en a un, `début` sont des dates `AAAA-MM-JJ` valides ;
+  `début` n'est pas après `fin`.
 
 ## Photo
 
@@ -169,5 +190,6 @@ L'état : tout ce dont le site est fait.
   au plus ancien ; l'ordre de deux articles de même date est libre.
   Leurs pages sont les pages de `pages` dont le fichier est
   `actualites/<dossier>/index.md`, chacune celle d'un seul article.
+- `jour: date`, le jour de sa construction, à Paris.
 - `séances: list of /model/seance`, les séances, par jour puis par
   heure de début ; l'ordre de deux séances au même début est libre.

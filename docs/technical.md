@@ -62,9 +62,12 @@
   renseignées et que sa catégorie est une catégorie du site ; sur
   chaque source de page et de réalisation, que ses catégories en sont ;
   sur chaque source d'article, que le nom de son dossier commence par
-  une date `AAAA-MM-JJ` valide suivie de `-`. Sur la page de l'agenda, il vérifie qu'elle montre le nom
+  une date `AAAA-MM-JJ` valide suivie de `-`, et que sa mise en avant,
+  s'il en a une, est bien formée. Sur la page de l'agenda, il vérifie qu'elle montre le nom
   de chaque séance du fichier d'exemple ; sur la page des actualités,
-  qu'elle a un lien vers chaque article.
+  qu'elle a un lien vers chaque article ; sur la page d'accueil et sur
+  celle de l'agenda, qu'elles ont un lien vers chaque article en avant
+  sur elles, le jour où les tests construisent le site.
 - Une affirmation de la spécification porte une étiquette seulement si
   le contrôle de forme peut la vérifier ; les autres se terminent par
   `(not testable)`. Elles se vérifient à la relecture, comme le contenu
