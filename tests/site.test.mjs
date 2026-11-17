@@ -1,7 +1,7 @@
 // Form check of the built site: build once, then read _site/.
 import { test, before } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 
@@ -10,14 +10,18 @@ const SITE = "_site";
 // The sample stand-in for TiBillet the site is built with.
 const TIBILLET = join("tests", "tibillet.json");
 
-// Markdown pages of src/, outside _includes/, as paths relative to src/.
-function pages(dir = "") {
+// Markdown files of src/ under `dir`, outside _includes/ and, unless
+// `dir` is inside it, outside realisations/, as paths relative to src/.
+function markdown(dir = "") {
   return readdirSync(join(SRC, dir), { withFileTypes: true }).flatMap((e) => {
     const rel = join(dir, e.name);
-    if (e.isDirectory()) return rel === "_includes" ? [] : pages(rel);
+    if (e.isDirectory()) return rel === "_includes" || rel === "realisations" ? [] : markdown(rel);
     return rel.endsWith(".md") ? [rel] : [];
   });
 }
+const pages = () => markdown();
+// The files of the réalisations: the Markdown files under realisations/.
+const realisations = () => (existsSync(join(SRC, "realisations")) ? markdown("realisations") : []);
 
 // Address serving a page, and the built file of an address.
 const address = (page) => "/" + page.replace(/\.md$/, "").replace(/(^|\/)index$/, "");
@@ -133,6 +137,40 @@ test("every category a page shows is a category of the site", () => {
   for (const [p, c] of shown) {
     assert.ok(identifiers.includes(c), `${p}: catégorie ${c}`);
   }
+});
+
+test("every réalisation belongs to categories of the site", () => {
+  // /model/realisation/categories
+  const identifiers = categoryIds();
+  const files = realisations();
+  assert.ok(files.length > 0, "no réalisation");
+  for (const r of files) {
+    for (const c of frontMatterList(r, "catégories")) {
+      assert.ok(identifiers.includes(c), `${r}: catégorie ${c}`);
+    }
+  }
+});
+
+// The <img> elements of a built page, with their `src` and `alt`, if any.
+const images = (html) => [...html.matchAll(/<img\s[^>]*>/gi)].map((m) => {
+  const attr = (name) => m[0].match(new RegExp(`\\s${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, "i"));
+  const value = (a) => (a ? text(a[1] ?? a[2] ?? a[3]) : undefined);
+  return { src: value(attr("src")), alt: value(attr("alt")) };
+});
+
+test("every image has a text alternative and leads to a file of _site/", () => {
+  // /model/image/texte
+  // /model/site/image
+  const found = all.flatMap((p) => images(built[p]).map((i) => [p, i]));
+  assert.ok(found.length > 0, "no image on any page");
+  const wrong = [];
+  for (const [p, { src, alt }] of found) {
+    if (!alt) wrong.push(`${p}: ${src}: no text alternative`);
+    const internal = src !== undefined && /^\/(?!\/)/.test(src);
+    const file = internal ? join(SITE, decodeURI(src)) : "";
+    if (!internal || !existsSync(file) || !statSync(file).isFile()) wrong.push(`${p}: ${src}: no file in _site/`);
+  }
+  assert.deepEqual(wrong, [], "wrong images");
 });
 
 test("no dead link: internal links lead to a page, fragments to an id", () => {
