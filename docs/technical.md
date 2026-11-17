@@ -15,10 +15,13 @@
 - Les pages sont mises en page par des gabarits Nunjucks, dans
   `src/_includes/`. Le gabarit de base porte la balise viewport.
 - Les informations communes du site sont dans le répertoire `src/_data`
-- Images : `@11ty/eleventy-img`, qui écrit chaque photo dans `_site/`
-  en WebP et en JPEG, en plusieurs largeurs, avec ses dimensions et un
-  chargement différé. Une photo entre dans le dépôt réduite à 2000 px au
-  plus sur son grand côté, en JPEG.
+- Images : `@11ty/eleventy-img`, qui produit chaque photo en WebP et en
+  JPEG, en plusieurs largeurs, avec ses dimensions et un chargement
+  différé. Il les écrit dans `.cache/`, que git ignore et que les
+  constructions gardent : une photo déjà produite n'est pas refaite.
+  Chaque construction copie tout ce cache d'images dans `_site/img/`.
+  Une photo entre dans le dépôt réduite à 2000 px au plus sur son grand
+  côté, en JPEG.
 - Commandes : `npm run build` génère le site ; `npm start` le sert en
   local avec rechargement, sur `http://localhost:8080`.
 - Les messages vus par l'utilisateur ne sont pas spécifiés.
@@ -47,8 +50,9 @@
   `main`, chaque jour à 3 h UTC (4 h ou 5 h à Paris), et à la demande
   depuis l'onglet Actions.
 - Il lance `npm test`, construit le site avec l'API de TiBillet, puis le
-  publie. Si une étape échoue, ou si l'adresse ou la clé de TiBillet
-  manque, rien n'est publié et la version précédente reste en ligne.
+  publie. Il garde `.cache/` d'un déploiement à l'autre. Si une étape
+  échoue, ou si l'adresse ou la clé de TiBillet manque, rien n'est
+  publié et la version précédente reste en ligne.
 - La CI a sa propre clé TiBillet, dans le secret `TIBILLET_API_KEY` du
   dépôt ; `TIBILLET_URL` est une variable du dépôt.
 - Quand GitHub suspend la tâche quotidienne faute d'activité sur le
@@ -61,11 +65,11 @@
 - Les tests construisent le site avec `TIBILLET_FICHIER` désignant
   `tests/tibillet.json`, un fichier d'exemple sans donnée personnelle,
   qui sert aussi au développement local.
-- Les tests sont un contrôle de forme du site construit. Ils le
-  construisent une fois par `npm run build`, puis lisent `_site/` : ni
-  serveur, ni navigateur, et sans lire les gabarits. Les pages sont
-  énumérées sur `src/`, hors les fichiers des réalisations, chacune lue
-  dans son fichier de `_site/`.
+- Les tests sont un contrôle de forme du site construit. Ils vident
+  `_site/`, le construisent une fois par `npm run build`, puis lisent
+  `_site/` : ni serveur, ni navigateur, et sans lire les gabarits. Les
+  pages sont énumérées sur `src/`, hors les fichiers des réalisations,
+  chacune lue dans son fichier de `_site/`.
 - Le contrôle de forme vérifie, sur chaque page construite : la langue,
   un titre non vide, le titre du navigateur, un seul `<h1>` portant le
   titre, et que chaque lien interne mène à une page du site, qui porte
