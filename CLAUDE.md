@@ -29,3 +29,13 @@ For a content-heavy project, the specification includes `docs/contents.md`:
 A content page that adds no tag (only `ui.md` and `contents.md`) is
 planned without a Tests phase (Specification, Implementation): the
 existing tests already run over every page.
+
+## Secrets
+
+- `.env` contient l'adresse et la clé de l'API TiBillet, qui donne
+  aussi l'accès en écriture. Ne jamais lire ni afficher ses valeurs
+  (ni `Read`, ni `cat`, ni dans un message, un commit, un test ou une
+  sortie de commande) ; pour en connaître les variables, masquer les
+  valeurs : `sed 's/=.*/=<masqué>/' .env`.
+- Le code lit la clé depuis l'environnement, jamais en dur, et elle
+  n'apparaît jamais dans `_site/`.
