@@ -1,0 +1,15 @@
+{#- /ui/prochaines-seances. Expects `seancesPage`, a list of séances in the order of `seances`. -#}
+{%- if seancesPage.length %}
+<section class="prochaines-seances">
+<h2>Prochaines séances</h2>
+{%- for jour, liste in seancesPage.slice(0, 5) | groupby("jour") %}
+<h3>{{ jour | jourLong }}</h3>
+<ul class="seances">
+{%- for s in liste %}
+{% include "seance.njk" %}
+{%- endfor %}
+</ul>
+{%- endfor %}
+<p><a href="/agenda">Voir l'agenda</a></p>
+</section>
+{%- endif %}

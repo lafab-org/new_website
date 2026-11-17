@@ -10,6 +10,8 @@ layout: base.njk
   <li><strong>Lieu :</strong> {{ site.lieu }}</li>
   <li><strong>Activité :</strong> {{ "prix" | champ }}</li>
 </ul>
+{%- set seancesPage = seances | seancesDe(parts[2]) %}
+{%- include "prochaines-seances.njk" %}
 {%- endif %}
 <div class="corps">
 {{ content | safe }}

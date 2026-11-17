@@ -35,6 +35,9 @@ export default function (eleventyConfig) {
     const ids = asList(categories);
     return (list ?? []).filter((e) => ids.includes(e.data["catégorie"]));
   });
+  // The séances of the event whose page is `evenements/<nom>.md`.
+  eleventyConfig.addFilter("seancesDe", (list, nom) =>
+    (list ?? []).filter((s) => s.evenement === nom));
   // A day `2026-12-03` written out in French: `jeudi 3 décembre 2026`.
   const jour = new Intl.DateTimeFormat("fr-FR", {
     weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC",

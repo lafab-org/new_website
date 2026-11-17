@@ -17,3 +17,6 @@ TiBillet.
 - `seances-evenement`, `seances-atelier` : la réponse des réservations
   porte le nom et le courriel des inscrits ; `tests/tibillet.json`
   s'écrit à la main, jamais copié d'une réponse réelle.
+- `seances-atelier` : la section reprend `src/_includes/prochaines-seances.njk`
+  avec `seancesPage` filtrée par catégories ; le filtre `selectattr` de
+  Nunjucks ignore son argument de comparaison.
