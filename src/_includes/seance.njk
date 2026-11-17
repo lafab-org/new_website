@@ -1,0 +1,21 @@
+{#- One séance, as /ui/seance shows it. Expects `s`, a séance of `seances`. -#}
+{%- set restantes = s.jauge - s.reservees if s.jauge else null %}
+{%- set complete = s.jauge and restantes <= 0 %}
+<li class="seance">
+  <span class="seance-heure">{{ s.debut | heure }}{% if s.fin %} - {{ s.fin | heure }}{% endif %}</span>
+  <span class="seance-nom">{% if s.evenement %}<a href="/evenements/{{ s.evenement }}">{{ s.nom }}</a>{% else %}{{ s.nom }}{% endif %}</span>
+  <span class="seance-categorie">{{ s.categorie | nomCategorie(categories) }}</span>
+  <span class="seance-participation">
+  {%- if s.annulee %}Annulée
+  {%- elif s.acces == "libre" %}Accès libre
+  {%- elif s.acces == "sur-place" %}Paiement sur place
+  {%- else %}
+    {%- set parts = [] %}
+    {%- if s.acces == "réservation-gratuite" %}{% set parts = (parts.push("Réservation gratuite"), parts) %}{% endif %}
+    {%- if s.acces == "réservation-payante" %}{% set parts = (parts.push("Réservation payante"), parts) %}{% endif %}
+    {%- if s.jauge %}{% set parts = (parts.push("Complet" if complete else ("1 place restante" if restantes == 1 else restantes + " places restantes")), parts) %}{% endif %}
+    {{- parts | join(" · ") }}
+    {%- if not complete %}{% if parts.length %} · {% endif %}<a href="{{ s.reservation }}">{{ "Réserver" if s.acces else "Voir sur TiBillet" }}</a>{% endif %}
+  {%- endif -%}
+  </span>
+</li>

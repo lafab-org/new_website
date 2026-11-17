@@ -16,3 +16,27 @@ main {
     padding: 2rem;
   }
 }
+
+/* Agenda : une séance par bloc, ses éléments l'un sous l'autre. */
+.seances {
+  list-style: none;
+  padding: 0;
+}
+
+.seance {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.seance-heure {
+  font-weight: bold;
+}
+
+.seance-nom {
+  font-size: 1.1em;
+}
+
+.seance-categorie {
+  font-size: 0.9em;
+}

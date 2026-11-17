@@ -15,10 +15,6 @@ TiBillet.
 
 ## Lessons
 
-- `seances-agenda` : les tags actuels de TiBillet (`matériaux souples`,
-  `numérique, électronique`, `Repair Café`) ne suivent pas encore la
-  convention ; l'agenda reste vide sur la vraie API tant qu'ils ne sont
-  pas corrigés.
-- `seances-agenda` : la réponse des réservations porte le nom et le
-  courriel des inscrits ; `tests/tibillet.json` s'écrit à la main,
-  jamais copié d'une réponse réelle.
+- `seances-evenement`, `seances-atelier` : la réponse des réservations
+  porte le nom et le courriel des inscrits ; `tests/tibillet.json`
+  s'écrit à la main, jamais copié d'une réponse réelle.

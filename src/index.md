@@ -4,7 +4,8 @@ templateEngineOverride: njk,md
 ---
 
 Bienvenue à La Fabrique, atelier partagé à Strasbourg, que fait vivre
-[l'association](/association).
+[l'association](/association). Ses prochaines séances sont dans
+l'[agenda](/agenda).
 
 ## Les ateliers
 

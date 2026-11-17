@@ -1,0 +1,16 @@
+---
+layout: base.njk
+---
+{{ content | safe }}
+{%- if seances.length %}
+{%- for jour, liste in seances | groupby("jour") %}
+<h2>{{ jour | jourLong }}</h2>
+<ul class="seances">
+{%- for s in liste %}
+{% include "seance.njk" %}
+{%- endfor %}
+</ul>
+{%- endfor %}
+{%- else %}
+<p>Aucune séance prévue pour l'instant.</p>
+{%- endif %}

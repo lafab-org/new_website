@@ -35,6 +35,22 @@ export default function (eleventyConfig) {
     const ids = asList(categories);
     return (list ?? []).filter((e) => ids.includes(e.data["catégorie"]));
   });
+  // A day `2026-12-03` written out in French: `jeudi 3 décembre 2026`.
+  const jour = new Intl.DateTimeFormat("fr-FR", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+  });
+  eleventyConfig.addFilter("jourLong", (d) => {
+    const s = jour.format(new Date(`${d}T12:00:00Z`));
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  });
+  // A time `18:00` as `18 h`, `09:30` as `9 h 30`.
+  eleventyConfig.addFilter("heure", (h) => {
+    const [hh, mm] = h.split(":");
+    return `${Number(hh)} h${mm === "00" ? "" : " " + mm}`;
+  });
+  // The name of a category, from its identifier.
+  eleventyConfig.addFilter("nomCategorie", (id, categories) =>
+    (categories ?? []).find((c) => c.identifiant === id)?.nom ?? id);
   return {
     dir: { input: "src", output: "_site", includes: "_includes" },
     markdownTemplateEngine: false,
