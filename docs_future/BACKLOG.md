@@ -16,3 +16,4 @@
 - Données personnelles des photos : métadonnées, visages et noms d'auteurs des réalisations.
 - Pagination de la page des réalisations.
 - Reprise des anciennes actualités : les 82 nouvelles de l'ancien site, triées et nettoyées.
+- Photo des évènements : la montrer sur la page d'évènement et dans les séances, depuis TiBillet ou le front matter de la page.

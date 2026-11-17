@@ -6,6 +6,11 @@
   --fond: #ffffff;
   --accroche: #1f4a6e;
   --fond-doux: #fff3eb;
+  --filet-doux: #f3d9c6;
+  --bouton: #c44b00;
+  --alerte: #a8322d;
+  --estompe: #f2f2f2;
+  --texte-estompe: #555555;
   --police: system-ui, sans-serif;
   --largeur-texte: 40rem;
   --filet: 3px;
@@ -319,4 +324,129 @@ h2 {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem 1rem;
   }
+}
+
+/* Séance : une carte, l'horaire et la catégorie en tête, puis le nom,
+   puis la participation. */
+.seances {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.seance {
+  margin: 0.6rem 0;
+  padding: 0.7rem 0.8rem;
+  background: var(--fond-doux);
+  border-left: 5px solid var(--orange);
+  border-radius: 0.6rem;
+}
+.seance p {
+  margin: 0;
+}
+.seance-tete {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.seance-heure {
+  font-weight: bold;
+  white-space: nowrap;
+}
+.seance-categorie {
+  padding: 0 0.5rem;
+  text-align: right;
+  color: var(--accroche);
+  background: var(--fond);
+  border-radius: 1rem;
+}
+.seance-nom {
+  margin: 0.2rem 0 0.4rem;
+  font-size: 1.05rem;
+  font-weight: bold;
+  line-height: 1.3;
+}
+.seance-nom a {
+  color: var(--texte);
+  text-decoration-color: var(--orange);
+  text-underline-offset: 0.2em;
+}
+.seance-participation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.6rem;
+  font-size: 0.9rem;
+}
+.bouton {
+  display: inline-block;
+  padding: 0.15rem 0.8rem;
+  color: var(--fond);
+  background: var(--bouton);
+  border-radius: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+.alerte {
+  color: var(--alerte);
+  font-weight: bold;
+}
+.seance.annulee {
+  background: var(--estompe);
+  border-left-color: var(--texte-estompe);
+}
+.seance.annulee .seance-heure,
+.seance.annulee .seance-nom,
+.seance.annulee .seance-nom a {
+  color: var(--texte-estompe);
+}
+.seance.annulee .seance-nom {
+  text-decoration: line-through;
+}
+
+/* Les séances d'un jour, sous le jour en sous-titre. */
+.jour {
+  margin: 1.75rem 0 0.25rem;
+  font-size: 1.3rem;
+}
+.prochaines-seances .jour {
+  margin-top: 1.25rem;
+  font-size: 1.05rem;
+}
+.voir-agenda a {
+  color: var(--texte);
+  font-weight: bold;
+  text-decoration-color: var(--orange);
+}
+.voir-agenda a::after {
+  content: " →";
+  color: var(--orange);
+}
+
+/* Page d'évènement : les informations pratiques en fiche encadrée,
+   chaque libellé dans sa colonne. */
+.informations {
+  margin: 1rem 0 1.5rem;
+  padding: 0.4rem 0.9rem;
+  list-style: none;
+  border: 2px dotted var(--orange);
+  border-radius: 0.6rem;
+}
+.informations li {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+}
+.informations li + li {
+  border-top: var(--trait) solid var(--filet-doux);
+}
+.libelle {
+  padding-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accroche);
 }

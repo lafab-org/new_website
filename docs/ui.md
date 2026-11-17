@@ -69,11 +69,11 @@ pages d'évènement sont dans /contents/page-devenement.
 
 Entre le titre et le corps, la page montre l'accroche de l'évènement,
 s'il en a une, puis ses informations pratiques, en liste, dans cet
-ordre (not testable) :
-- `Rendez-vous : <rendez-vous>`
-- `Horaire : <horaire>`
-- `Lieu : <lieu>`, où `<lieu>` est le `lieu` du site
-- `Activité : <prix>`
+ordre, chacune son libellé puis sa valeur (not testable) :
+- `Rendez-vous`, puis son `rendez-vous` ;
+- `Horaire`, puis son `horaire` ;
+- `Lieu`, puis le `lieu` du site ;
+- `Activité`, puis son `prix`.
 
 Après les informations pratiques, la section /ui/prochaines-seances,
 pour les séances de l'évènement (not testable).
@@ -82,8 +82,8 @@ pour les séances de l'évènement (not testable).
 
 Montre une séance, dans cet ordre (not testable) :
 - son début, puis sa fin si elle en a une ;
-- son nom, en lien vers la page de son évènement si elle en a un ;
 - le nom de sa catégorie ;
+- son nom, en lien vers la page de son évènement si elle en a un ;
 - sa participation, le premier cas qui s'applique :
   1. annulée : `Annulée` ;
   2. accès `libre` : `Accès libre` ;
