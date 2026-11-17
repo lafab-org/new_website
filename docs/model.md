@@ -9,9 +9,6 @@ Une page du site web, écrite sous forme de fichier source Markdown.
 - `title: string`, le titre de la page.
   - [titre] Non vide.
 - `body: string`, le texte Markdown de la page.
-- `menu: string`, le nom de la page dans les menus de l'en-tête : la clé
-  `menu` de son front matter, sinon son `title`. Non vide (not
-  testable).
 - `links: set of string`, les adresses des éléments `<a href>` de la
   page une fois construite, gabarit compris.
 - `images: set of /model/image`, les éléments `<img>` de la page une
@@ -178,10 +175,12 @@ L'état : tout ce dont le site est fait.
   `src/_data/categories.json`, qui donne pour chacune son identifiant et
   son nom, dans cet ordre.
 - `ateliers: list of /model/page`, les pages d'atelier, dans l'ordre où
-  le site les présente. Le fichier `src/_data/ateliers.json` en donne
-  les adresses, dans cet ordre.
+  le site les présente. Le fichier `src/_data/ateliers.json` les donne
+  dans cet ordre, chacune par son adresse et son nom court. Le nom
+  court d'une page d'atelier est son nom dans le menu de l'en-tête.
   - Ce sont les pages dont le fichier est directement dans `ateliers/`,
     hors `ateliers/index.md`, chacune une fois (not testable).
+  - Chaque nom court est non vide (not testable).
 - `evenements: set of /model/evenement`, tous les évènements. Leurs
   pages sont les pages de `pages` dont le fichier est directement dans
   `evenements/`, hors `evenements/index.md`, chacune celle d'un seul

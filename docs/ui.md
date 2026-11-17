@@ -23,8 +23,8 @@ Commun à toutes les pages, dans cet ordre (not testable) :
   - `Actualités`, vers `/actualites` ;
   - `Réalisations`, vers `/realisations` ;
 - le menu des ateliers et de l'association :
-  - chaque page des `ateliers` du site, dans leur ordre, sous son
-    `menu`, vers son adresse ;
+  - chaque page des `ateliers` du site, dans leur ordre, sous son nom
+    court, vers son adresse ;
   - `L'association`, vers `/association`.
 
 Dans un menu, l'entrée qui mène à la page affichée est mise en
