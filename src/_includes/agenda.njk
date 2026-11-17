@@ -2,6 +2,8 @@
 layout: base.njk
 ---
 {{ content | safe }}
+{%- set pageEnAvant = "agenda" %}
+{%- include "articles-en-avant.njk" %}
 {%- if seances.length %}
 {%- for jour, liste in seances | groupby("jour") %}
 <h2>{{ jour | jourLong }}</h2>

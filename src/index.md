@@ -1,6 +1,7 @@
 ---
 title: "La Fabrique"
 templateEngineOverride: njk,md
+layout: accueil.njk
 ---
 
 Bienvenue à La Fabrique, atelier partagé à Strasbourg, que fait vivre

@@ -1,0 +1,8 @@
+{%- set liste = collections.articles | enAvant(pageEnAvant) %}
+{%- if liste.length %}
+<div class="en-avant">
+{%- for a in liste %}
+{% include "article-resume.njk" %}
+{%- endfor %}
+</div>
+{%- endif %}

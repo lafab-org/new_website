@@ -1,6 +1,6 @@
 # Backlog
 
-- Hébergement et déploiement du site : où et comment il est publié, reconstruit toutes les 24 h pour l'agenda.
+- Prioritaire - Hébergement et déploiement du site : où et comment il est publié, reconstruit toutes les 24 h pour l'agenda et les articles en avant.
 - Photos des ateliers : intégrer aux pages une sélection de photos (redimensionnées, avec texte alternatif) ; les pages métallerie et Répar'Action les recevront.
 - Design général du site : navigation (dont le retour vers l'accueil) et apparence commune, une fois plusieurs pages spécifiées.
 - Ligne éditoriale : relire les pages d'accueil et métallerie pour présenter La Fabrique comme un lieu où l'on participe, non comme un service.
@@ -18,5 +18,4 @@
 - Transfert des images : ajuster `sizes` et les largeurs produites pour ne pas télécharger plus que l'écran n'affiche.
 - Données personnelles des photos : métadonnées, visages et noms d'auteurs des réalisations.
 - Pagination de la page des réalisations.
-- Article mis en avant : un article choisi est présenté sur la page d'accueil et/ou sur celle de l'agenda.
 - Reprise des anciennes actualités : les 82 nouvelles de l'ancien site, triées et nettoyées.

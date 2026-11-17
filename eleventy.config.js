@@ -21,6 +21,21 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("articles", (api) =>
     api.getFilteredByGlob("src/actualites/*/index.md")
       .sort((a, b) => b.data.dateArticle.localeCompare(a.data.dateArticle)));
+  // The day of the build, in Paris: `2026-11-17`, taken anew at each
+  // build, so that `npm start` left running past midnight follows it.
+  const jourParis = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit",
+  });
+  let jourConstruction;
+  eleventyConfig.on("eleventy.before", () => { jourConstruction = jourParis.format(new Date()); });
+  // A front matter day, which YAML may read as a Date, as `2026-11-17`.
+  const jourIso = (d) => (d instanceof Date ? d.toISOString().slice(0, 10) : String(d));
+  // The articles in avant on `page` (accueil or agenda) on the day of the build.
+  eleventyConfig.addFilter("enAvant", (articles, page) => (articles ?? []).filter((a) => {
+    const m = a.data["mise-en-avant"];
+    if (!m || ![].concat(m.pages ?? []).includes(page)) return false;
+    return (m["début"] == null || jourIso(m["début"]) <= jourConstruction) && jourConstruction <= jourIso(m.fin);
+  }));
   // A front matter value by its name, for names Nunjucks cannot write
   // as a variable (`rendez-vous`).
   eleventyConfig.addFilter("champ", function (name) {
