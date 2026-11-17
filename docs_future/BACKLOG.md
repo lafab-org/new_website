@@ -18,3 +18,6 @@
 - Reprise des anciennes actualités : les 82 nouvelles de l'ancien site, triées et nettoyées.
 - Photo des évènements : la montrer sur la page d'évènement et dans les séances, depuis TiBillet ou le front matter de la page.
 - Séance annulée et lecteurs d'écran : l'annulation n'est dite qu'en fin de carte, après le nom barré ; l'annoncer dès le nom.
+- Contenu de l'accueil : revoir ce que la page présente (texte, ateliers, évènements) pour qu'il corresponde à ce qu'on veut y montrer.
+- Design de l'accueil : son apparence, d'après des maquettes, une fois son contenu revu.
+- Accroche des évènements dans « Les évènements » : la décrire dans `ui.md`, avec la section, plutôt que dans `contents.md`.
