@@ -8,8 +8,7 @@ TiBillet.
 ## Outline
 
 1. `seances-agenda` done
-2. `seances-evenement` : /model/evenement, /ui/prochaines-seances,
-   /ui/page-devenement.
+2. `seances-evenement` done
 3. `seances-atelier` : /model/page, /ui/page-datelier, /ui/page-de-lassociation,
    /contents/page-datelier.
 

@@ -45,6 +45,9 @@ ordre (not testable) :
 - `Lieu : <lieu>`, où `<lieu>` est le `lieu` du site
 - `Activité : <prix>`
 
+Après les informations pratiques, la section /ui/prochaines-seances,
+pour les séances de l'évènement (not testable).
+
 ## Séance
 
 Montre une séance, dans cet ordre (not testable) :
@@ -77,3 +80,12 @@ Après le corps de la page :
   site (not testable).
 - Sans séance, le texte `Aucune séance prévue pour l'instant.` (not
   testable).
+
+## Prochaines séances
+
+Une section, montrée par une page pour une liste de séances (not
+testable) :
+- sans séance, rien ;
+- sinon, le sous-titre `Prochaines séances`, puis les cinq premières
+  séances de la liste, groupées par jour comme sur /ui/page-de-lagenda,
+  puis un lien `Voir l'agenda` vers `/agenda`.

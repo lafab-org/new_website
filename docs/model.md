@@ -50,6 +50,9 @@ Une page qui présente un évènement, avec ses informations pratiques.
 - `catégorie: string`, la catégorie dont il relève.
   - [categorie] L'identifiant d'une catégorie du site.
 
+Ses séances sont les séances du site dont il est l'évènement, dans
+l'ordre des `séances` du site.
+
 ## Séance
 
 Une date d'une activité de La Fabrique, lue sur TiBillet.
