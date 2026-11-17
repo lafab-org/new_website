@@ -15,3 +15,9 @@
 - Sur la page d'un article, sa couverture est montrée entière, jamais
   recadrée ; dans la liste des actualités et les articles en avant, elle
   peut l'être.
+- Sur la page des réalisations, les photos sont des vignettes carrées,
+  recadrées, qui en montrent une à la fois : au doigt, on passe de
+  l'une à l'autre en glissant ; à la souris, elles défilent en fondu
+  tant que le pointeur est sur la réalisation, environ 1,5 s chacune,
+  puis recommencent. Quand le visiteur demande moins d'animations,
+  elles changent sans fondu.

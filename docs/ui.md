@@ -123,11 +123,12 @@ Après le corps de la page, dans cet ordre :
 
 Après le corps de la page, chaque réalisation du site, dans l'ordre des
 `réalisations` du site, dans cet ordre (not testable) :
-- son titre, en sous-titre ;
 - ses photos, dans leur ordre, chacune avec sa description pour texte
   alternatif ;
-- `Par <auteur>` ;
-- le mois et l'année de sa date, par exemple `Octobre 2019`.
+- `<nombre> photos`, si elle en a plus d'une ;
+- son titre, en sous-titre ;
+- `Par <auteur> · <date>`, la date en mois et année, par exemple
+  `Par Céline · Juin 2023`.
 
 ## Page des actualités
 
