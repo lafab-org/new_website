@@ -4,7 +4,8 @@
 
 Le site est tel que les fichiers de `src/`, hors `_includes/`, sont dans
 le dépôt : ses pages sont les fichiers Markdown, front matter compris,
-hors ceux des réalisations ; ses réalisations sont lues dans ceux-ci ;
+hors ceux des réalisations ; ses réalisations sont lues dans ceux-ci, ses articles
+dans leurs pages ;
 ses autres champs sont lus dans les fichiers de données.
 Il n'a aucune séance.
 
@@ -40,7 +41,7 @@ Cases:
 Then:
 - [generee] Après les cas 1, 3 et 5 : le résultat est le site généré
   sous `_site/`, où chaque page est écrite en HTML, son corps rendu
-  depuis le Markdown, et chaque photo des réalisations en fichiers
+  depuis le Markdown, et chaque photo des réalisations et des articles en fichiers
   image ; `index.md` donne `_site/index.html`. Les
   `séances` du site sont les séances lues.
 - Un évènement de TiBillet donne une séance quand l'un de ses

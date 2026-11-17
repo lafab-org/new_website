@@ -103,6 +103,35 @@ Après le corps de la page, chaque réalisation du site, dans l'ordre des
 - `Par <auteur>` ;
 - le mois et l'année de sa date, par exemple `Octobre 2019`.
 
+## Page des actualités
+
+À `/actualites` : la page `actualites.md`, telle que
+/operations/construire-le-site/generee la rend. Ses objectifs
+éditoriaux sont dans /contents/page-des-actualites.
+
+Après le corps de la page :
+- [articles] Un lien vers la page de chaque article du site.
+- Chaque article du site, dans l'ordre des `articles` du site, dans cet
+  ordre (not testable) :
+  - son titre, en sous-titre, en lien vers sa page ;
+  - sa date, par exemple `13 janvier 2015` ;
+  - sa couverture, s'il en a une, avec sa description pour texte
+    alternatif ;
+  - son résumé, s'il en a un.
+- Sans article, le texte `Aucune actualité pour l'instant.` (not
+  testable).
+
+## Page d'article
+
+À `/actualites/<dossier>` : la page `actualites/<dossier>/index.md` d'un
+article, telle que /operations/construire-le-site/generee la rend. Ses
+objectifs éditoriaux sont dans /contents/page-darticle.
+
+Entre le titre et le corps, sa date, comme sur
+/ui/page-des-actualites, puis sa couverture s'il en a une, avec sa
+description pour texte alternatif ; après le corps, un lien
+`Toutes les actualités` vers `/actualites` (not testable).
+
 ## Prochaines séances
 
 Une section, montrée par une page pour une liste de séances (not

@@ -108,12 +108,31 @@ par élément de `photos`.
 - `photos: list of /model/photo`, dans l'ordre où elles sont montrées.
   - Au moins une (not testable).
 
+## Article
+
+Une actualité de La Fabrique. Chaque fichier
+`actualites/<dossier>/index.md` de `src/` est la page d'un article, avec
+ses photos dans le même dossier. Son front matter donne `résumé` et
+`couverture` sous leurs noms. Le corps de sa page peut montrer des
+photos de son dossier, chacune par son nom de fichier, avec sa
+description pour texte alternatif (not testable).
+
+- `page: /model/page`, sa page.
+- `date: date`, le jour de sa publication : la date `AAAA-MM-JJ` par
+  laquelle commence le nom de son dossier, par exemple
+  `2026-11-17-nouveau-site`.
+  - [date] Le nom du dossier commence par une date `AAAA-MM-JJ` valide,
+    suivie de `-`.
+- `résumé: optional string`, ce dont il parle, en une ou deux phrases.
+- `couverture: optional /model/photo`, la photo qui le représente.
+
 ## Photo
 
-Une photo d'une réalisation.
+Une photo d'une réalisation ou d'un article.
 
 - `fichier: string`, le nom du fichier image.
-  - Un fichier du dossier de la réalisation (not testable).
+  - Un fichier du dossier de sa réalisation ou de son article (not
+    testable).
 - `description: string`, ce que montre la photo.
   - Non vide (not testable).
 
@@ -146,5 +165,9 @@ L'état : tout ce dont le site est fait.
 - `réalisations: list of /model/realisation`, toutes les réalisations,
   de la plus récente à la plus ancienne ; l'ordre de deux réalisations
   de même date est libre.
+- `articles: list of /model/article`, tous les articles, du plus récent
+  au plus ancien ; l'ordre de deux articles de même date est libre.
+  Leurs pages sont les pages de `pages` dont le fichier est
+  `actualites/<dossier>/index.md`, chacune celle d'un seul article.
 - `séances: list of /model/seance`, les séances, par jour puis par
   heure de début ; l'ordre de deux séances au même début est libre.

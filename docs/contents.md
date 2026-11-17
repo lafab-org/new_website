@@ -24,6 +24,7 @@ Contraintes :
   ceux des ateliers et des évènements.
 - Un lien vers la page de l'agenda.
 - Un lien vers la page des réalisations.
+- Un lien vers la page des actualités.
 - Un lien vers chaque page d'atelier et d'évènement.
 - Les pages d'atelier sont listées sous `Les ateliers`, dans l'ordre
   des `ateliers` du site.
@@ -50,6 +51,25 @@ et a envie de venir faire les siens.
 Contraintes :
 - Titre : `Réalisations`.
 - La description d'une photo dit ce qu'elle montre, en une phrase
+  courte.
+
+## Page des actualités
+
+Objectif : le curieux voit que La Fabrique est un lieu vivant, et ce
+qui s'y passe.
+
+Contraintes :
+- Titre : `Actualités`.
+
+## Page d'article
+
+Objectif : le curieux et l'usager apprennent une nouvelle de La
+Fabrique, et ont envie d'y participer.
+
+Contraintes :
+- Le résumé, s'il y en a un, dit en une ou deux phrases de quoi parle
+  l'article.
+- La description de la couverture dit ce qu'elle montre, en une phrase
   courte.
 
 ## Page de l'association

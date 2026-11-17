@@ -18,3 +18,5 @@
 - Transfert des images : ajuster `sizes` et les largeurs produites pour ne pas télécharger plus que l'écran n'affiche.
 - Données personnelles des photos : métadonnées, visages et noms d'auteurs des réalisations.
 - Pagination de la page des réalisations.
+- Article mis en avant : un article choisi est présenté sur la page d'accueil et/ou sur celle de l'agenda.
+- Reprise des anciennes actualités : les 82 nouvelles de l'ancien site, triées et nettoyées.
