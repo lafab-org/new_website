@@ -237,3 +237,109 @@ test("the news page links to every article", () => {
   const missing = found.map(address).filter((a) => !links.has(a));
   assert.deepEqual(missing, [], "articles missing from the news page");
 });
+
+// The mise en avant of an article page, from its front matter block:
+// `{ pages, début, fin }`, each as written, or undefined without one.
+const miseEnAvant = (page) => {
+  const fm = readFileSync(join(SRC, page), "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? "";
+  const lines = fm.split(/\r?\n/);
+  const start = lines.findIndex((l) => /^mise-en-avant:/.test(l));
+  if (start < 0) return undefined;
+  const block = [];
+  const inline = lines[start].replace(/^mise-en-avant:/, "").replace(/\s+#.*$/, "").trim();
+  if (inline !== "") {
+    // A flow mapping, `{ pages: [...], fin: ... }`, read as a block of
+    // its entries; any other value leaves the block empty.
+    const flow = inline.match(/^\{(.*)\}$/)?.[1] ?? "";
+    let depth = 0, entry = "";
+    for (const c of flow + ",") {
+      if (c === "," && depth === 0) { if (entry.trim()) block.push("  " + entry.trim()); entry = ""; continue; }
+      if (c === "[") depth++;
+      if (c === "]") depth--;
+      entry += c;
+    }
+  } else {
+    for (const l of lines.slice(start + 1)) {
+      if (!/^\s/.test(l) && l.trim() !== "") break;
+      block.push(l);
+    }
+  }
+  const unquote = (v) => v.trim().replace(/^(["'])(.*)\1$/, "$2");
+  const value = (key) => block.find((l) => new RegExp(`^\\s+${key}:`).test(l))?.replace(/^[^:]*:/, "").replace(/\s+#.*$/, "").trim();
+  const listed = value("pages");
+  let pages;
+  if (listed === undefined) pages = [];
+  else if (listed.startsWith("[")) {
+    pages = listed.replace(/^\[|\]$/g, "").split(",").map(unquote).filter((v) => v !== "");
+  } else if (listed !== "") pages = [unquote(listed)];
+  else {
+    const i = block.findIndex((l) => /^\s+pages:/.test(l));
+    pages = [];
+    for (const l of block.slice(i + 1)) {
+      const m = l.replace(/\s+#.*$/, "").match(/^\s+-\s*(.*)$/);
+      if (!m) break;
+      pages.push(unquote(m[1]));
+    }
+  }
+  const date = (key) => (value(key) === undefined ? undefined : unquote(value(key)));
+  return { pages, début: date("début"), fin: date("fin") };
+};
+
+// A valid day written AAAA-MM-JJ.
+const validDay = (s) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s ?? "");
+  if (!m) return false;
+  const [y, mo, d] = m.slice(1).map(Number);
+  const day = new Date(0);
+  day.setUTCFullYear(y, mo - 1, d);
+  return day.getUTCFullYear() === y && day.getUTCMonth() === mo - 1 && day.getUTCDate() === d;
+};
+
+test("every mise en avant is well formed", () => {
+  // /model/mise-en-avant/valide
+  for (const p of articles()) {
+    const m = miseEnAvant(p);
+    if (!m) continue;
+    assert.ok(m.pages.length > 0, `${p}: no page`);
+    for (const page of m.pages) assert.ok(["accueil", "agenda"].includes(page), `${p}: page ${page}`);
+    assert.ok(validDay(m.fin), `${p}: fin ${m.fin}`);
+    if (m.début !== undefined) {
+      assert.ok(validDay(m.début), `${p}: début ${m.début}`);
+      assert.ok(m.début <= m.fin, `${p}: début after fin`);
+    }
+  }
+});
+
+// The day in Paris, AAAA-MM-JJ, when the tests run.
+const today = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit",
+}).format(new Date());
+
+// The addresses of the articles in avant on `page` (accueil or agenda) today.
+const enAvant = (page) => articles().filter((p) => {
+  const m = miseEnAvant(p);
+  return m && m.pages.includes(page) && (m.début === undefined || m.début <= today) && today <= m.fin;
+}).map(address);
+
+const linksOf = (addr) => {
+  const file = builtFile(addr);
+  assert.ok(existsSync(file), `${addr}: not built`);
+  return new Set(hrefs(readFileSync(file, "utf8"))
+    .map((h) => h.split("#")[0].replace(/\?.*$/, "").replace(/(.)\/$/, "$1")));
+};
+
+test("the home page links to every article in avant on it", () => {
+  // /ui/page-daccueil/en-avant
+  // /operations/construire-le-site/generee
+  const links = linksOf("/");
+  const missing = enAvant("accueil").filter((a) => !links.has(a));
+  assert.deepEqual(missing, [], "articles in avant missing from the home page");
+});
+
+test("the agenda links to every article in avant on it", () => {
+  // /ui/page-de-lagenda/en-avant
+  // /operations/construire-le-site/generee
+  const links = linksOf("/agenda");
+  const missing = enAvant("agenda").filter((a) => !links.has(a));
+  assert.deepEqual(missing, [], "articles in avant missing from the agenda");
+});
