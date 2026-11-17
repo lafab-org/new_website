@@ -133,6 +133,9 @@ sont, dans l'ordre des `articles` du site, ceux dont la mise en avant
 a `accueil`, ou `agenda`, dans ses `pages`, et dont le `jour` du site
 n'est ni avant le `début`, s'il y en a un, ni après la `fin`.
 
+Un article est publié si sa mise en avant, s'il en a une, n'a pas de
+`début` après le `jour` du site.
+
 ## Mise en avant
 
 La présentation d'un article sur d'autres pages que la sienne, pour un
@@ -165,7 +168,8 @@ L'état : tout ce dont le site est fait.
   évènements. Elle est dans le fichier `src/_data/site.json`.
 - `pages: set of /model/page`, toutes les pages.
   - [lien-interne] Chaque lien interne d'une page désigne une page de
-    `pages` ; s'il a un fragment, cette page porte l'identifiant.
+    `pages` qui n'est pas celle d'un article non publié ; s'il a un
+    fragment, cette page porte l'identifiant.
   - [fragment] Chaque lien fragment d'une page désigne un identifiant
     de cette page.
   - [image] L'adresse de chaque image d'une page est interne et désigne

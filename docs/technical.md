@@ -68,8 +68,9 @@
 - Les tests sont un contrôle de forme du site construit. Ils vident
   `_site/`, le construisent une fois par `npm run build`, puis lisent
   `_site/` : ni serveur, ni navigateur, et sans lire les gabarits. Les
-  pages sont énumérées sur `src/`, hors les fichiers des réalisations,
-  chacune lue dans son fichier de `_site/`.
+  pages sont énumérées sur `src/`, hors les fichiers des réalisations
+  et ceux des articles non publiés le jour où les tests construisent
+  le site, chacune lue dans son fichier de `_site/`.
 - Le contrôle de forme vérifie, sur chaque page construite : la langue,
   un titre non vide, le titre du navigateur, un seul `<h1>` portant le
   titre, et que chaque lien interne mène à une page du site, qui porte
@@ -85,7 +86,8 @@
   une date `AAAA-MM-JJ` valide suivie de `-`, et que sa mise en avant,
   s'il en a une, est bien formée. Sur la page de l'agenda, il vérifie qu'elle montre le nom
   de chaque séance du fichier d'exemple ; sur la page des actualités,
-  qu'elle a un lien vers chaque article ; sur la page d'accueil et sur
+  qu'elle a un lien vers chaque article publié, et que ni la page ni
+  les photos de chaque article non publié ne sont dans `_site/` ; sur la page d'accueil et sur
   celle de l'agenda, qu'elles ont un lien vers chaque article en avant
   sur elles, le jour où les tests construisent le site.
 - Une affirmation de la spécification porte une étiquette seulement si

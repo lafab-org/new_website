@@ -136,21 +136,21 @@ Après le corps de la page, chaque réalisation du site, dans l'ordre des
 éditoriaux sont dans /contents/page-des-actualites.
 
 Après le corps de la page :
-- [articles] Un lien vers la page de chaque article du site.
-- Chaque article du site, dans l'ordre des `articles` du site, dans cet
-  ordre (not testable) :
+- [articles] Un lien vers la page de chaque article publié du site.
+- Chaque article publié du site, dans l'ordre des `articles` du site,
+  dans cet ordre (not testable) :
   - sa couverture, s'il en a une, avec sa description pour texte
     alternatif ;
   - son titre, en sous-titre, en lien vers sa page ;
   - sa date, par exemple `13 janvier 2015` ;
   - son résumé, s'il en a un.
-- Sans article, le texte `Aucune actualité pour l'instant.` (not
+- Sans article publié, le texte `Aucune actualité pour l'instant.` (not
   testable).
 
 ## Page d'article
 
 À `/actualites/<dossier>` : la page `actualites/<dossier>/index.md` d'un
-article, telle que /operations/construire-le-site/generee la rend. Ses
+article publié, telle que /operations/construire-le-site/generee la rend. Ses
 objectifs éditoriaux sont dans /contents/page-darticle.
 
 Entre le titre et le corps, sa date, comme sur

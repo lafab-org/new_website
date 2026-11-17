@@ -41,11 +41,14 @@ Cases:
 
 Then:
 - [generee] Après les cas 1, 3 et 5 : le résultat est le site généré
-  sous `_site/`, où chaque page est écrite en HTML, son corps rendu
-  depuis le Markdown, et chaque photo des réalisations et des articles en fichiers
-  image, ainsi que le logo ; `index.md` donne `_site/index.html`. Les
+  sous `_site/`, où chaque page, hors celles des articles non publiés,
+  est écrite en HTML, son corps rendu
+  depuis le Markdown, et chaque photo des réalisations et des articles
+  publiés en fichiers image, ainsi que le logo ; `index.md` donne `_site/index.html`. Les
   `séances` du site sont les séances lues, et son `jour` celui de la
   construction, à Paris.
+- [non-publie] Après les cas 1, 3 et 5 : ni la page d'un article non
+  publié ni ses photos ne sont dans `_site/`.
 - Un évènement de TiBillet donne une séance quand l'un de ses
   `keywords` est l'identifiant d'une catégorie du site ; les autres sont
   ignorés. Sa séance a, aux dates et heures de Paris :
