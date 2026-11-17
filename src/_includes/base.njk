@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  {%- set ici = page.url | replace(r/(.)\/$/, "$1") %}
+  {%- set ici = (page.url or "") | replace(r/(.)\/$/, "$1") %}
   {%- macro entree(nom, adresse, ici) -%}
   <li><a href="{{ adresse }}"{% if adresse == ici %} aria-current="page"{% endif %}>{{ nom }}</a></li>
   {%- endmacro %}

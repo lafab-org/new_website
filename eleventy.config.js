@@ -1,5 +1,5 @@
-import { cpSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { cpSync, existsSync, statSync } from "node:fs";
+import { join, relative } from "node:path";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 // Where eleventy-img writes the reduced copies, kept between builds so
@@ -12,8 +12,8 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/logo.svg");
   // Each <img> of the built pages becomes a <picture> of reduced copies,
-  // served under /img/: written to the cache, then the whole cache is
-  // copied into _site/img/ after each build.
+  // served under /img/: written to the cache, then copied into _site/img/
+  // after each build (see eleventy.after below).
   eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
     outputDir: IMAGES_CACHE,
     urlPath: "/img/",
@@ -23,17 +23,17 @@ export default function (eleventyConfig) {
       imgAttributes: { loading: "lazy", decoding: "async", sizes: "(min-width: 40rem) 36rem, 100vw" },
     },
   });
-  eleventyConfig.on("eleventy.after", ({ directories }) => {
-    if (existsSync(IMAGES_CACHE)) cpSync(IMAGES_CACHE, join(directories.output, "img"), { recursive: true });
+  // Only the reduced copies the built pages use are copied, so that the
+  // photos of a page no longer built are not published.
+  eleventyConfig.on("eleventy.after", ({ directories, results }) => {
+    if (!existsSync(IMAGES_CACHE)) return;
+    const used = new Set(results.flatMap(({ content }) =>
+      typeof content === "string" ? [...content.matchAll(/\/img\/([^\s"'?#,]+)/g)].map((m) => m[1]) : []));
+    cpSync(IMAGES_CACHE, join(directories.output, "img"), {
+      recursive: true,
+      filter: (src) => statSync(src).isDirectory() || used.has(relative(IMAGES_CACHE, src)),
+    });
   });
-  // The réalisations, most recent first.
-  eleventyConfig.addCollection("realisations", (api) =>
-    api.getFilteredByGlob("src/realisations/*/index.md")
-      .sort((a, b) => b.data.date - a.data.date));
-  // The articles, most recent first.
-  eleventyConfig.addCollection("articles", (api) =>
-    api.getFilteredByGlob("src/actualites/*/index.md")
-      .sort((a, b) => b.data.dateArticle.localeCompare(a.data.dateArticle)));
   // The day of the build, in Paris: `2026-11-17`, taken anew at each
   // build, so that `npm start` left running past midnight follows it.
   const jourParis = new Intl.DateTimeFormat("en-CA", {
@@ -41,8 +41,18 @@ export default function (eleventyConfig) {
   });
   let jourConstruction;
   eleventyConfig.on("eleventy.before", () => { jourConstruction = jourParis.format(new Date()); });
+  eleventyConfig.addGlobalData("jourConstruction", () => jourConstruction);
   // A front matter day, which YAML may read as a Date, as `2026-11-17`.
   const jourIso = (d) => (d instanceof Date ? d.toISOString().slice(0, 10) : String(d));
+  // The réalisations, most recent first.
+  eleventyConfig.addCollection("realisations", (api) =>
+    api.getFilteredByGlob("src/realisations/*/index.md")
+      .sort((a, b) => b.data.date - a.data.date));
+  // The published articles, most recent first.
+  eleventyConfig.addCollection("articles", (api) =>
+    api.getFilteredByGlob("src/actualites/*/index.md")
+      .filter((a) => a.data.publie)
+      .sort((a, b) => b.data.dateArticle.localeCompare(a.data.dateArticle)));
   // The articles in avant on `page` (accueil or agenda) on the day of the build.
   eleventyConfig.addFilter("enAvant", (articles, page) => (articles ?? []).filter((a) => {
     const m = a.data["mise-en-avant"];

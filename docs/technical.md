@@ -19,7 +19,8 @@
   JPEG, en plusieurs largeurs, avec ses dimensions et un chargement
   différé. Il les écrit dans `.cache/`, que git ignore et que les
   constructions gardent : une photo déjà produite n'est pas refaite.
-  Chaque construction copie tout ce cache d'images dans `_site/img/`.
+  Chaque construction copie dans `_site/img/` les fichiers de ce cache
+  que les pages construites utilisent.
   Une photo entre dans le dépôt réduite à 2000 px au plus sur son grand
   côté, en JPEG.
 - Commandes : `npm run build` génère le site ; `npm start` le sert en
