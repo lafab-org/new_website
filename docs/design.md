@@ -12,3 +12,6 @@
   que de défiler.
 - Sur un écran étroit, le menu principal passe sous le logo, sur sa
   propre ligne.
+- Sur la page d'un article, sa couverture est montrée entière, jamais
+  recadrée ; dans la liste des actualités et les articles en avant, elle
+  peut l'être.
