@@ -5,10 +5,10 @@ layout: base.njk
 {%- if parts.length == 3 and parts[1] == "evenements" and parts[2] != "index" %}
 {% if accroche %}<p class="accroche">{{ accroche }}</p>{% endif %}
 <ul class="informations">
-  <li>Rendez-vous : {{ "rendez-vous" | champ }}</li>
-  <li>Horaire : {{ "horaire" | champ }}</li>
-  <li>Lieu : {{ site.lieu }}</li>
-  <li>Activité : {{ "prix" | champ }}</li>
+  <li><span class="libelle">Rendez-vous</span> <span>{{ "rendez-vous" | champ }}</span></li>
+  <li><span class="libelle">Horaire</span> <span>{{ "horaire" | champ }}</span></li>
+  <li><span class="libelle">Lieu</span> <span>{{ site.lieu }}</span></li>
+  <li><span class="libelle">Activité</span> <span>{{ "prix" | champ }}</span></li>
 </ul>
 {%- set seancesPage = seances | seancesDe(parts[2]) %}
 {%- include "prochaines-seances.njk" %}

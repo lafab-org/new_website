@@ -6,7 +6,7 @@ layout: base.njk
 {%- include "articles-en-avant.njk" %}
 {%- if seances.length %}
 {%- for jour, liste in seances | groupby("jour") %}
-<h2>{{ jour | jourLong }}</h2>
+<h2 class="jour">{{ jour | jourLong }}</h2>
 <ul class="seances">
 {%- for s in liste %}
 {% include "seance.njk" %}

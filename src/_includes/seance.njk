@@ -1,21 +1,20 @@
 {#- One séance, as /ui/seance shows it. Expects `s`, a séance of `seances`. -#}
 {%- set restantes = s.jauge - s.reservees if s.jauge else null %}
 {%- set complete = s.jauge and restantes <= 0 %}
-<li class="seance">
-  <span class="seance-heure">{{ s.debut | heure }}{% if s.fin %} - {{ s.fin | heure }}{% endif %}</span>
-  <span class="seance-nom">{% if s.evenement %}<a href="/evenements/{{ s.evenement }}">{{ s.nom }}</a>{% else %}{{ s.nom }}{% endif %}</span>
-  <span class="seance-categorie">{{ s.categorie | nomCategorie(categories) }}</span>
-  <span class="seance-participation">
-  {%- if s.annulee %}Annulée
-  {%- elif s.acces == "libre" %}Accès libre
-  {%- elif s.acces == "sur-place" %}Paiement sur place
+<li class="seance{% if s.annulee %} annulee{% endif %}">
+  <p class="seance-tete"><span class="seance-heure">{{ s.debut | heure }}{% if s.fin %} - {{ s.fin | heure }}{% endif %}</span> <span class="seance-categorie">{{ s.categorie | nomCategorie(categories) }}</span></p>
+  <p class="seance-nom">{% if s.evenement %}<a href="/evenements/{{ s.evenement }}">{{ s.nom }}</a>{% else %}{{ s.nom }}{% endif %}</p>
+  <p class="seance-participation">
+  {%- if s.annulee %}<span class="alerte">Annulée</span>
+  {%- elif s.acces == "libre" %}<span>Accès libre</span>
+  {%- elif s.acces == "sur-place" %}<span>Paiement sur place</span>
   {%- else %}
     {%- set parts = [] %}
     {%- if s.acces == "réservation-gratuite" %}{% set parts = (parts.push("Réservation gratuite"), parts) %}{% endif %}
     {%- if s.acces == "réservation-payante" %}{% set parts = (parts.push("Réservation payante"), parts) %}{% endif %}
-    {%- if s.jauge %}{% set parts = (parts.push("Complet" if complete else ("1 place restante" if restantes == 1 else restantes + " places restantes")), parts) %}{% endif %}
-    {{- parts | join(" · ") }}
-    {%- if not complete %}{% if parts.length %} · {% endif %}<a href="{{ s.reservation }}">{{ "Réserver" if s.acces else "Voir sur TiBillet" }}</a>{% endif %}
+    {%- if s.jauge and not complete %}{% set parts = (parts.push("1 place restante" if restantes == 1 else restantes + " places restantes"), parts) %}{% endif %}
+    {%- if parts.length or complete %}<span>{{ parts | join(" · ") }}{% if complete %}{% if parts.length %} · {% endif %}<span class="alerte">Complet</span>{% endif %}</span>{% endif %}
+    {%- if not complete %} <a class="bouton" href="{{ s.reservation }}">{{ "Réserver" if s.acces else "Voir sur TiBillet" }}</a>{% endif %}
   {%- endif -%}
-  </span>
+  </p>
 </li>

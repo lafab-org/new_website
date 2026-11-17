@@ -3,13 +3,13 @@
 <section class="prochaines-seances">
 <h2>Prochaines séances</h2>
 {%- for jour, liste in seancesPage.slice(0, 5) | groupby("jour") %}
-<h3>{{ jour | jourLong }}</h3>
+<h3 class="jour">{{ jour | jourLong }}</h3>
 <ul class="seances">
 {%- for s in liste %}
 {% include "seance.njk" %}
 {%- endfor %}
 </ul>
 {%- endfor %}
-<p><a href="/agenda">Voir l'agenda</a></p>
+<p class="voir-agenda"><a href="/agenda">Voir l'agenda</a></p>
 </section>
 {%- endif %}
