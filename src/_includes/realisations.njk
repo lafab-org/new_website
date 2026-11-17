@@ -1,0 +1,14 @@
+---
+layout: base.njk
+---
+{{ content | safe }}
+{% for r in collections.realisations %}
+<section class="realisation">
+  <h2>{{ r.data.titre }}</h2>
+  {% for photo in r.data.photos %}
+  <img src="{{ r.page.filePathStem | replace('/index', '') }}/{{ photo.fichier }}" alt="{{ photo.description }}">
+  {% endfor %}
+  <p>Par {{ r.data.auteur }}</p>
+  <p>{{ r.data.date | moisAnnee }}</p>
+</section>
+{% endfor %}

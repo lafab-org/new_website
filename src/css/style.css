@@ -40,3 +40,15 @@ main {
 .seance-categorie {
   font-size: 0.9em;
 }
+
+/* Réalisations : chaque photo occupe la largeur du texte. */
+.realisation img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+.realisation p {
+  margin: 0.25rem 0;
+}

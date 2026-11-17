@@ -1,7 +1,22 @@
+import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+
 const byTitle = (a, b) => a.data.title.localeCompare(b.data.title, "fr");
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
+  // Each <img> of the built pages becomes a <picture> of reduced copies,
+  // written under _site/img/.
+  eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+    formats: ["webp", "jpeg"],
+    widths: [400, 800, 1600],
+    htmlOptions: {
+      imgAttributes: { loading: "lazy", decoding: "async", sizes: "(min-width: 40rem) 36rem, 100vw" },
+    },
+  });
+  // The réalisations, most recent first.
+  eleventyConfig.addCollection("realisations", (api) =>
+    api.getFilteredByGlob("src/realisations/*/index.md")
+      .sort((a, b) => b.data.date - a.data.date));
   // A front matter value by its name, for names Nunjucks cannot write
   // as a variable (`rendez-vous`).
   eleventyConfig.addFilter("champ", function (name) {
@@ -16,7 +31,7 @@ export default function (eleventyConfig) {
     const pages = api.getAll();
     const addresses = pages[0]?.data.ateliers ?? [];
     return addresses
-      .map((a) => pages.find((p) => p.url.replace(/\/$/, "") === a))
+      .map((a) => pages.find((p) => p.url && p.url.replace(/\/$/, "") === a))
       .filter((p) => p);
   });
   // Event pages grouped by category, in the order of `categories.json`,
@@ -55,6 +70,12 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("heure", (h) => {
     const [hh, mm] = h.split(":");
     return `${Number(hh)} h${mm === "00" ? "" : " " + mm}`;
+  });
+  // A date as its month and year: `Octobre 2019`.
+  const moisAnnee = new Intl.DateTimeFormat("fr-FR", { month: "long", year: "numeric", timeZone: "UTC" });
+  eleventyConfig.addFilter("moisAnnee", (d) => {
+    const s = moisAnnee.format(new Date(d));
+    return s.charAt(0).toUpperCase() + s.slice(1);
   });
   // The name of a category, from its identifier.
   eleventyConfig.addFilter("nomCategorie", (id, categories) =>
