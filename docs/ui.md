@@ -89,6 +89,20 @@ Après le corps de la page :
 - Sans séance, le texte `Aucune séance prévue pour l'instant.` (not
   testable).
 
+## Page des réalisations
+
+À `/realisations` : la page `realisations.md`, telle que
+/operations/construire-le-site/generee la rend. Ses objectifs
+éditoriaux sont dans /contents/page-des-realisations.
+
+Après le corps de la page, chaque réalisation du site, dans l'ordre des
+`réalisations` du site, dans cet ordre (not testable) :
+- son titre, en sous-titre ;
+- ses photos, dans leur ordre, chacune avec sa description pour texte
+  alternatif ;
+- `Par <auteur>` ;
+- le mois et l'année de sa date, par exemple `Octobre 2019`.
+
 ## Prochaines séances
 
 Une section, montrée par une page pour une liste de séances (not

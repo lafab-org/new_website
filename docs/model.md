@@ -11,6 +11,8 @@ Une page du site web, écrite sous forme de fichier source Markdown.
 - `body: string`, le texte Markdown de la page.
 - `links: set of string`, les adresses des éléments `<a href>` de la
   page une fois construite, gabarit compris.
+- `images: set of /model/image`, les éléments `<img>` de la page une
+  fois construite, gabarit compris.
 - `catégories: set of string`, les identifiants des catégories dont la
   page montre les évènements ; vide si son front matter n'en donne pas.
   - [categories] Chacun est l'identifiant d'une catégorie du site.
@@ -26,7 +28,16 @@ seul `/` ; il désigne une page quand son adresse, sans fragment `#…`,
 sans paramètres `?…` et sans `/` final autre que celui de `/`, est
 celle de la page. Un lien est un fragment si son adresse commence par
 `#`. Le fragment d'un lien, `#…`, désigne un identifiant (`id`) d'une
-page construite.
+page construite. L'adresse d'une image est interne si elle commence par
+un seul `/` ; elle désigne alors le fichier de `_site/` à ce chemin.
+
+## Image
+
+Une image d'une page construite.
+
+- `adresse: string`, son `src`.
+- `texte: string`, son texte alternatif, `alt`.
+  - [texte] Non vide.
 
 ## Catégorie
 
@@ -79,6 +90,33 @@ Les places restantes d'une séance qui a une jauge : sa jauge moins ses
 places réservées. Elle est complète quand il n'en reste aucune, ou
 moins.
 
+## Réalisation
+
+Un objet fait à La Fabrique, montré en photos. Chaque fichier Markdown
+du dossier `realisations/` de `src/` est une réalisation, et non une
+page : `realisations/<dossier>/index.md`, avec ses photos dans le même
+dossier. Son front matter donne ses champs sous leurs noms, une photo
+par élément de `photos`.
+
+- `titre: string`, ce qu'elle est.
+- `date: date`, le jour où elle a été présentée.
+- `auteur: string`, qui l'a faite.
+- `catégories: set of string`, les identifiants des catégories dont
+  elle relève.
+  - [categories] Chacun est l'identifiant d'une catégorie du site.
+  - Au moins une (not testable).
+- `photos: list of /model/photo`, dans l'ordre où elles sont montrées.
+  - Au moins une (not testable).
+
+## Photo
+
+Une photo d'une réalisation.
+
+- `fichier: string`, le nom du fichier image.
+  - Un fichier du dossier de la réalisation (not testable).
+- `description: string`, ce que montre la photo.
+  - Non vide (not testable).
+
 ## Site
 
 L'état : tout ce dont le site est fait.
@@ -90,6 +128,8 @@ L'état : tout ce dont le site est fait.
     `pages` ; s'il a un fragment, cette page porte l'identifiant.
   - [fragment] Chaque lien fragment d'une page désigne un identifiant
     de cette page.
+  - [image] L'adresse de chaque image d'une page est interne et désigne
+    un fichier de `_site/`.
 - `catégories: list of /model/categorie`, toutes les catégories, dans
   l'ordre où le site les présente. Elles sont dans le fichier
   `src/_data/categories.json`, qui donne pour chacune son identifiant et
@@ -103,5 +143,8 @@ L'état : tout ce dont le site est fait.
   pages sont les pages de `pages` dont le fichier est directement dans
   `evenements/`, hors `evenements/index.md`, chacune celle d'un seul
   évènement.
+- `réalisations: list of /model/realisation`, toutes les réalisations,
+  de la plus récente à la plus ancienne ; l'ordre de deux réalisations
+  de même date est libre.
 - `séances: list of /model/seance`, les séances, par jour puis par
   heure de début ; l'ordre de deux séances au même début est libre.

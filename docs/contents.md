@@ -23,6 +23,7 @@ Contraintes :
 - Un lien vers la page de l'association, dans le corps de la page, avant
   ceux des ateliers et des évènements.
 - Un lien vers la page de l'agenda.
+- Un lien vers la page des réalisations.
 - Un lien vers chaque page d'atelier et d'évènement.
 - Les pages d'atelier sont listées sous `Les ateliers`, dans l'ordre
   des `ateliers` du site.
@@ -40,6 +41,16 @@ Objectifs :
 
 Contraintes :
 - Titre : `Agenda`.
+
+## Page des réalisations
+
+Objectif : le curieux voit ce que les membres fabriquent à La Fabrique,
+et a envie de venir faire les siens.
+
+Contraintes :
+- Titre : `Réalisations`.
+- La description d'une photo dit ce qu'elle montre, en une phrase
+  courte.
 
 ## Page de l'association
 

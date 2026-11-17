@@ -7,13 +7,18 @@
 - Exécution : une version LTS de Node.js, avec npm.
 - Styles : CSS simple, sans étape de construction.
 - Organisation : sources dans `src/`, site généré dans `_site/`.
-- Une page est un fichier de `src/` : son URL est formée de son dossier
+- Une page est un fichier Markdown de `src/`, hors ceux de
+  `realisations/` : son URL est formée de son dossier
   et de son nom de fichier, sans extension. `index.md` est écrit dans
   `_site/index.html` et sert `/` ; `topic/page.md` est écrit dans
   `_site/topic/page/index.html` et sert `/topic/page`.
 - Les pages sont mises en page par des gabarits Nunjucks, dans
   `src/_includes/`. Le gabarit de base porte la balise viewport.
 - Les informations communes du site sont dans le répertoire `src/_data`
+- Images : `@11ty/eleventy-img`, qui écrit chaque photo dans `_site/`
+  en WebP et en JPEG, en plusieurs largeurs, avec ses dimensions et un
+  chargement différé. Une photo entre dans le dépôt réduite à 2000 px au
+  plus sur son grand côté, en JPEG.
 - Commandes : `npm run build` génère le site ; `npm start` le sert en
   local avec rechargement, sur `http://localhost:8080`.
 - Les messages vus par l'utilisateur ne sont pas spécifiés.
@@ -43,17 +48,19 @@
 - Les tests sont un contrôle de forme du site construit. Ils le
   construisent une fois par `npm run build`, puis lisent `_site/` : ni
   serveur, ni navigateur, et sans lire les gabarits. Les pages sont
-  énumérées sur `src/`, chacune lue dans son fichier de `_site/`.
+  énumérées sur `src/`, hors les fichiers des réalisations, chacune lue
+  dans son fichier de `_site/`.
 - Le contrôle de forme vérifie, sur chaque page construite : la langue,
   un titre non vide, le titre du navigateur, un seul `<h1>` portant le
   titre, et que chaque lien interne mène à une page du site, qui porte
   l'identifiant visé par son fragment s'il en a un ; un fragment seul
-  mène à un identifiant de sa page. Les liens morts sont rapportés tous
-  ensemble, chacun avec sa page. Les liens externes ne sont pas
+  mène à un identifiant de sa page ; et que chaque image a un texte
+  alternatif et que son adresse mène à un fichier de `_site/`. Les liens
+  morts sont rapportés tous ensemble, chacun avec sa page. Les liens externes ne sont pas
   vérifiés. Sur chaque source
   d'évènement, il vérifie que les informations pratiques sont
   renseignées et que sa catégorie est une catégorie du site ; sur
-  chaque source de page, que ses catégories en sont. Sur la page de
+  chaque source de page et de réalisation, que ses catégories en sont. Sur la page de
   l'agenda, il vérifie qu'elle montre le nom de chaque séance du
   fichier d'exemple.
 - Une affirmation de la spécification porte une étiquette seulement si
