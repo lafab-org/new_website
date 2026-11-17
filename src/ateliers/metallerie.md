@@ -45,7 +45,7 @@ TIG, initiation au soudage semi-automatique, ou accompagnement d'un
 projet. Une fois autonome, on vient travailler seul.
 
 Les initiations ont lieu deux fois par mois, un vendredi et un samedi
-après-midi, et se réservent sur l'agenda.
+après-midi, et se réservent sur [l'agenda](/agenda).
 
 ## Donner un coup de main
 

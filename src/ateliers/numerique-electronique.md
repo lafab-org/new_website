@@ -28,7 +28,8 @@ en 3D et on y découpe au laser, pour réparer, fabriquer ou apprendre.
 
 On n'utilise que ce que l'on maîtrise.
 
-La découpeuse laser exige une initiation avant usage.
+La découpeuse laser exige une initiation avant usage, qui se réserve
+sur [l'agenda](/agenda).
 
 ## Venir visiter
 

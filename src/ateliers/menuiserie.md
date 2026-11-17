@@ -45,7 +45,7 @@ pendant les portes ouvertes, que propose [l'association](/association).
 Les initiations scier, débiter et travailler le bois massif sont
 obligatoires pour utiliser les machines concernées. Elles ont lieu deux
 fois par mois, un vendredi et un samedi après-midi, et se réservent sur
-l'agenda.
+[l'agenda](/agenda).
 
 L'initiation tournage sur bois, elle aussi obligatoire, a lieu sur
 demande : écrivez à [contact@lafab.org](mailto:contact@lafab.org).

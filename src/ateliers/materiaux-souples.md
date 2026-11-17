@@ -41,7 +41,8 @@ On n'utilise que ce que l'on maîtrise.
 
 En cordonnerie, on vient d'abord à une session d'auto-réparation pour
 utiliser la machine à coudre, puis on prend un projet libre pour
-utiliser le banc de finition.
+utiliser le banc de finition. Les sessions et les projets libres se
+réservent sur [l'agenda](/agenda).
 
 ## Venir visiter
 

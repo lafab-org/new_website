@@ -2,6 +2,8 @@
 layout: base.njk
 ---
 {{ content | safe }}
+{%- set seancesPage = seances | deCategoriesSeances("catégories" | champ) %}
+{%- include "prochaines-seances.njk" %}
 {%- set evenements = collections.evenements | deCategories("catégories" | champ) %}
 {%- if evenements.length %}
 <h2>Les évènements</h2>

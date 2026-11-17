@@ -10,3 +10,5 @@
 - Évènement d'initiation à la découpeuse laser : sa page d'évènement (la page de l'atelier numérique et électronique la présente comme obligatoire avant usage).
 - Réunions de gestion et AG annuelle : leurs pages d'évènement, dans la catégorie « Vie de l'association ».
 - Lien d'une séance vers sa propre page : sur une page d'évènement, le nom de la séance ne renvoie pas à la page elle-même.
+- Section « Les évènements » : la décrire dans `ui.md` (pages d'atelier et de l'association) plutôt que dans `contents.md`.
+- Séances à plusieurs catégories : un évènement TiBillet portant plusieurs catégories apparaît sur chacune des pages concernées, pas seulement la première.
