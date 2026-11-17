@@ -1,6 +1,5 @@
 ---
 title: "La métallerie"
-menu: "Métallerie"
 catégories: ["métal"]
 ---
 

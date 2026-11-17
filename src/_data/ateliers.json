@@ -1,6 +1,6 @@
 [
-  "/ateliers/menuiserie",
-  "/ateliers/metallerie",
-  "/ateliers/materiaux-souples",
-  "/ateliers/numerique-electronique"
+  { "adresse": "/ateliers/menuiserie", "menu": "Menuiserie" },
+  { "adresse": "/ateliers/metallerie", "menu": "Métallerie" },
+  { "adresse": "/ateliers/materiaux-souples", "menu": "Matériaux souples" },
+  { "adresse": "/ateliers/numerique-electronique", "menu": "Numérique" }
 ]

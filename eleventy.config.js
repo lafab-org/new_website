@@ -58,12 +58,12 @@ export default function (eleventyConfig) {
   // A value of the front matter as a list: a single value gives a list of
   // one, none an empty list.
   const asList = (v) => (v == null ? [] : [].concat(v));
-  // The atelier pages, in the order of the addresses of `ateliers.json`.
+  // The atelier pages, in the order of `ateliers.json`.
   eleventyConfig.addCollection("pagesAtelier", (api) => {
     const pages = api.getAll();
-    const addresses = pages[0]?.data.ateliers ?? [];
-    return addresses
-      .map((a) => pages.find((p) => p.url && p.url.replace(/\/$/, "") === a))
+    const ateliers = pages[0]?.data.ateliers ?? [];
+    return ateliers
+      .map((a) => pages.find((p) => p.url && p.url.replace(/\/$/, "") === a.adresse))
       .filter((p) => p);
   });
   // Event pages grouped by category, in the order of `categories.json`,

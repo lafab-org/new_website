@@ -17,4 +17,3 @@
 - Données personnelles des photos : métadonnées, visages et noms d'auteurs des réalisations.
 - Pagination de la page des réalisations.
 - Reprise des anciennes actualités : les 82 nouvelles de l'ancien site, triées et nettoyées.
-- Ateliers au même endroit : réunir leur ordre (`ateliers.json`) et leurs noms courts de menu (front matter), aujourd'hui séparés.

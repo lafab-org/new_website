@@ -24,8 +24,8 @@
     </div>
     <nav aria-label="Ateliers et association">
       <ul class="menu menu-secondaire">
-        {%- for p in collections.pagesAtelier %}
-          {{ entree(p.data.menu or p.data.title, p.url | replace(r/\/$/, ""), ici) }}
+        {%- for a in ateliers %}
+          {{ entree(a.menu, a.adresse, ici) }}
         {%- endfor %}
           {{ entree("L'association", "/association", ici) }}
       </ul>
