@@ -1,0 +1,125 @@
+{
+  "events": {
+    "results": [
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000001",
+        "name": "Club retouches spécial fêtes",
+        "startDate": "2026-12-03T18:00:00+01:00",
+        "endDate": "2026-12-03T20:00:00+01:00",
+        "url": "https://tibillet.example/event/club-retouches-2026-12-03/",
+        "maximumAttendeeCapacity": 8,
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": ["matériaux-souples", "club-retouches", "réservation-gratuite"]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000002",
+        "name": "Initiation au soudage",
+        "startDate": "2026-12-05T09:30:00+01:00",
+        "endDate": "2026-12-05T12:30:00+01:00",
+        "url": "https://tibillet.example/event/initiation-soudage-2026-12-05/",
+        "maximumAttendeeCapacity": 4,
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": ["initiation-soudage", "métal", "réservation-payante"]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000003",
+        "name": "Portes ouvertes",
+        "startDate": "2026-12-05T14:00:00+01:00",
+        "endDate": null,
+        "url": "https://tibillet.example/event/portes-ouvertes-2026-12-05/",
+        "maximumAttendeeCapacity": 0,
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": ["association", "portes-ouvertes", "libre"]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000004",
+        "name": "Répar'Action",
+        "startDate": "2026-12-12T14:00:00+01:00",
+        "endDate": "2026-12-12T17:00:00+01:00",
+        "url": "https://tibillet.example/event/repar-action-2026-12-12/",
+        "eventStatus": "https://schema.org/EventCancelled",
+        "keywords": ["numérique-électronique", "repar-action", "sur-place"]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000005",
+        "name": "Week-end bois massif",
+        "startDate": "2027-01-16T09:00:00+01:00",
+        "endDate": "2027-01-17T17:00:00+01:00",
+        "url": "https://tibillet.example/event/week-end-bois-massif-2027-01-16/",
+        "maximumAttendeeCapacity": 6,
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": ["bois"]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000006",
+        "name": "Atelier passé",
+        "startDate": "2025-03-08T10:00:00+01:00",
+        "endDate": "2025-03-08T12:00:00+01:00",
+        "url": "https://tibillet.example/event/atelier-passe-2025-03-08/",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": ["bois", "libre"]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000007",
+        "name": "Soirée privée",
+        "startDate": "2026-12-04T19:00:00+01:00",
+        "url": "https://tibillet.example/event/soiree-privee-2026-12-04/",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": ["privé"]
+      }
+    ]
+  },
+  "reservations": {
+    "00000000-0000-4000-8000-000000000001": {
+      "results": [
+        {
+          "@type": "Reservation",
+          "identifier": "10000000-0000-4000-8000-000000000001",
+          "reservationFor": { "@type": "Event", "identifier": "00000000-0000-4000-8000-000000000001", "name": "Club retouches spécial fêtes" },
+          "reservationStatus": "https://schema.org/ReservationConfirmed",
+          "reservedTicket": [{ "@type": "Ticket", "identifier": "20000000-0000-4000-8000-000000000001", "ticketQuantity": 2 }]
+        },
+        {
+          "@type": "Reservation",
+          "identifier": "10000000-0000-4000-8000-000000000002",
+          "reservationFor": { "@type": "Event", "identifier": "00000000-0000-4000-8000-000000000001", "name": "Club retouches spécial fêtes" },
+          "reservationStatus": "https://schema.org/ReservationPending",
+          "reservedTicket": [{ "@type": "Ticket", "identifier": "20000000-0000-4000-8000-000000000002", "ticketQuantity": 1 }]
+        },
+        {
+          "@type": "Reservation",
+          "identifier": "10000000-0000-4000-8000-000000000003",
+          "reservationFor": { "@type": "Event", "identifier": "00000000-0000-4000-8000-000000000001", "name": "Club retouches spécial fêtes" },
+          "reservationStatus": "https://schema.org/ReservationCancelled",
+          "reservedTicket": [{ "@type": "Ticket", "identifier": "20000000-0000-4000-8000-000000000003", "ticketQuantity": 4 }]
+        }
+      ]
+    },
+    "00000000-0000-4000-8000-000000000002": {
+      "results": [
+        {
+          "@type": "Reservation",
+          "identifier": "10000000-0000-4000-8000-000000000004",
+          "reservationFor": { "@type": "Event", "identifier": "00000000-0000-4000-8000-000000000002", "name": "Initiation au soudage" },
+          "reservationStatus": "https://schema.org/ReservationConfirmed",
+          "reservedTicket": [
+            { "@type": "Ticket", "identifier": "20000000-0000-4000-8000-000000000004", "ticketQuantity": 3 },
+            { "@type": "Ticket", "identifier": "20000000-0000-4000-8000-000000000005", "ticketQuantity": 1 }
+          ]
+        }
+      ]
+    },
+    "00000000-0000-4000-8000-000000000003": { "results": [] },
+    "00000000-0000-4000-8000-000000000004": { "results": [] },
+    "00000000-0000-4000-8000-000000000005": { "results": [] },
+    "00000000-0000-4000-8000-000000000006": { "results": [] },
+    "00000000-0000-4000-8000-000000000007": { "results": [] }
+  }
+}

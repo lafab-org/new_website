@@ -7,6 +7,8 @@ import { join } from "node:path";
 
 const SRC = "src";
 const SITE = "_site";
+// The sample stand-in for TiBillet the site is built with.
+const TIBILLET = join("tests", "tibillet.json");
 
 // Markdown pages of src/, outside _includes/, as paths relative to src/.
 function pages(dir = "") {
@@ -39,7 +41,10 @@ const isEvent = (page) => /^evenements\/[^/]+\.md$/.test(page) && page !== "even
 const all = pages();
 const built = {};
 before(() => {
-  execFileSync("npm", ["run", "build"], { stdio: "pipe" });
+  execFileSync("npm", ["run", "build"], {
+    stdio: "pipe",
+    env: { ...process.env, TIBILLET_FICHIER: TIBILLET },
+  });
   for (const p of all) built[p] = readFileSync(builtFile(address(p)), "utf8");
 });
 
@@ -148,4 +153,20 @@ test("no dead link: internal links lead to a page, fragments to an id", () => {
     }
   }
   assert.deepEqual(dead, [], "dead links");
+});
+
+test("the agenda shows the name of every séance of the sample file", () => {
+  // /operations/construire-le-site/fichier
+  // /ui/page-de-lagenda/seances
+  const identifiers = categoryIds();
+  const events = JSON.parse(readFileSync(TIBILLET, "utf8")).events.results;
+  const names = events
+    .filter((e) => (e.keywords ?? []).some((k) => identifiers.includes(k)))
+    .map((e) => e.name);
+  assert.ok(names.length > 0, "no séance in the sample file");
+  const file = builtFile("/agenda");
+  assert.ok(existsSync(file), "no agenda page built");
+  const shown = text(readFileSync(file, "utf8"));
+  const missing = names.filter((n) => !shown.includes(n));
+  assert.deepEqual(missing, [], "séances missing from the agenda");
 });
