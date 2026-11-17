@@ -44,3 +44,36 @@ ordre (not testable) :
 - `Horaire : <horaire>`
 - `Lieu : <lieu>`, où `<lieu>` est le `lieu` du site
 - `Activité : <prix>`
+
+## Séance
+
+Montre une séance, dans cet ordre (not testable) :
+- son début, puis sa fin si elle en a une ;
+- son nom, en lien vers la page de son évènement si elle en a un ;
+- le nom de sa catégorie ;
+- sa participation, le premier cas qui s'applique :
+  1. annulée : `Annulée` ;
+  2. accès `libre` : `Accès libre` ;
+  3. accès `sur-place` : `Paiement sur place` ;
+  4. accès `réservation-gratuite` ou `réservation-payante`, ou sans
+     accès : `Réservation gratuite` ou `Réservation payante` selon
+     l'accès, rien sans accès ; puis, si elle a une jauge,
+     `1 place restante` ou `<n> places restantes`, où `<n>` est le
+     nombre de ses places restantes, ou `Complet` si elle est
+     complète ; enfin, sauf si elle est complète, un lien vers sa
+     réservation : `Réserver` avec un accès, `Voir sur TiBillet` sans
+     accès.
+
+## Page de l'agenda
+
+À `/agenda` : la page `agenda.md`, telle que
+/operations/construire-le-site/generee la rend. Ses objectifs
+éditoriaux sont dans /contents/page-de-lagenda.
+
+Après le corps de la page :
+- [seances] Le nom de chaque séance du site.
+- Les séances sont groupées par jour, chaque jour en sous-titre, ses
+  séances sous la forme de /ui/seance, dans l'ordre des `séances` du
+  site (not testable).
+- Sans séance, le texte `Aucune séance prévue pour l'instant.` (not
+  testable).

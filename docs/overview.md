@@ -15,5 +15,6 @@ un service à consommer.
 ## Hors périmètre
 
 - Aucune autre langue.
-- Ni comptes, ni paiement en ligne, ni réservation.
+- Ni comptes, ni paiement en ligne, ni réservation sur le site : elles
+  se font sur TiBillet.
 - Ni serveur applicatif, ni système de gestion de contenu.

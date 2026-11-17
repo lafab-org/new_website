@@ -10,7 +10,6 @@ s'imposent au texte, s'il y en a. Les textes entre backticks (`comme
 ceci`) figurent tels quels dans la page.
 
 Contraintes communes :
-- Aucun lien vers l'agenda.
 - Le seul moyen de contact donné est `contact@lafab.org`, en lien
   `mailto:`.
 
@@ -23,6 +22,7 @@ Contraintes :
 - Titre : `La Fabrique`.
 - Un lien vers la page de l'association, dans le corps de la page, avant
   ceux des ateliers et des évènements.
+- Un lien vers la page de l'agenda.
 - Un lien vers chaque page d'atelier et d'évènement.
 - Les pages d'atelier sont listées sous `Les ateliers`, dans l'ordre
   des `ateliers` du site.
@@ -30,6 +30,16 @@ Contraintes :
   catégorie qui a des évènements, dans l'ordre des `catégories` du
   site : le nom de la catégorie en sous-titre, puis un lien vers chacun
   de ses évènements, triés par titre.
+
+## Page de l'agenda
+
+Objectifs :
+- le curieux et l'usager voient ce qui a lieu à La Fabrique, et quand ;
+- l'usager sait que la réservation et le paiement se font sur TiBillet,
+  par le lien de chaque séance sur réservation.
+
+Contraintes :
+- Titre : `Agenda`.
 
 ## Page de l'association
 

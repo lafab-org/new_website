@@ -7,13 +7,7 @@ TiBillet.
 
 ## Outline
 
-1. `seances-agenda` : /readme, /overview/hors-perimetre,
-   /technical/politique-de-tests-et-de-qualite, /model/seance,
-   /model/site, /operations/initial-state,
-   /operations/construire-le-site, /ui/seance,
-   /ui/page-de-lagenda, /contents/page-daccueil,
-   /contents/page-de-lagenda ; aussi les lignes de `technical.md` et
-   la contrainte commune de `contents.md` hors de leurs sections.
+1. `seances-agenda` done
 2. `seances-evenement` : /model/evenement, /ui/prochaines-seances,
    /ui/page-devenement.
 3. `seances-atelier` : /model/page, /ui/page-datelier, /ui/page-de-lassociation,
