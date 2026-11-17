@@ -2,7 +2,6 @@
 
 - Suspension de la reconstruction quotidienne : GitHub suspend la tâche planifiée après 60 jours sans activité sur le dépôt ; la réactiver automatiquement, ou passer à une offre payante.
 - Photos des ateliers : intégrer aux pages une sélection de photos (redimensionnées, avec texte alternatif) ; les pages métallerie et Répar'Action les recevront.
-- Design général du site : navigation (dont le retour vers l'accueil) et apparence commune, une fois plusieurs pages spécifiées.
 - Pied de page : adresse, contact et liens utiles sur toutes les pages.
 - Ligne éditoriale : relire les pages d'accueil et métallerie pour présenter La Fabrique comme un lieu où l'on participe, non comme un service.
 - Données structurées des évènements : balisage `schema.org/Event`, récurrence comprise, pour les moteurs de recherche.
@@ -18,3 +17,4 @@
 - Données personnelles des photos : métadonnées, visages et noms d'auteurs des réalisations.
 - Pagination de la page des réalisations.
 - Reprise des anciennes actualités : les 82 nouvelles de l'ancien site, triées et nettoyées.
+- Ateliers au même endroit : réunir leur ordre (`ateliers.json`) et leurs noms courts de menu (front matter), aujourd'hui séparés.

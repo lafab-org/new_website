@@ -1,5 +1,6 @@
 ---
 title: "Atelier matériaux souples"
+menu: "Matériaux souples"
 catégories: ["matériaux-souples"]
 ---
 

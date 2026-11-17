@@ -1,19 +1,123 @@
 /* Pensé d'abord pour un écran étroit de smartphone. */
+:root {
+  --orange: #ff6600;
+  --texte: #111111;
+  --fond: #ffffff;
+  --accroche: #1f4a6e;
+  --largeur-texte: 40rem;
+  --filet: 3px;
+}
+
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
   line-height: 1.5;
+  color: var(--texte);
+  background: var(--fond);
+}
+
+/* En-tête : le logo, puis le menu principal dessous ; le menu des
+   ateliers passe sur deux lignes plutôt que de défiler. */
+.en-tete-haut {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-bottom: var(--filet) solid var(--orange);
+}
+
+.logo img {
+  display: block;
+  height: 3rem;
+  width: auto;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  color: var(--texte);
+  text-decoration: none;
+}
+
+.menu a[aria-current="page"] {
+  color: var(--orange);
+  font-weight: bold;
+}
+
+.menu-principal {
+  font-size: 1.15rem;
+}
+
+.menu-secondaire {
+  display: block;
+  text-align: center;
+  text-wrap: balance;
+  padding: 0.4rem 1rem;
+  border-bottom: var(--filet) dashed var(--orange);
+  font-size: 0.95rem;
+}
+.menu-secondaire li {
+  display: inline-block;
+  margin: 0.1rem 0.5rem;
 }
 
 main {
   padding: 1rem;
 }
 
+h1 {
+  margin: 0.5rem 0;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+h2 {
+  margin-top: 2rem;
+  line-height: 1.2;
+}
+
+.accroche {
+  color: var(--accroche);
+  font-style: italic;
+}
+
 @media (min-width: 40rem) {
+  .en-tete-haut {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem max(1rem, calc((100% - var(--largeur-texte)) / 2));
+  }
+
+  .logo img {
+    height: 4.5rem;
+  }
+
+  .menu-principal {
+    font-size: 1.5rem;
+    gap: 2rem;
+  }
+
+  .menu-secondaire li {
+    margin: 0.1rem 1rem;
+  }
+
   main {
-    max-width: 40rem;
+    max-width: var(--largeur-texte);
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  h1 {
+    font-size: 2.6rem;
   }
 }
 

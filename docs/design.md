@@ -8,6 +8,7 @@
 - Police : la police système du visiteur, sans police téléchargée.
 - Les menus de l'en-tête sont toujours visibles, jamais repliés
   derrière un bouton ; sur un écran étroit, le menu des ateliers et de
-  l'association passe sur deux lignes plutôt que de défiler.
+  l'association passe sur des lignes de longueurs équilibrées plutôt
+  que de défiler.
 - Sur un écran étroit, le menu principal passe sous le logo, sur sa
   propre ligne.

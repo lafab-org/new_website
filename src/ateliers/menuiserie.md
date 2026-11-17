@@ -1,5 +1,6 @@
 ---
 title: "La menuiserie"
+menu: "Menuiserie"
 catégories: ["bois"]
 ---
 

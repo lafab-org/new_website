@@ -1,5 +1,6 @@
 ---
 title: "Le numérique et l'électronique"
+menu: "Numérique"
 catégories: ["numérique-électronique"]
 ---
 

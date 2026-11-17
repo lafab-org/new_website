@@ -7,6 +7,30 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  {%- set ici = page.url | replace(r/(.)\/$/, "$1") %}
+  {%- macro entree(nom, adresse, ici) -%}
+  <li><a href="{{ adresse }}"{% if adresse == ici %} aria-current="page"{% endif %}>{{ nom }}</a></li>
+  {%- endmacro %}
+  <header>
+    <div class="en-tete-haut">
+      <a class="logo" href="/"><img src="/logo.svg" alt="La Fabrique - accueil" width="344" height="189" eleventy:ignore></a>
+      <nav aria-label="Menu principal">
+        <ul class="menu menu-principal">
+          {{ entree("Agenda", "/agenda", ici) }}
+          {{ entree("Actualités", "/actualites", ici) }}
+          {{ entree("Réalisations", "/realisations", ici) }}
+        </ul>
+      </nav>
+    </div>
+    <nav aria-label="Ateliers et association">
+      <ul class="menu menu-secondaire">
+        {%- for p in collections.pagesAtelier %}
+          {{ entree(p.data.menu or p.data.title, p.url | replace(r/\/$/, ""), ici) }}
+        {%- endfor %}
+          {{ entree("L'association", "/association", ici) }}
+      </ul>
+    </nav>
+  </header>
   <main>
     <h1>{{ title }}</h1>
     {{ content | safe }}

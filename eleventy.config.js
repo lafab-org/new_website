@@ -10,6 +10,7 @@ const byTitle = (a, b) => a.data.title.localeCompare(b.data.title, "fr");
 
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
+  eleventyConfig.addPassthroughCopy("src/logo.svg");
   // Each <img> of the built pages becomes a <picture> of reduced copies,
   // served under /img/: written to the cache, then the whole cache is
   // copied into _site/img/ after each build.

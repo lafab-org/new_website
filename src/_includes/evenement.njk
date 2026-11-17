@@ -3,12 +3,12 @@ layout: base.njk
 ---
 {%- set parts = page.filePathStem.split("/") -%}
 {%- if parts.length == 3 and parts[1] == "evenements" and parts[2] != "index" %}
-{% if accroche %}<p class="accroche"><strong>{{ accroche }}</strong></p>{% endif %}
+{% if accroche %}<p class="accroche">{{ accroche }}</p>{% endif %}
 <ul class="informations">
-  <li><strong>Rendez-vous :</strong> {{ "rendez-vous" | champ }}</li>
-  <li><strong>Horaire :</strong> {{ "horaire" | champ }}</li>
-  <li><strong>Lieu :</strong> {{ site.lieu }}</li>
-  <li><strong>Activité :</strong> {{ "prix" | champ }}</li>
+  <li>Rendez-vous : {{ "rendez-vous" | champ }}</li>
+  <li>Horaire : {{ "horaire" | champ }}</li>
+  <li>Lieu : {{ site.lieu }}</li>
+  <li>Activité : {{ "prix" | champ }}</li>
 </ul>
 {%- set seancesPage = seances | seancesDe(parts[2]) %}
 {%- include "prochaines-seances.njk" %}

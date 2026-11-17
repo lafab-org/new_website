@@ -67,10 +67,16 @@ body {
   font-size: 1.15rem;
 }
 .menu-secondaire {
-  justify-content: center;
+  display: block;
+  text-align: center;
+  text-wrap: balance;
   padding: 0.4rem 1rem;
   border-bottom: var(--filet) dashed var(--orange);
   font-size: 0.95rem;
+}
+.menu-secondaire li {
+  display: inline-block;
+  margin: 0.1rem 0.5rem;
 }
 
 /* Page */
@@ -116,7 +122,9 @@ h2 {
   }
   .menu-secondaire {
     max-width: none;
-    gap: 0.25rem 2rem;
+  }
+  .menu-secondaire li {
+    margin: 0.1rem 1rem;
   }
   main {
     padding: 1.5rem 0 2rem;
