@@ -1,6 +1,7 @@
 # Backlog
 
 - Prioritaire - Hébergement et déploiement du site : où et comment il est publié, reconstruit toutes les 24 h pour l'agenda et les articles en avant.
+- Suspension de la reconstruction quotidienne : GitHub suspend la tâche planifiée après 60 jours sans activité sur le dépôt ; la réactiver automatiquement, ou passer à une offre payante.
 - Photos des ateliers : intégrer aux pages une sélection de photos (redimensionnées, avec texte alternatif) ; les pages métallerie et Répar'Action les recevront.
 - Design général du site : navigation (dont le retour vers l'accueil) et apparence commune, une fois plusieurs pages spécifiées.
 - Ligne éditoriale : relire les pages d'accueil et métallerie pour présenter La Fabrique comme un lieu où l'on participe, non comme un service.

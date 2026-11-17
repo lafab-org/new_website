@@ -14,7 +14,8 @@ Il n'a aucune séance ; son `jour` est libre.
 Génère le site web à partir des pages et des séances de TiBillet.
 
 Trigger: `npm run build` ; `npm start` la relance à chaque changement
-d'une page.
+d'une page ; le déploiement la lance, selon
+/technical/hebergement-et-deploiement.
 
 Inputs, de l'environnement ou du fichier `.env` :
 - `TIBILLET_FICHIER: optional string`

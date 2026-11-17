@@ -38,6 +38,22 @@
   billets : aucune donnée personnelle n'est écrite, ni dans `_site/` ni
   ailleurs.
 
+## Hébergement et déploiement
+
+- Le site est publié sur GitHub Pages, depuis le dépôt public
+  `lafab-org/new_website`, à l'adresse `https://nouveau.lafab.org/`,
+  servi à la racine du domaine.
+- Un workflow GitHub Actions déploie le site : à chaque push sur
+  `main`, chaque jour à 3 h UTC (4 h ou 5 h à Paris), et à la demande
+  depuis l'onglet Actions.
+- Il lance `npm test`, construit le site avec l'API de TiBillet, puis le
+  publie. Si une étape échoue, ou si l'adresse ou la clé de TiBillet
+  manque, rien n'est publié et la version précédente reste en ligne.
+- La CI a sa propre clé TiBillet, dans le secret `TIBILLET_API_KEY` du
+  dépôt ; `TIBILLET_URL` est une variable du dépôt.
+- Quand GitHub suspend la tâche quotidienne faute d'activité sur le
+  dépôt, elle est réactivée à la main.
+
 ## Politique de tests et de qualité
 
 - Outil : `node:test`, dans `tests/`, sans dépendance supplémentaire ;
