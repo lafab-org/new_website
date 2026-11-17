@@ -25,11 +25,19 @@ sont dans /contents/page-daccueil.
 /operations/construire-le-site/generee la rend. Les objectifs éditoriaux de
 la page de l'association sont dans /contents/page-de-lassociation.
 
+Après le corps de la page, avant la section `Les évènements`, la
+section /ui/prochaines-seances, pour les séances de la page (not
+testable).
+
 ## Page d'atelier
 
 À `/ateliers/<nom>` : la page `ateliers/<nom>.md`, telle que
 /operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
 pages d'atelier sont dans /contents/page-datelier.
+
+Après le corps de la page, avant la section `Les évènements`, la
+section /ui/prochaines-seances, pour les séances de la page (not
+testable).
 
 ## Page d'évènement
 

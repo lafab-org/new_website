@@ -68,6 +68,7 @@ Objectifs, pour chaque page d'atelier :
 
 Contraintes :
 - Un lien vers la page de l'association.
+- Un lien vers la page de l'agenda.
 - Après son corps, une section `Les évènements` liste un lien vers
   chacun des évènements de la page, triés par titre ;
   sans évènement, la page n'a pas cette section.

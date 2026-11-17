@@ -16,6 +16,8 @@ Une page du site web, écrite sous forme de fichier source Markdown.
   - [categories] Chacun est l'identifiant d'une catégorie du site.
 
 Les évènements d'une page sont ceux de ses catégories.
+Ses séances sont les séances du site dont la catégorie est l'une de ses
+catégories, dans l'ordre des `séances` du site.
 
 L'adresse d'une page est celle qui la sert : `/` pour `index.md`,
 `/dossier` pour `dossier/index.md`, `/dossier/nom` pour
