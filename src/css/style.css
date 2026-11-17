@@ -107,6 +107,64 @@ h2 {
   font-style: italic;
 }
 
+/* Texte de la page : un trait orange sous chaque sous-titre, des puces
+   orange, les liens soulignés d'orange. Le corps d'un article ou d'un
+   évènement est dans .corps. */
+:is(main, .corps) > h2:not([class]),
+.prochaines-seances > h2 {
+  padding-bottom: 0.3rem;
+  font-size: 1.4rem;
+  background: linear-gradient(var(--orange), var(--orange))
+    left bottom / 6rem var(--filet) no-repeat;
+}
+:is(main, .corps) > ul:not([class]) {
+  padding-left: 1.2rem;
+}
+:is(main, .corps) > ul:not([class]) li {
+  margin: 0.25rem 0;
+}
+:is(main, .corps) > ul:not([class]) li::marker {
+  color: var(--orange);
+}
+:is(main, .corps) > :is(p:not([class]), ul:not([class])) a {
+  color: var(--texte);
+  text-decoration-color: var(--orange);
+  text-underline-offset: 0.2em;
+}
+
+/* Les évènements d'une page : une tuile par évènement, son titre puis
+   son accroche. */
+.evenements {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.evenements a {
+  display: block;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0.6rem 0.8rem;
+  color: var(--texte);
+  text-decoration: none;
+  border: 2px dotted var(--orange);
+  border-radius: 0.6rem;
+}
+.evenement-titre {
+  display: block;
+  font-weight: bold;
+  line-height: 1.3;
+}
+.evenement-accroche {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.88rem;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--accroche);
+}
+
 @media (min-width: 40rem) {
   .en-tete-haut {
     flex-direction: row;
@@ -158,6 +216,10 @@ h2 {
 
   .article:has(img) img {
     margin: 0;
+  }
+
+  .evenements {
+    grid-template-columns: 1fr 1fr;
   }
 }
 

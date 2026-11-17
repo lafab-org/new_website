@@ -10,7 +10,7 @@
 - Évènement d'initiation à la découpeuse laser : sa page d'évènement (la page de l'atelier numérique et électronique la présente comme obligatoire avant usage).
 - Réunions de gestion et AG annuelle : leurs pages d'évènement, dans la catégorie « Vie de l'association ».
 - Lien d'une séance vers sa propre page : sur une page d'évènement, le nom de la séance ne renvoie pas à la page elle-même.
-- Section « Les évènements » : la décrire dans `ui.md` (pages d'atelier et de l'association) plutôt que dans `contents.md`.
+- Section « Les évènements » : la décrire dans `ui.md` (pages d'atelier et de l'association), accroche comprise, plutôt que dans `contents.md`.
 - Séances à plusieurs catégories : un évènement TiBillet portant plusieurs catégories apparaît sur chacune des pages concernées, pas seulement la première.
 - Réalisations sur les pages d'atelier : quelques réalisations de ses catégories, avec un lien vers la page des réalisations.
 - Données personnelles des photos : métadonnées, visages et noms d'auteurs des réalisations.
@@ -20,4 +20,4 @@
 - Séance annulée et lecteurs d'écran : l'annulation n'est dite qu'en fin de carte, après le nom barré ; l'annoncer dès le nom.
 - Contenu de l'accueil : revoir ce que la page présente (texte, ateliers, évènements) pour qu'il corresponde à ce qu'on veut y montrer.
 - Design de l'accueil : son apparence, d'après des maquettes, une fois son contenu revu.
-- Accroche des évènements dans « Les évènements » : la décrire dans `ui.md`, avec la section, plutôt que dans `contents.md`.
+- `.gitignore` : ignorer `.playwright-mcp/`, le dossier des captures d'écran de l'outil de navigateur.

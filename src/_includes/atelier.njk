@@ -7,9 +7,10 @@ layout: base.njk
 {%- set evenements = collections.evenements | deCategories("catégories" | champ) %}
 {%- if evenements.length %}
 <h2>Les évènements</h2>
-<ul>
+<ul class="evenements">
 {%- for p in evenements %}
-  <li><a href="{{ p.url }}">{{ p.data.title }}</a></li>
+  <li><a href="{{ p.url }}"><span class="evenement-titre">{{ p.data.title }}</span>
+  {%- if p.data.accroche %}<span class="evenement-accroche">{{ p.data.accroche }}</span>{% endif %}</a></li>
 {%- endfor %}
 </ul>
 {%- endif %}
