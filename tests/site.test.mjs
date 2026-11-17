@@ -1,7 +1,7 @@
 // Form check of the built site: build once, then read _site/.
 import { test, before } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 
@@ -45,6 +45,8 @@ const isEvent = (page) => /^evenements\/[^/]+\.md$/.test(page) && page !== "even
 const all = pages();
 const built = {};
 before(() => {
+  // Built from an empty _site/, so that no stale file is read.
+  rmSync(SITE, { recursive: true, force: true });
   execFileSync("npm", ["run", "build"], {
     stdio: "pipe",
     env: { ...process.env, TIBILLET_FICHIER: TIBILLET },
