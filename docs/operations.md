@@ -47,8 +47,9 @@ Then:
   publiés en fichiers image, ainsi que le logo ; `index.md` donne `_site/index.html`. Les
   `séances` du site sont les séances lues, et son `jour` celui de la
   construction, à Paris.
-- [non-publie] Après les cas 1, 3 et 5 : ni la page d'un article non
-  publié ni ses photos ne sont dans `_site/`.
+- [non-publie] Après les cas 1, 3 et 5 : la page d'un article non
+  publié n'est pas dans `_site/`. Ses photos n'y sont pas non plus
+  (not testable).
 - Un évènement de TiBillet donne une séance quand l'un de ses
   `keywords` est l'identifiant d'une catégorie du site ; les autres sont
   ignorés. Sa séance a, aux dates et heures de Paris :

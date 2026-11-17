@@ -86,8 +86,8 @@
   une date `AAAA-MM-JJ` valide suivie de `-`, et que sa mise en avant,
   s'il en a une, est bien formée. Sur la page de l'agenda, il vérifie qu'elle montre le nom
   de chaque séance du fichier d'exemple ; sur la page des actualités,
-  qu'elle a un lien vers chaque article publié, et que ni la page ni
-  les photos de chaque article non publié ne sont dans `_site/` ; sur la page d'accueil et sur
+  qu'elle a un lien vers chaque article publié, et que la page de
+  chaque article non publié n'est pas dans `_site/` ; sur la page d'accueil et sur
   celle de l'agenda, qu'elles ont un lien vers chaque article en avant
   sur elles, le jour où les tests construisent le site.
 - Une affirmation de la spécification porte une étiquette seulement si

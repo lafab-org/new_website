@@ -42,9 +42,74 @@ const hrefs = (html) =>
 const ids = (html) => new Set([...html.matchAll(/\sid\s*=\s*["']([^"']*)["']/gi)].map((m) => m[1]));
 const isEvent = (page) => /^evenements\/[^/]+\.md$/.test(page) && page !== "evenements/index.md";
 
-const all = pages();
+// The sources of the articles, published or not: actualites/<dossier>/index.md.
+const isArticle = (p) => /^actualites\/[^/]+\/index\.md$/.test(p);
+const articles = () => pages().filter(isArticle);
+
+// The mise en avant of an article page, from its front matter block:
+// `{ pages, début, fin }`, each as written, or undefined without one.
+const miseEnAvant = (page) => {
+  const fm = readFileSync(join(SRC, page), "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? "";
+  const lines = fm.split(/\r?\n/);
+  const start = lines.findIndex((l) => /^mise-en-avant:/.test(l));
+  if (start < 0) return undefined;
+  const block = [];
+  const inline = lines[start].replace(/^mise-en-avant:/, "").replace(/\s+#.*$/, "").trim();
+  if (inline !== "") {
+    // A flow mapping, `{ pages: [...], fin: ... }`, read as a block of
+    // its entries; any other value leaves the block empty.
+    const flow = inline.match(/^\{(.*)\}$/)?.[1] ?? "";
+    let depth = 0, entry = "";
+    for (const c of flow + ",") {
+      if (c === "," && depth === 0) { if (entry.trim()) block.push("  " + entry.trim()); entry = ""; continue; }
+      if (c === "[") depth++;
+      if (c === "]") depth--;
+      entry += c;
+    }
+  } else {
+    for (const l of lines.slice(start + 1)) {
+      if (!/^\s/.test(l) && l.trim() !== "") break;
+      block.push(l);
+    }
+  }
+  const unquote = (v) => v.trim().replace(/^(["'])(.*)\1$/, "$2");
+  const value = (key) => block.find((l) => new RegExp(`^\\s+${key}:`).test(l))?.replace(/^[^:]*:/, "").replace(/\s+#.*$/, "").trim();
+  const listed = value("pages");
+  let pages;
+  if (listed === undefined) pages = [];
+  else if (listed.startsWith("[")) {
+    pages = listed.replace(/^\[|\]$/g, "").split(",").map(unquote).filter((v) => v !== "");
+  } else if (listed !== "") pages = [unquote(listed)];
+  else {
+    const i = block.findIndex((l) => /^\s+pages:/.test(l));
+    pages = [];
+    for (const l of block.slice(i + 1)) {
+      const m = l.replace(/\s+#.*$/, "").match(/^\s+-\s*(.*)$/);
+      if (!m) break;
+      pages.push(unquote(m[1]));
+    }
+  }
+  const date = (key) => (value(key) === undefined ? undefined : unquote(value(key)));
+  return { pages, début: date("début"), fin: date("fin") };
+};
+
+// The day in Paris, AAAA-MM-JJ, when the tests run.
+const today = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit",
+}).format(new Date());
+
+// An article is published unless its mise en avant starts after today.
+const published = (p) => {
+  const début = miseEnAvant(p)?.début;
+  return début === undefined || début <= today;
+};
+
+// The built pages: all pages, but those of the articles not published
+// on the day the tests run.
+let all;
 const built = {};
 before(() => {
+  all = pages().filter((p) => !isArticle(p) || published(p));
   // Built from an empty _site/, so that no stale file is read.
   rmSync(SITE, { recursive: true, force: true });
   execFileSync("npm", ["run", "build"], {
@@ -211,9 +276,6 @@ test("the agenda shows the name of every séance of the sample file", () => {
   assert.deepEqual(missing, [], "séances missing from the agenda");
 });
 
-// The pages of the articles: actualites/<dossier>/index.md.
-const articles = () => all.filter((p) => /^actualites\/[^/]+\/index\.md$/.test(p));
-
 test("every article folder starts with a valid date, then a hyphen", () => {
   // /model/article/date
   const found = articles();
@@ -229,9 +291,9 @@ test("every article folder starts with a valid date, then a hyphen", () => {
   }
 });
 
-test("the news page links to every article", () => {
+test("the news page links to every published article", () => {
   // /ui/page-des-actualites/articles
-  const found = articles();
+  const found = articles().filter(published);
   const file = builtFile("/actualites");
   assert.ok(existsSync(file), "no news page built");
   const links = new Set(hrefs(readFileSync(file, "utf8"))
@@ -239,53 +301,6 @@ test("the news page links to every article", () => {
   const missing = found.map(address).filter((a) => !links.has(a));
   assert.deepEqual(missing, [], "articles missing from the news page");
 });
-
-// The mise en avant of an article page, from its front matter block:
-// `{ pages, début, fin }`, each as written, or undefined without one.
-const miseEnAvant = (page) => {
-  const fm = readFileSync(join(SRC, page), "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? "";
-  const lines = fm.split(/\r?\n/);
-  const start = lines.findIndex((l) => /^mise-en-avant:/.test(l));
-  if (start < 0) return undefined;
-  const block = [];
-  const inline = lines[start].replace(/^mise-en-avant:/, "").replace(/\s+#.*$/, "").trim();
-  if (inline !== "") {
-    // A flow mapping, `{ pages: [...], fin: ... }`, read as a block of
-    // its entries; any other value leaves the block empty.
-    const flow = inline.match(/^\{(.*)\}$/)?.[1] ?? "";
-    let depth = 0, entry = "";
-    for (const c of flow + ",") {
-      if (c === "," && depth === 0) { if (entry.trim()) block.push("  " + entry.trim()); entry = ""; continue; }
-      if (c === "[") depth++;
-      if (c === "]") depth--;
-      entry += c;
-    }
-  } else {
-    for (const l of lines.slice(start + 1)) {
-      if (!/^\s/.test(l) && l.trim() !== "") break;
-      block.push(l);
-    }
-  }
-  const unquote = (v) => v.trim().replace(/^(["'])(.*)\1$/, "$2");
-  const value = (key) => block.find((l) => new RegExp(`^\\s+${key}:`).test(l))?.replace(/^[^:]*:/, "").replace(/\s+#.*$/, "").trim();
-  const listed = value("pages");
-  let pages;
-  if (listed === undefined) pages = [];
-  else if (listed.startsWith("[")) {
-    pages = listed.replace(/^\[|\]$/g, "").split(",").map(unquote).filter((v) => v !== "");
-  } else if (listed !== "") pages = [unquote(listed)];
-  else {
-    const i = block.findIndex((l) => /^\s+pages:/.test(l));
-    pages = [];
-    for (const l of block.slice(i + 1)) {
-      const m = l.replace(/\s+#.*$/, "").match(/^\s+-\s*(.*)$/);
-      if (!m) break;
-      pages.push(unquote(m[1]));
-    }
-  }
-  const date = (key) => (value(key) === undefined ? undefined : unquote(value(key)));
-  return { pages, début: date("début"), fin: date("fin") };
-};
 
 // A valid day written AAAA-MM-JJ.
 const validDay = (s) => {
@@ -312,10 +327,12 @@ test("every mise en avant is well formed", () => {
   }
 });
 
-// The day in Paris, AAAA-MM-JJ, when the tests run.
-const today = new Intl.DateTimeFormat("en-CA", {
-  timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit",
-}).format(new Date());
+test("the page of an article not published is not built", () => {
+  // /operations/construire-le-site/non-publie
+  const unpublished = articles().filter((p) => !published(p));
+  const present = unpublished.map(address).filter((a) => existsSync(builtFile(a)));
+  assert.deepEqual(present, [], "pages of articles not published are built");
+});
 
 // The addresses of the articles in avant on `page` (accueil or agenda) today.
 const enAvant = (page) => articles().filter((p) => {
