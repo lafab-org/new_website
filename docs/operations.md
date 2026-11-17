@@ -43,7 +43,7 @@ Then:
 - [generee] Après les cas 1, 3 et 5 : le résultat est le site généré
   sous `_site/`, où chaque page est écrite en HTML, son corps rendu
   depuis le Markdown, et chaque photo des réalisations et des articles en fichiers
-  image ; `index.md` donne `_site/index.html`. Les
+  image, ainsi que le logo ; `index.md` donne `_site/index.html`. Les
   `séances` du site sont les séances lues, et son `jour` celui de la
   construction, à Paris.
 - Un évènement de TiBillet donne une séance quand l'un de ses

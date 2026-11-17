@@ -9,6 +9,9 @@ Une page du site web, écrite sous forme de fichier source Markdown.
 - `title: string`, le titre de la page.
   - [titre] Non vide.
 - `body: string`, le texte Markdown de la page.
+- `menu: string`, le nom de la page dans les menus de l'en-tête : la clé
+  `menu` de son front matter, sinon son `title`. Non vide (not
+  testable).
 - `links: set of string`, les adresses des éléments `<a href>` de la
   page une fois construite, gabarit compris.
 - `images: set of /model/image`, les éléments `<img>` de la page une

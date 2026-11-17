@@ -10,8 +10,25 @@ lien en cliquant dessus.
   `<titre>` est le `title` de la page, et `La Fabrique` pour la page
   d'accueil.
 - [titre] La page a un seul titre principal (`<h1>`) : son `title`.
-- Le titre principal vient en premier, puis le corps de la page (not
-  testable).
+- L'en-tête /ui/en-tete vient en premier, puis le titre principal,
+  puis le corps de la page (not testable).
+
+## En-tête
+
+Commun à toutes les pages, dans cet ordre (not testable) :
+- le logo de La Fabrique, en lien vers `/`, avec le texte alternatif
+  `La Fabrique - accueil` ;
+- le menu principal :
+  - `Agenda`, vers `/agenda` ;
+  - `Actualités`, vers `/actualites` ;
+  - `Réalisations`, vers `/realisations` ;
+- le menu des ateliers et de l'association :
+  - chaque page des `ateliers` du site, dans leur ordre, sous son
+    `menu`, vers son adresse ;
+  - `L'association`, vers `/association`.
+
+Dans un menu, l'entrée qui mène à la page affichée est mise en
+évidence (not testable).
 
 ## Page d'accueil
 
