@@ -208,3 +208,32 @@ test("the agenda shows the name of every séance of the sample file", () => {
   const missing = names.filter((n) => !shown.includes(n));
   assert.deepEqual(missing, [], "séances missing from the agenda");
 });
+
+// The pages of the articles: actualites/<dossier>/index.md.
+const articles = () => all.filter((p) => /^actualites\/[^/]+\/index\.md$/.test(p));
+
+test("every article folder starts with a valid date, then a hyphen", () => {
+  // /model/article/date
+  const found = articles();
+  for (const p of found) {
+    const folder = p.split("/")[1];
+    const m = folder.match(/^(\d{4})-(\d{2})-(\d{2})-/);
+    assert.ok(m, `${p}: folder does not start with AAAA-MM-JJ-`);
+    const [y, mo, d] = m.slice(1).map(Number);
+    const day = new Date(0);
+    day.setUTCFullYear(y, mo - 1, d);
+    const valid = day.getUTCFullYear() === y && day.getUTCMonth() === mo - 1 && day.getUTCDate() === d;
+    assert.ok(valid, `${p}: ${m[0].slice(0, -1)} is not a valid date`);
+  }
+});
+
+test("the news page links to every article", () => {
+  // /ui/page-des-actualites/articles
+  const found = articles();
+  const file = builtFile("/actualites");
+  assert.ok(existsSync(file), "no news page built");
+  const links = new Set(hrefs(readFileSync(file, "utf8"))
+    .map((h) => h.split("#")[0].replace(/\?.*$/, "").replace(/(.)\/$/, "$1")));
+  const missing = found.map(address).filter((a) => !links.has(a));
+  assert.deepEqual(missing, [], "articles missing from the news page");
+});
