@@ -1,0 +1,11 @@
+---
+layout: base.njk
+---
+<p class="date">{{ dateArticle | jourMoisAnnee }}</p>
+{%- if couverture %}
+<img src="{{ page.filePathStem | replace('/index', '') }}/{{ couverture.fichier }}" alt="{{ couverture.description }}">
+{%- endif %}
+<div class="corps">
+{{ content | safe }}
+</div>
+<p><a href="/actualites">Toutes les actualités</a></p>

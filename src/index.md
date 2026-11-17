@@ -6,7 +6,7 @@ templateEngineOverride: njk,md
 Bienvenue à La Fabrique, atelier partagé à Strasbourg, que fait vivre
 [l'association](/association). Ses prochaines séances sont dans
 l'[agenda](/agenda). Les [réalisations](/realisations) de ses membres montrent ce
-qu'on peut y fabriquer.
+qu'on peut y fabriquer. Ses [actualités](/actualites) disent ce qui s'y passe.
 
 ## Les ateliers
 

@@ -17,6 +17,10 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("realisations", (api) =>
     api.getFilteredByGlob("src/realisations/*/index.md")
       .sort((a, b) => b.data.date - a.data.date));
+  // The articles, most recent first.
+  eleventyConfig.addCollection("articles", (api) =>
+    api.getFilteredByGlob("src/actualites/*/index.md")
+      .sort((a, b) => b.data.dateArticle.localeCompare(a.data.dateArticle)));
   // A front matter value by its name, for names Nunjucks cannot write
   // as a variable (`rendez-vous`).
   eleventyConfig.addFilter("champ", function (name) {
@@ -77,6 +81,11 @@ export default function (eleventyConfig) {
     const s = moisAnnee.format(new Date(d));
     return s.charAt(0).toUpperCase() + s.slice(1);
   });
+  // A day `2015-01-13` as `13 janvier 2015`.
+  const jourMoisAnnee = new Intl.DateTimeFormat("fr-FR", {
+    day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+  });
+  eleventyConfig.addFilter("jourMoisAnnee", (d) => jourMoisAnnee.format(new Date(`${d}T12:00:00Z`)));
   // The name of a category, from its identifier.
   eleventyConfig.addFilter("nomCategorie", (id, categories) =>
     (categories ?? []).find((c) => c.identifiant === id)?.nom ?? id);

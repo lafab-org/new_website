@@ -1,0 +1,16 @@
+---
+layout: base.njk
+---
+{{ content | safe }}
+{% for a in collections.articles %}
+<section class="article">
+  <h2><a href="{{ a.url | replace(r/\/$/, '') }}">{{ a.data.title }}</a></h2>
+  <p class="date">{{ a.data.dateArticle | jourMoisAnnee }}</p>
+  {% if a.data.couverture %}
+  <img src="{{ a.page.filePathStem | replace('/index', '') }}/{{ a.data.couverture.fichier }}" alt="{{ a.data.couverture.description }}">
+  {% endif %}
+  {% if a.data["résumé"] %}<p>{{ a.data["résumé"] }}</p>{% endif %}
+</section>
+{% else %}
+<p>Aucune actualité pour l'instant.</p>
+{% endfor %}
