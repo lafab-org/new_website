@@ -1,6 +1,6 @@
 # Backlog
 
-- Hébergement et déploiement du site : où et comment il est publié.
+- Hébergement et déploiement du site : où et comment il est publié, reconstruit toutes les 24 h pour l'agenda.
 - Page de l'agenda : liste les évènements selon la charte graphique du site, construite en interrogeant l'API de TiBillet (tags par catégorie) ; la réservation et le paiement se font sur TiBillet ; les pages d'atelier y renverront, avec leurs prochains évènements.
 - Photos des ateliers : intégrer aux pages une sélection de photos (redimensionnées, avec texte alternatif) ; les pages métallerie et Répar'Action les recevront.
 - Design général du site : navigation (dont le retour vers l'accueil) et apparence commune, une fois plusieurs pages spécifiées.
