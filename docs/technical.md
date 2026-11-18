@@ -81,6 +81,13 @@
   la création, plus ensuite.
 - Ses photos vont dans `src/actualites/photos/`.
 
+## Édition des réalisations
+
+- Une réalisation se crée, se modifie et se supprime dans Pages CMS.
+- À sa création, son fichier est nommé `<AAAA-MM-JJ>-<titre>.md`, par
+  sa date et son titre ; ce nom ne change plus ensuite.
+- Ses photos vont dans `src/realisations/photos/`.
+
 ## Politique de tests et de qualité
 
 - Outil : `node:test`, dans `tests/`, sans dépendance supplémentaire ;

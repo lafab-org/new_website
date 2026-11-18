@@ -1,10 +1,5 @@
 # Technique
 
-## Édition des réalisations
-
-- Une réalisation se crée, se modifie et se supprime dans Pages CMS.
-- Ses photos vont dans `src/realisations/photos/`.
-
 ## Édition des évènements
 
 - Une page d'évènement se crée, se modifie et se supprime dans Pages
