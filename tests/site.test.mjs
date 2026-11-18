@@ -4,11 +4,15 @@ import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const SRC = "src";
 const SITE = "_site";
-// The sample stand-in for TiBillet the site is built with.
-const TIBILLET = join("tests", "tibillet.json");
+// The sample stand-in for TiBillet the site is built with, a module.
+const TIBILLET = join("tests", "tibillet.mjs");
+// Its events, as the module exports them when read by the tests.
+const sampleEvents = async () =>
+  (await import(pathToFileURL(TIBILLET).href)).default.events.results;
 
 // Markdown files of src/ under `dir`, outside _includes/ and, unless
 // `dir` is inside it, outside realisations/, as paths relative to src/.
@@ -260,15 +264,15 @@ test("no dead link: internal links lead to a page, fragments to an id", () => {
   assert.deepEqual(dead, [], "dead links");
 });
 
-test("the agenda shows the name of every séance of the sample file", () => {
+test("the agenda shows the name of every séance of the sample module", async () => {
   // /operations/construire-le-site/fichier
   // /ui/page-de-lagenda/seances
   const identifiers = categoryIds();
-  const events = JSON.parse(readFileSync(TIBILLET, "utf8")).events.results;
+  const events = await sampleEvents();
   const names = events
     .filter((e) => (e.keywords ?? []).some((k) => identifiers.includes(k)))
     .map((e) => e.name);
-  assert.ok(names.length > 0, "no séance in the sample file");
+  assert.ok(names.length > 0, "no séance in the sample module");
   const file = builtFile("/agenda");
   assert.ok(existsSync(file), "no agenda page built");
   const shown = text(readFileSync(file, "utf8"));
@@ -361,4 +365,51 @@ test("the agenda links to every article in avant on it", () => {
   const links = linksOf("/agenda");
   const missing = enAvant("agenda").filter((a) => !links.has(a));
   assert.deepEqual(missing, [], "articles in avant missing from the agenda");
+});
+
+// The day in Paris, AAAA-MM-JJ, of a date-time.
+const parisDay = (iso) => new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit",
+}).format(new Date(iso));
+
+// The day `n` days after a day, both AAAA-MM-JJ.
+const addDays = (day, n) => {
+  const [y, m, d] = day.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10);
+};
+
+test("the home page shows the name of every séance of the next 7 days", async () => {
+  // /ui/page-daccueil/semaine
+  // /operations/construire-le-site/fichier
+  // /operations/construire-le-site/generee
+  const identifiers = categoryIds();
+  const last = addDays(today, 6);
+  const names = (await sampleEvents())
+    .filter((e) => (e.keywords ?? []).some((k) => identifiers.includes(k)))
+    .filter((e) => today <= parisDay(e.startDate) && parisDay(e.startDate) <= last)
+    .map((e) => e.name);
+  assert.ok(names.length > 1, "fewer than two séances of the sample module in the next 7 days");
+  const shown = text(built["index.md"]);
+  const missing = names.filter((n) => !shown.includes(n));
+  assert.deepEqual(missing, [], "séances of the next 7 days missing from the home page");
+});
+
+test("the home page shows three distinct réalisations, or all of them", () => {
+  // /model/site/tirage
+  // /operations/construire-le-site/generee
+  const titles = realisations().map((r) => frontMatter(r, "titre"));
+  assert.ok(titles.length > 0, "no réalisation");
+  // How many réalisations bear each title.
+  const bearing = new Map();
+  for (const t of titles) bearing.set(t, (bearing.get(t) ?? 0) + 1);
+  // How many times each title is a whole text node of the home page.
+  const shown = new Map();
+  for (const node of built["index.md"].split(/<[^>]*>/).map(text)) {
+    if (bearing.has(node)) shown.set(node, (shown.get(node) ?? 0) + 1);
+  }
+  const count = [...shown.values()].reduce((a, b) => a + b, 0);
+  assert.equal(count, Math.min(3, titles.length), "réalisations shown on the home page");
+  for (const [t, n] of shown) {
+    assert.ok(n <= bearing.get(t), `${t}: shown ${n} times, borne by ${bearing.get(t)} réalisations`);
+  }
 });
