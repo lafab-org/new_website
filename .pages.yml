@@ -348,20 +348,31 @@ content:
           maxlength: 70
       - name: blocs
         label: Blocs
-        description: Les parties de la page d'accueil, dans l'ordre où elles s'affichent. Le bloc Texte de la page, au plus une fois, place le texte ci-dessous.
+        description: Dans l'ordre d'affichage ; Texte de la page au plus une fois.
         type: block
         list: true
         blockKey: type
         blocks:
           - name: corps
             label: Texte de la page
-            fields: []
+            # A hidden field: a block without fields is shown as a text box,
+            # which a save would write over the block.
+            fields:
+              - name: bloc
+                type: string
+                hidden: true
           - name: articles-en-avant
             label: Articles en avant
-            fields: []
+            fields:
+              - name: bloc
+                type: string
+                hidden: true
           - name: ateliers
             label: Les ateliers
-            fields: []
+            fields:
+              - name: bloc
+                type: string
+                hidden: true
           - name: section
             label: Section d'une autre page
             fields:
@@ -379,10 +390,16 @@ content:
                 required: true
           - name: semaine
             label: Les 7 prochains jours
-            fields: []
+            fields:
+              - name: bloc
+                type: string
+                hidden: true
           - name: realisations
             label: Des réalisations
-            fields: []
+            fields:
+              - name: bloc
+                type: string
+                hidden: true
       # Hidden but kept on save: it chooses the template of the page.
       - name: layout
         type: string
