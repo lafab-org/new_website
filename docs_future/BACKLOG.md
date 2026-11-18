@@ -22,3 +22,31 @@
 - `.gitignore` : ignorer `.playwright-mcp/`, le dossier des captures d'écran de l'outil de navigateur.
 - Données d'exemple TiBillet : remplacer `TIBILLET_FICHIER` par une simple activation des données d'exemple, sans citer le chemin du module, et une commande npm dédiée au développement local.
 - Favicon : une icône du site pour l'onglet du navigateur, tirée du logo ; aujourd'hui `/favicon.ico` répond 404.
+
+## Rapports à envoyer
+
+- Pages CMS (https://github.com/pages-cms/pages-cms/issues), à envoyer
+  tel quel :
+
+  > **Saving an entry fails with "Cannot read properties of undefined
+  > (reading 'match')" when a `date` field sits in an absent optional
+  > object**
+  >
+  > Config: a collection with an optional `object` field (not required)
+  > holding a `date` field. Edit an existing entry whose front matter has
+  > no value for that object, change any other field, save.
+  >
+  > Result: `POST /api/<owner>/<repo>/<branch>/files/<path>` returns 500,
+  > "Cannot read properties of undefined (reading 'match')".
+  >
+  > Cause (at 6f4e860): in `app/api/[owner]/[repo]/[branch]/files/[path]/route.ts`,
+  > `deepMap` (`lib/schema.ts`) traverses the absent object as `{}` and
+  > calls each nested field's write function with `undefined`. The date
+  > field's `write` (`fields/core/date/index.ts`) passes it to date-fns
+  > `parse`, which throws. `default: ""` on the date field does not help.
+  >
+  > Suggested fix: return `value` unchanged from the date `write` (and
+  > `read`) when it is empty, as the image field does (`if (!value)
+  > return null`); or skip absent objects in `deepMap`.
+  >
+  > Workaround: a `string` field with a `pattern` instead of `date`.

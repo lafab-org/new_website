@@ -33,8 +33,9 @@ simples, leurs photos dans un dossier commun à chaque sorte.
 - 3, 4, 6 : déclarer dans `.pages.yml` tous les champs du front matter de
   la sorte : Pages CMS supprime à l'enregistrement les champs non
   déclarés.
-- 3, 4, 6 : `default: ""` sur chaque champ date, sinon il prend la date
-  du jour et crée l'objet facultatif qui le contient.
+- 3, 4, 6 : pas de champ `date` dans un objet facultatif : Pages CMS
+  échoue à l'enregistrement quand l'objet est absent ; un `string` avec
+  un motif `AAAA-MM-JJ` le remplace.
 - 3, 6 : dès qu'un second dossier de médias existe, `media` devient une
   liste nommée et chaque champ `image` ou `rich-text` désigne le sien
   par `options.media`.

@@ -65,18 +65,23 @@ content:
                   label: Accueil
                 - value: agenda
                   label: Agenda
-          # Without an empty default, a date field starts at today's date.
+          # Strings, not dates: Pages CMS fails on save when a date field
+          # sits in an absent object (date-fns parse of undefined).
           - name: début
             label: Début
-            description: Sans début, dès la publication.
-            type: date
-            default: ""
+            description: Au format AAAA-MM-JJ ; sans début, dès la publication.
+            type: string
+            pattern:
+              regex: '^(\d{4}-\d{2}-\d{2})?$'
+              message: Une date au format AAAA-MM-JJ.
           - name: fin
             label: Fin
-            description: Le dernier jour de la mise en avant, pas avant le début.
-            type: date
+            description: Au format AAAA-MM-JJ ; le dernier jour de la mise en avant, pas avant le début.
+            type: string
             required: true
-            default: ""
+            pattern:
+              regex: '^\d{4}-\d{2}-\d{2}$'
+              message: Une date au format AAAA-MM-JJ.
       - name: body
         label: Texte
         description: Chaque photo insérée a un texte alternatif, qui décrit ce qu'elle montre.
