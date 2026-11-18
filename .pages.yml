@@ -26,6 +26,19 @@ media:
     extensions: [jpg, jpeg, png, webp]
     rename: safe
 
+  - name: pages
+    label: Photos des pages
+    input: src/photos
+    output: /photos
+    extensions: [jpg, jpeg, png, webp]
+    rename: safe
+  - name: ateliers
+    label: Photos des ateliers
+    input: src/ateliers/photos
+    output: /ateliers/photos
+    extensions: [jpg, jpeg, png, webp]
+    rename: safe
+
 content:
   - name: actualites
     label: Actualités
@@ -244,6 +257,126 @@ content:
       - name: body
         label: Texte
         description: En Markdown ; une photo s'écrit ![ce qu'elle montre](/evenements/photos/nom.jpg), après l'avoir envoyée dans Médias, Photos des évènements, 2000 px au plus en largeur et en hauteur.
+        type: code
+        options:
+          format: markdown
+
+  # The Markdown files directly in src/, and only them: the pages whose
+  # address is a single segment. Edited only; their file names are
+  # their addresses.
+  - name: pages
+    label: Pages
+    type: collection
+    path: src
+    subfolders: false
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      fields: [title]
+      primary: title
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+        options:
+          maxlength: 70
+      - name: catégories
+        label: Catégories
+        description: Celles dont la page montre les évènements et les séances, pour une page qui en montre, comme celle de l'association.
+        type: select
+        options:
+          multiple: true
+          values:
+            - value: association
+              label: Vie de l'association
+            - value: bois
+              label: Bois
+            - value: métal
+              label: Métal
+            - value: matériaux-souples
+              label: Matériaux souples
+            - value: numérique-électronique
+              label: Numérique et électronique
+      # Hidden but kept on save: they choose the template of the page.
+      - name: layout
+        type: string
+        hidden: true
+      - name: templateEngineOverride
+        type: string
+        hidden: true
+      - name: body
+        label: Texte
+        description: "En Markdown ; une photo s'écrit ![ce qu'elle montre](/photos/nom.jpg), après l'avoir envoyée dans Médias, Photos des pages, 2000 px au plus en largeur et en hauteur. Laisser en place le code du site, entre {{ }} ou {% %}, et, dans l'accueil, la ligne <!-- fonctionnement -->, qui sépare la présentation du fonctionnement."
+        type: code
+        options:
+          format: markdown
+
+  # Edited only: the list and the short names of the ateliers are in
+  # src/_data/ateliers.json.
+  - name: ateliers
+    label: Ateliers
+    type: collection
+    path: src/ateliers
+    subfolders: false
+    operations:
+      create: false
+      rename: false
+      delete: false
+    view:
+      fields: [title]
+      primary: title
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+        options:
+          maxlength: 70
+      - name: accroche
+        label: Accroche
+        description: Une phrase d'appel, sous le nom de l'atelier sur l'accueil.
+        type: string
+        required: true
+      - name: catégories
+        label: Catégories
+        description: Celles dont la page montre les évènements et les séances.
+        type: select
+        options:
+          multiple: true
+          values:
+            - value: association
+              label: Vie de l'association
+            - value: bois
+              label: Bois
+            - value: métal
+              label: Métal
+            - value: matériaux-souples
+              label: Matériaux souples
+            - value: numérique-électronique
+              label: Numérique et électronique
+      - name: couverture
+        label: Couverture
+        description: La photo qui représente l'atelier sur l'accueil.
+        type: object
+        fields:
+          - name: fichier
+            label: Photo
+            description: 2000 px au plus en largeur et en hauteur.
+            type: image
+            required: true
+            options:
+              media: ateliers
+          - name: description
+            label: Description
+            description: Ce que montre la photo.
+            type: string
+            required: true
+      - name: body
+        label: Texte
+        description: En Markdown ; une photo s'écrit ![ce qu'elle montre](/ateliers/photos/nom.jpg), après l'avoir envoyée dans Médias, Photos des ateliers, 2000 px au plus en largeur et en hauteur.
         type: code
         options:
           format: markdown
