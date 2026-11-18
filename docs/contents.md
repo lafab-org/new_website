@@ -50,10 +50,6 @@ Fabrique, par domaine, et vont vers leur page.
 
 Contraintes :
 - Titre : `Évènements`.
-- Les évènements sont groupés, un groupe par catégorie qui a des
-  évènements, dans l'ordre des `catégories` du site : le nom de la
-  catégorie en sous-titre, puis un lien vers chacun de ses évènements,
-  triés par titre.
 - Un lien vers la page des séances par évènement.
 
 ## Page des séances par évènement
@@ -104,7 +100,6 @@ Objectifs :
 - le curieux voit les évènements de l'association.
 
 Contraintes :
-- L'adresse est celle de La Fabrique, `lieu` du site.
 - La section `Fonctionnement` est brève et donne :
   - l'adhésion, 10 € pour un an ;
   - les horaires d'ouverture : jeudi 10 h-16 h, vendredi 13 h-16 h,
@@ -112,8 +107,6 @@ Contraintes :
   - le ticket, 12 € pour une session de 3 h en autonomie ;
   - les initiations, 30 € sur réservation, obligatoires avant d'utiliser
     certaines machines.
-- Après son corps, la section `Les évènements` de ses évènements,
-  comme celle de la page d'atelier.
 - Un lien vers la page de l'évènement portes ouvertes.
 
 ## Page d'atelier
@@ -132,10 +125,6 @@ Contraintes :
   courte.
 - Un lien vers la page de l'association.
 - Un lien vers la page de l'agenda.
-- Après son corps, une section `Les évènements` liste chacun des
-  évènements de la page, triés par titre : un lien vers sa page, avec
-  son accroche s'il en a une ; sans évènement, la page n'a pas cette
-  section.
 
 ## Page d'évènement
 

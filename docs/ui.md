@@ -71,9 +71,11 @@ selon son type (not testable) :
 /operations/construire-le-site/generee la rend. Les objectifs éditoriaux de
 la page de l'association sont dans /contents/page-de-lassociation.
 
-Après le corps de la page, avant la section `Les évènements`, la
-section /ui/prochaines-seances, pour les séances de la page (not
-testable).
+Après le corps de la page, dans cet ordre (not testable) :
+- le sous-titre `Où nous trouver`, puis le `lieu` du site ;
+- la section /ui/prochaines-seances, pour les séances de la page ;
+- la section `Les évènements` de ses évènements, comme sur
+  /ui/page-datelier.
 
 ## Page d'atelier
 
@@ -81,9 +83,11 @@ testable).
 /operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
 pages d'atelier sont dans /contents/page-datelier.
 
-Après le corps de la page, avant la section `Les évènements`, la
-section /ui/prochaines-seances, pour les séances de la page (not
-testable).
+Après le corps de la page, dans cet ordre (not testable) :
+- la section /ui/prochaines-seances, pour les séances de la page ;
+- sans évènement de la page, rien ; sinon, le sous-titre
+  `Les évènements`, puis chacun des évènements de la page, triés par
+  titre : un lien vers sa page, avec son accroche s'il en a une.
 
 ## Page d'évènement
 
@@ -148,6 +152,11 @@ Après le corps de la page, dans cet ordre :
 À `/evenements` : la page `evenements.md`, telle que
 /operations/construire-le-site/generee la rend. Ses objectifs
 éditoriaux sont dans /contents/page-des-evenements.
+
+Après le corps de la page, un groupe par catégorie qui a des
+évènements, dans l'ordre des `catégories` du site : le nom de la
+catégorie en sous-titre, puis un lien vers chacun de ses évènements,
+triés par titre (not testable).
 
 ## Page des séances par évènement
 

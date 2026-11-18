@@ -67,7 +67,10 @@
 - `.pages.yml`, à la racine du dépôt, déclare ce que Pages CMS modifie :
   pour chaque sorte de contenu, ses fichiers, ses champs sous leurs noms
   du front matter, et son dossier de médias. Le corps d'une page se
-  modifie en Markdown.
+  modifie dans l'éditeur riche de Pages CMS, qui l'enregistre en
+  Markdown.
+- Le corps d'une page est du Markdown seul, sans code de gabarit : ce
+  que le site calcule, les gabarits le placent.
 - Les éditeurs sans accès au dépôt y sont invités par courriel, comme
   collaborateurs de Pages CMS.
 - Chaque modification est un commit sur `main`, au nom et au courriel de
