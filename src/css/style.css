@@ -564,3 +564,53 @@ main > .date {
   content: "← ";
   color: var(--orange);
 }
+
+/* Accueil : les ateliers et les réalisations tirées, en grille de
+   cartes, une colonne sur un écran étroit. */
+.ateliers,
+.tirage {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tirage picture {
+  display: block;
+}
+
+.ateliers img,
+.tirage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.ateliers a {
+  color: var(--texte);
+  text-decoration: none;
+}
+
+.atelier-nom {
+  display: block;
+  margin-top: 0.4rem;
+  font-weight: bold;
+  color: var(--accroche);
+}
+
+.atelier-accroche,
+.tirage-titre {
+  margin: 0.2rem 0 0;
+}
+
+@media (min-width: 40rem) {
+  .ateliers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tirage {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

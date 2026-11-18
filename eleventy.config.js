@@ -11,6 +11,7 @@ const byTitle = (a, b) => a.data.title.localeCompare(b.data.title, "fr");
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/logo.svg");
+  eleventyConfig.addPassthroughCopy("src/couverture-a-venir.svg");
   // Each <img> of the built pages becomes a <picture> of reduced copies,
   // served under /img/: written to the cache, then copied into _site/img/
   // after each build (see eleventy.after below).
@@ -54,6 +55,22 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("realisations", (api) =>
     api.getFilteredByGlob("src/realisations/*/index.md")
       .sort((a, b) => b.data.date - a.data.date));
+  // Three réalisations drawn at random at each build, or all of them if
+  // there are fewer.
+  eleventyConfig.addCollection("tirage", (api) => {
+    const restantes = api.getFilteredByGlob("src/realisations/*/index.md");
+    const tirage = [];
+    while (tirage.length < 3 && restantes.length > 0) {
+      tirage.push(...restantes.splice(Math.floor(Math.random() * restantes.length), 1));
+    }
+    return tirage;
+  });
+  // The séances of the 7 days that start on the day of the build.
+  eleventyConfig.addFilter("septJours", (list) => {
+    const [a, m, j] = jourConstruction.split("-").map(Number);
+    const dernier = new Date(Date.UTC(a, m - 1, j + 6)).toISOString().slice(0, 10);
+    return (list ?? []).filter((s) => jourConstruction <= s.jour && s.jour <= dernier);
+  });
   // The published articles, most recent first.
   eleventyConfig.addCollection("articles", (api) =>
     api.getFilteredByGlob("src/actualites/*/index.md")

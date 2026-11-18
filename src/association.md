@@ -26,6 +26,20 @@ L'adhésion à l'association coûte 10 € pour un an. Elle se prend sur
 place, en espèces, et certaines activités sont réservées aux adhérents
 à jour.
 
+## Fonctionnement
+
+Les ateliers sont ouverts :
+
+- le jeudi, de 10 h à 16 h ;
+- le vendredi, de 13 h à 16 h ;
+- le samedi, de 10 h à 19 h.
+
+Pour travailler en autonomie, on prend un ticket de 12 €, qui donne
+accès aux ateliers pour une session de 3 h.
+
+Certaines machines demandent une initiation avant de s'en servir. Une
+initiation coûte 30 € et se réserve sur l'[agenda](/agenda).
+
 ## Donner un coup de main
 
 Pour aider à faire vivre La Fabrique, vous pouvez :

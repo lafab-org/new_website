@@ -1,5 +1,6 @@
 ---
 title: "La métallerie"
+accroche: "Découper, souder, plier et assembler le métal, et réparer son vélo."
 catégories: ["métal"]
 ---
 

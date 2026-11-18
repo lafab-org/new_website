@@ -1,5 +1,6 @@
 ---
 title: "Atelier matériaux souples"
+accroche: "Coudre, retoucher et réparer le tissu et le cuir, de la couture à la cordonnerie."
 catégories: ["matériaux-souples"]
 ---
 

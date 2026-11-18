@@ -1,6 +1,55 @@
 ---
 layout: base.njk
 ---
+{#- /ui/page-daccueil: the body of index.md is in two parts, the
+    présentation and the fonctionnement, separated by the comment
+    `<!-- fonctionnement -->`; the sections come between and after them. -#}
+{%- set parties = content.split("<!-- fonctionnement -->") %}
+{{ parties[0] | safe }}
 {%- set pageEnAvant = "accueil" %}
 {%- include "articles-en-avant.njk" %}
-{{ content | safe }}
+<section class="accueil-ateliers">
+<h2>Les ateliers</h2>
+<ul class="ateliers">
+{%- for p in collections.pagesAtelier %}
+  <li><a href="{{ p.url | replace(r/\/$/, '') }}">
+  {%- if p.data.couverture %}
+    <img sizes="(min-width: 40rem) 19rem, calc(100vw - 2rem)" src="{{ p.page.filePathStem | replace('/index', '') }}/{{ p.data.couverture.fichier }}" alt="{{ p.data.couverture.description }}">
+  {%- else %}
+    <img src="/couverture-a-venir.svg" alt="Photo à venir" width="400" height="300" eleventy:ignore>
+  {%- endif %}
+    <span class="atelier-nom">{{ p.data.title }}</span></a>
+    <p class="atelier-accroche">{{ p.data.accroche }}</p></li>
+{%- endfor %}
+</ul>
+</section>
+{{ parties[1] | safe }}
+<section class="accueil-semaine">
+<h2>Les 7 prochains jours</h2>
+{%- set semaine = seances | septJours %}
+{%- if semaine.length %}
+{%- for jour, liste in semaine | groupby("jour") %}
+<h3 class="jour">{{ jour | jourLong }}</h3>
+<ul class="seances">
+{%- for s in liste %}
+{% include "seance.njk" %}
+{%- endfor %}
+</ul>
+{%- endfor %}
+{%- else %}
+<p>Aucune séance dans les 7 prochains jours.</p>
+{%- endif %}
+<p class="voir-agenda"><a href="/agenda">Tout l'agenda</a></p>
+</section>
+{%- if collections.tirage.length %}
+<section class="accueil-realisations">
+<h2>Des réalisations</h2>
+<ul class="tirage">
+{%- for r in collections.tirage %}
+  <li><img sizes="(min-width: 40rem) 12.7rem, calc(100vw - 2rem)" src="{{ r.page.filePathStem | replace('/index', '') }}/{{ r.data.photos[0].fichier }}" alt="{{ r.data.photos[0].description }}">
+  <p class="tirage-titre">{{ r.data.titre }}</p></li>
+{%- endfor %}
+</ul>
+<p class="voir-agenda"><a href="/realisations">Toutes les réalisations</a></p>
+</section>
+{%- endif %}

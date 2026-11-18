@@ -1,5 +1,6 @@
 ---
 title: "Le numérique et l'électronique"
+accroche: "Souder des circuits, imprimer en 3D et découper au laser."
 catégories: ["numérique-électronique"]
 ---
 

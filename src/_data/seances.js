@@ -2,6 +2,8 @@
 // local file standing in for it. Only the number of reserved tickets is
 // kept from the reservations.
 import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const ACCES = ["libre", "sur-place", "réservation-gratuite", "réservation-payante"];
 const RESERVEES = [
@@ -31,9 +33,13 @@ const resultats = (reponse, quoi) => {
   return reponse.results;
 };
 
-// The events of TiBillet and a function giving the reservations of one.
-function depuisFichier(chemin) {
-  const donnees = JSON.parse(readFileSync(chemin, "utf8"));
+// The events of TiBillet and a function giving the reservations of one,
+// from a module standing in for TiBillet. It is read anew at each build,
+// so that its relative dates follow the day of the build.
+async function depuisFichier(chemin) {
+  const url = pathToFileURL(resolve(chemin));
+  url.search = `?construction=${Date.now()}`;
+  const donnees = (await import(url.href)).default;
   const evenements = resultats(donnees.events, "évènements");
   const reservations = donnees.reservations ?? {};
   return {
@@ -79,7 +85,7 @@ async function depuisApi(url, cle) {
 export default async function () {
   const { TIBILLET_FICHIER, TIBILLET_URL, TIBILLET_API_KEY } = process.env;
   let source;
-  if (TIBILLET_FICHIER) source = depuisFichier(TIBILLET_FICHIER);
+  if (TIBILLET_FICHIER) source = await depuisFichier(TIBILLET_FICHIER);
   else if (TIBILLET_URL && TIBILLET_API_KEY) source = await depuisApi(TIBILLET_URL, TIBILLET_API_KEY);
   else return [];
 

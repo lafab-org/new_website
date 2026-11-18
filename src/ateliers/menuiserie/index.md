@@ -1,5 +1,6 @@
 ---
 title: "La menuiserie"
+accroche: "Scier, raboter, tourner et assembler le bois, sur des machines professionnelles."
 catégories: ["bois"]
 ---
 
