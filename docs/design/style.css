@@ -6,6 +6,8 @@
   --fond: #ffffff;
   --accroche: #1f4a6e;
   --fond-doux: #fff3eb;
+  --fond-bleu: #eaf1f7;
+  --date-en-avant: #9e3d00;
   --filet-doux: #f3d9c6;
   --bouton: #c44b00;
   --alerte: #a8322d;
@@ -209,8 +211,12 @@ h2 {
 .en-avant {
   margin: 1.5rem 0;
   padding: 0 1rem;
-  background: var(--fond-doux);
-  border-left: 6px solid var(--orange);
+  background: var(--fond-bleu);
+  border-left: 6px solid var(--accroche);
+}
+
+.en-avant .date {
+  color: var(--date-en-avant);
 }
 
 /* Page d'article */

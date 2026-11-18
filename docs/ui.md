@@ -209,8 +209,8 @@ description pour texte alternatif ; après le corps, un lien
 Une section, montrée par une page pour une liste d'articles (not
 testable) :
 - sans article, rien ;
-- sinon, chaque article de la liste, dans son ordre, comme sur
-  /ui/page-des-actualites.
+- sinon, chaque article de la liste, dans son ordre, avec le même
+  contenu que sur /ui/page-des-actualites.
 
 ## Prochaines séances
 
