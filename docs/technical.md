@@ -93,7 +93,8 @@
   CMS.
 - À sa création, l'éditeur nomme son fichier `<nom>.md` ; ce nom ne
   change plus ensuite.
-- Les images de son corps vont dans `src/evenements/photos/`.
+- Sa couverture et les images de son corps vont dans
+  `src/evenements/photos/`.
 
 ## Édition des pages et des ateliers
 

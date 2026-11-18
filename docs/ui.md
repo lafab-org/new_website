@@ -92,9 +92,13 @@ testable).
 telle que /operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
 pages d'évènement sont dans /contents/page-devenement.
 
-Entre le titre et le corps, la page montre l'accroche de l'évènement,
-s'il en a une, puis ses informations pratiques, en liste, dans cet
-ordre, chacune son libellé puis sa valeur (not testable) :
+Entre le titre et le corps, la page montre la couverture de
+l'évènement, s'il en a une, avec sa description pour texte alternatif
+(not testable).
+
+Puis son accroche, s'il en a une, puis ses informations pratiques, en
+liste, dans cet ordre, chacune son libellé puis sa valeur (not
+testable) :
 - `Rendez-vous`, puis son `rendez-vous` ;
 - `Horaire`, puis son `horaire` ;
 - `Lieu`, puis le `lieu` du site ;

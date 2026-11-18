@@ -146,3 +146,7 @@ Objectifs, pour chaque page d'évènement :
 - l'usager sait quand venir, comment participer et quoi apporter ou
   prévoir ;
 - le bénévole voit comment aider.
+
+Contraintes :
+- La description de la couverture dit ce qu'elle montre, en une phrase
+  courte.

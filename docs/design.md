@@ -12,8 +12,8 @@
   que de défiler.
 - Sur un écran étroit, le menu principal passe sous le logo, sur sa
   propre ligne.
-- Sur la page d'un article, sa couverture est montrée entière, jamais
-  recadrée ; dans la liste des actualités et les articles en avant, elle
+- Sur la page d'un article ou d'un évènement, sa couverture est montrée
+  entière, jamais recadrée ; dans la liste des actualités et les articles en avant, elle
   peut l'être.
 - Sur la page des réalisations, les photos sont des vignettes carrées,
   recadrées, qui en montrent une à la fois : au doigt, on passe de

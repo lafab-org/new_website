@@ -16,7 +16,7 @@
 - Données personnelles des photos : métadonnées, visages et noms d'auteurs des réalisations.
 - Pagination de la page des réalisations.
 - Reprise des anciennes actualités : les 82 nouvelles de l'ancien site, triées et nettoyées.
-- Photo des évènements : la montrer sur la page d'évènement et dans les séances, depuis TiBillet ou le front matter de la page.
+- Photo des évènements dans les séances : y montrer la couverture de l'évènement.
 - Séance annulée et lecteurs d'écran : l'annulation n'est dite qu'en fin de carte, après le nom barré ; l'annoncer dès le nom.
 - Design de l'accueil : son apparence, d'après des maquettes, une fois son contenu revu.
 - `.gitignore` : ignorer `.playwright-mcp/`, le dossier des captures d'écran de l'outil de navigateur.

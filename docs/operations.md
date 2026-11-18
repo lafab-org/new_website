@@ -4,8 +4,8 @@
 
 Le site est tel que les fichiers de `src/`, hors `_includes/`, sont dans
 le dépôt : ses pages sont les fichiers Markdown, front matter compris,
-hors ceux des réalisations ; ses réalisations sont lues dans ceux-ci, ses articles
-et ses ateliers dans leurs pages ;
+hors ceux des réalisations ; ses réalisations sont lues dans ceux-ci, ses articles,
+ses ateliers et ses évènements dans leurs pages ;
 ses autres champs sont lus dans les fichiers de données.
 Il n'a aucune séance ; son `jour` et son `tirage` sont libres.
 
