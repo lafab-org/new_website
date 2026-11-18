@@ -1,0 +1,25 @@
+---
+layout: base.njk
+---
+{{ content | safe }}
+{%- for groupe in collections.evenementsParCategorie %}
+<h2>{{ groupe.nom }}</h2>
+{%- for p in groupe.pages %}
+{%- set seancesEvenement = seances | seancesDe(p.fileSlug) %}
+<section class="evenement-seances">
+<h3><a href="{{ p.url }}">{{ p.data.title }}</a></h3>
+{%- if seancesEvenement.length %}
+{%- for jour, liste in seancesEvenement | groupby("jour") %}
+<h4 class="jour">{{ jour | jourLong }}</h4>
+<ul class="seances">
+{%- for s in liste %}
+{% include "seance.njk" %}
+{%- endfor %}
+</ul>
+{%- endfor %}
+{%- else %}
+<p class="aucune-seance">Aucune séance prévue pour l'instant.</p>
+{%- endif %}
+</section>
+{%- endfor %}
+{%- endfor %}

@@ -311,6 +311,26 @@ h2 {
   margin-top: 1.25rem;
   font-size: 1.05rem;
 }
+
+/* Page des séances par évènement : chaque évènement, en lien, puis ses
+   séances par jour. */
+.evenement-seances h3 {
+  margin: 1.75rem 0 0.25rem;
+  font-size: 1.2rem;
+}
+.evenement-seances h3 a {
+  color: var(--texte);
+  text-decoration-color: var(--orange);
+}
+.evenement-seances .jour {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--accroche);
+}
+.aucune-seance {
+  margin: 0.25rem 0;
+}
 .voir-agenda a {
   color: var(--texte);
   font-weight: bold;
