@@ -23,8 +23,6 @@
   que les pages construites utilisent.
   Chaque image annonce par `sizes` la largeur où elle s'affiche, et les
   largeurs produites en sont proches, jusqu'à une densité d'écran de 3.
-  Une photo entre dans le dépôt réduite à 2000 px au plus sur son grand
-  côté, en JPEG.
 - Commandes : `npm run build` génère le site ; `npm start` le sert en
   local avec rechargement, sur `http://localhost:8080`.
 - Les messages vus par l'utilisateur ne sont pas spécifiés.
@@ -60,6 +58,28 @@
   dépôt ; `TIBILLET_URL` est une variable du dépôt.
 - Quand GitHub suspend la tâche quotidienne faute d'activité sur le
   dépôt, elle est réactivée à la main.
+
+## Édition du contenu
+
+- Le contenu se modifie dans le dépôt, directement ou par Pages CMS,
+  dans sa version hébergée, `app.pagescms.org`, par son application
+  GitHub installée sur le dépôt.
+- `.pages.yml`, à la racine du dépôt, déclare ce que Pages CMS modifie :
+  pour chaque sorte de contenu, ses fichiers, ses champs sous leurs noms
+  du front matter, et son dossier de médias. Le corps d'une page se
+  modifie en Markdown.
+- Les éditeurs sans accès au dépôt y sont invités par courriel, comme
+  collaborateurs de Pages CMS.
+- Chaque modification est un commit sur `main`, au nom et au courriel de
+  l'éditeur, qui lance le déploiement.
+
+## Édition des actualités
+
+- Un article se crée, se modifie et se supprime dans Pages CMS.
+- À sa création, son fichier est nommé `<AAAA-MM-JJ>-<titre>.md`, par
+  le jour de sa création et son titre ; l'éditeur peut changer ce nom à
+  la création, plus ensuite.
+- Ses photos vont dans `src/actualites/photos/`.
 
 ## Politique de tests et de qualité
 

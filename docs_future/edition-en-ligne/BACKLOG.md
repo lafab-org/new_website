@@ -9,8 +9,7 @@ simples, leurs photos dans un dossier commun à chaque sorte.
 ## Outline
 
 1. Rangement done
-2. Pages CMS et actualités : /overview/hors-perimetre,
-   /technical/edition-du-contenu, /technical/edition-des-actualites.
+2. Pages CMS et actualités done
 3. Réalisations : /technical/edition-des-realisations.
 4. Évènements : /technical/edition-des-evenements.
 5. Accueil en deux parties : `code-only`, le corps de `index.md` n'est
