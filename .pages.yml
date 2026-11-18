@@ -7,10 +7,18 @@ settings:
     identity: user
 
 media:
-  input: src/actualites/photos
-  output: /actualites/photos
-  extensions: [jpg, jpeg, png, webp]
-  rename: safe
+  - name: actualites
+    label: Photos des actualités
+    input: src/actualites/photos
+    output: /actualites/photos
+    extensions: [jpg, jpeg, png, webp]
+    rename: safe
+  - name: realisations
+    label: Photos des réalisations
+    input: src/realisations/photos
+    output: /realisations/photos
+    extensions: [jpg, jpeg, png, webp]
+    rename: safe
 
 content:
   - name: actualites
@@ -32,6 +40,8 @@ content:
         description: À la création, le nom du fichier doit garder la date AAAA-MM-JJ- par laquelle il commence.
         type: string
         required: true
+        options:
+          maxlength: 70
       - name: résumé
         label: Résumé
         description: Ce dont parle l'article, en une ou deux phrases.
@@ -45,6 +55,8 @@ content:
             description: 2000 px au plus en largeur et en hauteur.
             type: image
             required: true
+            options:
+              media: actualites
           - name: description
             label: Description
             description: Ce que montre la photo.
@@ -89,3 +101,77 @@ content:
         type: code
         options:
           format: markdown
+
+  - name: realisations
+    label: Réalisations
+    type: collection
+    path: src/realisations
+    subfolders: false
+    # Named from the fields at save, as the name field of Pages CMS is
+    # generated from the empty entry: the date of the réalisation, not the
+    # day of its creation.
+    filename: "{date}-{primary}-{auteur}.md"
+    operations:
+      rename: false
+    view:
+      fields: [titre, date, auteur]
+      primary: titre
+      sort: [date, titre]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: titre
+        label: Titre
+        description: Ce qu'elle est. Avec la date et l'auteur, il nomme le fichier, qui ne change plus ensuite.
+        type: string
+        required: true
+        options:
+          maxlength: 70
+      - name: date
+        label: Date
+        description: Le jour où elle a été présentée.
+        type: date
+        required: true
+      - name: auteur
+        label: Auteur
+        description: Qui l'a faite.
+        type: string
+        required: true
+      - name: catégories
+        label: Catégories
+        description: Au moins une.
+        type: select
+        required: true
+        options:
+          multiple: true
+          values:
+            - value: association
+              label: Vie de l'association
+            - value: bois
+              label: Bois
+            - value: métal
+              label: Métal
+            - value: matériaux-souples
+              label: Matériaux souples
+            - value: numérique-électronique
+              label: Numérique et électronique
+      - name: photos
+        label: Photos
+        description: Au moins une, dans l'ordre où elles sont montrées.
+        type: object
+        list: true
+        required: true
+        fields:
+          - name: fichier
+            label: Photo
+            description: 2000 px au plus en largeur et en hauteur.
+            type: image
+            required: true
+            options:
+              media: realisations
+          - name: description
+            label: Description
+            description: Ce que montre la photo.
+            type: string
+            required: true
