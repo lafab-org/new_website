@@ -77,8 +77,7 @@
 
 - Un article se crée, se modifie et se supprime dans Pages CMS.
 - À sa création, son fichier est nommé `<AAAA-MM-JJ>-<titre>.md`, par
-  le jour de sa création et son titre ; l'éditeur peut changer ce nom à
-  la création, plus ensuite.
+  le jour de sa création et son titre ; ce nom ne change plus ensuite.
 - Ses photos vont dans `src/actualites/photos/`.
 
 ## Édition des réalisations
@@ -92,8 +91,8 @@
 
 - Une page d'évènement se crée, se modifie et se supprime dans Pages
   CMS.
-- À sa création, son fichier est nommé `<titre>.md`, par son titre ;
-  l'éditeur peut changer ce nom à la création, plus ensuite.
+- À sa création, l'éditeur nomme son fichier `<nom>.md` ; ce nom ne
+  change plus ensuite.
 - Les images de son corps vont dans `src/evenements/photos/`.
 
 ## Politique de tests et de qualité

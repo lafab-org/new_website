@@ -19,6 +19,12 @@ media:
     output: /realisations/photos
     extensions: [jpg, jpeg, png, webp]
     rename: safe
+  - name: evenements
+    label: Photos des évènements
+    input: src/evenements/photos
+    output: /evenements/photos
+    extensions: [jpg, jpeg, png, webp]
+    rename: safe
 
 content:
   - name: actualites
@@ -26,9 +32,9 @@ content:
     type: collection
     path: src/actualites
     subfolders: false
-    filename:
-      template: "{year}-{month}-{day}-{primary}.md"
-      field: create
+    # Named from the fields at save: the name field of Pages CMS starts
+    # empty, not from the title.
+    filename: "{year}-{month}-{day}-{primary}.md"
     operations:
       rename: false
     view:
@@ -37,7 +43,7 @@ content:
     fields:
       - name: title
         label: Titre
-        description: À la création, le nom du fichier doit garder la date AAAA-MM-JJ- par laquelle il commence.
+        description: Avec le jour de la création, il nomme le fichier, qui ne change plus ensuite.
         type: string
         required: true
         options:
@@ -175,3 +181,69 @@ content:
             description: Ce que montre la photo.
             type: string
             required: true
+
+  - name: evenements
+    label: Évènements
+    type: collection
+    path: src/evenements
+    subfolders: false
+    # The name, without extension, is the address of the page and the
+    # TiBillet keyword that links events to it: typed by the editor at
+    # creation (the name field starts as ".md"), never renamed.
+    filename:
+      template: "{primary}.md"
+      field: create
+    operations:
+      rename: false
+    view:
+      fields: [title, catégorie]
+      primary: title
+    fields:
+      - name: title
+        label: Titre
+        description: "À la création, taper aussi un nom court dans le champ du nom de fichier (Filename) : en minuscules, sans accents, mots séparés par des tirets, finissant par .md, par exemple repar-action.md, et qui n'est pas déjà dans la liste des évènements. Sans .md, c'est le mot-clé TiBillet de la page ; il ne change plus ensuite."
+        type: string
+        required: true
+        options:
+          maxlength: 70
+      - name: accroche
+        label: Accroche
+        description: Une phrase d'appel, sous le titre.
+        type: string
+      - name: rendez-vous
+        label: Rendez-vous
+        description: Quand il a lieu, par exemple « tous les premiers jeudis du mois ».
+        type: string
+        required: true
+      - name: horaire
+        label: Horaire
+        description: À quelle heure, par exemple « 18h - 20h ».
+        type: string
+        required: true
+      - name: catégorie
+        label: Catégorie
+        type: select
+        required: true
+        options:
+          values:
+            - value: association
+              label: Vie de l'association
+            - value: bois
+              label: Bois
+            - value: métal
+              label: Métal
+            - value: matériaux-souples
+              label: Matériaux souples
+            - value: numérique-électronique
+              label: Numérique et électronique
+      - name: prix
+        label: Prix
+        description: Ce qu'il coûte et à qui il est ouvert.
+        type: string
+        required: true
+      - name: body
+        label: Texte
+        description: En Markdown ; une photo s'écrit ![ce qu'elle montre](/evenements/photos/nom.jpg), après l'avoir envoyée dans Médias, Photos des évènements, 2000 px au plus en largeur et en hauteur.
+        type: code
+        options:
+          format: markdown
