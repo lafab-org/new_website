@@ -1,0 +1,83 @@
+# Pages CMS (https://app.pagescms.org): what editors can change.
+# Field names are the front matter names, accents included; every field
+# of the front matter is declared, as Pages CMS drops the others on save.
+
+settings:
+  commit:
+    identity: user
+
+media:
+  input: src/actualites/photos
+  output: /actualites/photos
+  extensions: [jpg, jpeg, png, webp]
+  rename: safe
+
+content:
+  - name: actualites
+    label: Actualités
+    description: À la création, le nom du fichier doit garder la date AAAA-MM-JJ- par laquelle il commence.
+    type: collection
+    path: src/actualites
+    subfolders: false
+    filename:
+      template: "{year}-{month}-{day}-{primary}.md"
+      field: create
+    operations:
+      rename: false
+    view:
+      fields: [title]
+      primary: title
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+      - name: résumé
+        label: Résumé
+        description: Ce dont parle l'article, en une ou deux phrases.
+        type: text
+      - name: couverture
+        label: Couverture
+        type: object
+        fields:
+          - name: fichier
+            label: Photo
+            type: image
+            required: true
+          - name: description
+            label: Description
+            description: Ce que montre la photo.
+            type: string
+            required: true
+      - name: mise-en-avant
+        label: Mise en avant
+        description: Où et jusqu'à quand l'accueil ou l'agenda présentent l'article.
+        type: object
+        fields:
+          - name: pages
+            label: Pages
+            type: select
+            required: true
+            options:
+              multiple: true
+              values:
+                - value: accueil
+                  label: Accueil
+                - value: agenda
+                  label: Agenda
+          # Without an empty default, a date field starts at today's date.
+          - name: début
+            label: Début
+            description: Sans début, dès la publication.
+            type: date
+            default: ""
+          - name: fin
+            label: Fin
+            description: Le dernier jour de la mise en avant, pas avant le début.
+            type: date
+            required: true
+            default: ""
+      - name: body
+        label: Texte
+        description: Chaque photo insérée a un texte alternatif, qui décrit ce qu'elle montre.
+        type: rich-text

@@ -8,6 +8,15 @@ Strasbourg. Site statique construit avec Eleventy.
 - `npm run build` : génère le site dans `_site/`.
 - `npm test` : lance les tests.
 
+## Édition en ligne
+
+Les actualités se modifient aussi dans Pages CMS, sur
+<https://app.pagescms.org>, selon `.pages.yml`. L'application GitHub
+Pages CMS doit être installée sur le dépôt (par un administrateur de
+l'organisation) ; les éditeurs sans accès au dépôt y sont invités par
+courriel, dans les réglages du projet sur Pages CMS. Chaque
+enregistrement est un commit sur `main`, qui lance le déploiement.
+
 ## Déploiement
 
 Le site est publié sur GitHub Pages à l'adresse
