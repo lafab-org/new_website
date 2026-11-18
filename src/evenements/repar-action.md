@@ -1,12 +1,11 @@
 ---
-title: "Atelier Répar'Action"
-accroche: "Redonnez une deuxième vie à vos objets ! Plutôt que de jeter, ici on répare !"
-rendez-vous: "tous les premiers jeudis du mois"
-horaire: "18h - 20h"
-catégorie: "numérique-électronique"
-prix: "gratuite et ouverte à tous"
+title: Atelier Répar'Action
+accroche: Redonnez une deuxième vie à vos objets ! Plutôt que de jeter, ici on répare !
+rendez-vous: tous les premiers jeudis du mois
+horaire: 18h - 21h
+catégorie: numérique-électronique
+prix: gratuite et ouverte à tous
 ---
-
 ## Le principe
 
 Dans l'esprit des Repair Cafés, Répar'Action est un lieu collaboratif
