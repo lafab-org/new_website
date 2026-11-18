@@ -50,6 +50,20 @@ Une catégorie d'évènements, selon leur domaine.
 Les évènements d'une catégorie sont ceux dont la `catégorie` est son
 identifiant.
 
+## Atelier
+
+Une page qui présente un atelier de La Fabrique. Chaque fichier
+`ateliers/<dossier>/index.md` de `src/` est la page d'un atelier, avec
+sa couverture dans le même dossier. Son front matter donne `accroche` et
+`couverture` sous leurs noms.
+
+- `page: /model/page`, sa page.
+- `nom court: string`, son nom dans le menu de l'en-tête.
+  - Non vide (not testable).
+- `accroche: string`, une phrase d'appel.
+  - Non vide (not testable).
+- `couverture: optional /model/photo`, la photo qui le représente.
+
 ## Évènement
 
 Une page qui présente un évènement, avec ses informations pratiques.
@@ -152,11 +166,11 @@ temps. Le front matter de l'article donne ses champs sous leurs noms.
 
 ## Photo
 
-Une photo d'une réalisation ou d'un article.
+Une photo d'une réalisation, d'un article ou d'un atelier.
 
 - `fichier: string`, le nom du fichier image.
-  - Un fichier du dossier de sa réalisation ou de son article (not
-    testable).
+  - Un fichier du dossier de sa réalisation, de son article ou de son
+    atelier (not testable).
 - `description: string`, ce que montre la photo.
   - Non vide (not testable).
 
@@ -178,13 +192,13 @@ L'état : tout ce dont le site est fait.
   l'ordre où le site les présente. Elles sont dans le fichier
   `src/_data/categories.json`, qui donne pour chacune son identifiant et
   son nom, dans cet ordre.
-- `ateliers: list of /model/page`, les pages d'atelier, dans l'ordre où
-  le site les présente. Le fichier `src/_data/ateliers.json` les donne
-  dans cet ordre, chacune par son adresse et son nom court. Le nom
-  court d'une page d'atelier est son nom dans le menu de l'en-tête.
-  - Ce sont les pages dont le fichier est directement dans `ateliers/`,
-    hors `ateliers/index.md`, chacune une fois (not testable).
-  - Chaque nom court est non vide (not testable).
+- `ateliers: list of /model/atelier`, tous les ateliers, dans l'ordre
+  où le site les présente. Le fichier `src/_data/ateliers.json` les
+  donne dans cet ordre, chacun par l'adresse de sa page et son nom
+  court.
+  - Leurs pages sont les pages de `pages` dont le fichier est
+    `ateliers/<dossier>/index.md`, chacune celle d'un seul atelier (not
+    testable).
 - `evenements: set of /model/evenement`, tous les évènements. Leurs
   pages sont les pages de `pages` dont le fichier est directement dans
   `evenements/`, hors `evenements/index.md`, chacune celle d'un seul
@@ -197,5 +211,13 @@ L'état : tout ce dont le site est fait.
   Leurs pages sont les pages de `pages` dont le fichier est
   `actualites/<dossier>/index.md`, chacune celle d'un seul article.
 - `jour: date`, le jour de sa construction, à Paris.
+- `tirage: list of /model/realisation`, les réalisations que montre la
+  page d'accueil.
+  - [tirage] Trois réalisations distinctes de `réalisations`, ou toutes
+    s'il y en a moins de trois.
 - `séances: list of /model/seance`, les séances, par jour puis par
   heure de début ; l'ordre de deux séances au même début est libre.
+
+Les séances des 7 prochains jours sont les séances du site dont le
+`jour` est le `jour` du site ou l'un des six jours qui le suivent, dans
+l'ordre des `séances` du site.

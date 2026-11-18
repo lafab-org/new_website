@@ -5,9 +5,9 @@
 Le site est tel que les fichiers de `src/`, hors `_includes/`, sont dans
 le dépôt : ses pages sont les fichiers Markdown, front matter compris,
 hors ceux des réalisations ; ses réalisations sont lues dans ceux-ci, ses articles
-dans leurs pages ;
+et ses ateliers dans leurs pages ;
 ses autres champs sont lus dans les fichiers de données.
-Il n'a aucune séance ; son `jour` est libre.
+Il n'a aucune séance ; son `jour` et son `tirage` sont libres.
 
 ## Construire le site
 
@@ -23,10 +23,11 @@ Inputs, de l'environnement ou du fichier `.env` :
 - `TIBILLET_API_KEY: optional string`
 
 Cases:
-1. [fichier] `TIBILLET_FICHIER` donné, le fichier se lit comme des
-   évènements et des réservations de TiBillet, et chaque évènement
-   qui donne une séance a un `name`, un `startDate` et une `url` : les
-   séances sont lues dans ce fichier, sur tous ses évènements.
+1. [fichier] `TIBILLET_FICHIER` donné, ce qu'exporte son module se lit
+   comme des évènements et des réservations de TiBillet, et chaque
+   évènement qui donne une séance a un `name`, un `startDate` et une
+   `url` : les séances sont lues dans ce module, sur tous ses
+   évènements.
 2. `TIBILLET_FICHIER` donné, dans les autres cas : la construction
    échoue, et `_site/` est inchangé (not testable).
 3. `TIBILLET_URL` et `TIBILLET_API_KEY` donnés, TiBillet répond sans
@@ -44,9 +45,13 @@ Then:
   sous `_site/`, où chaque page, hors celles des articles non publiés,
   est écrite en HTML, son corps rendu
   depuis le Markdown, et chaque photo des réalisations et des articles
-  publiés en fichiers image, ainsi que le logo ; `index.md` donne `_site/index.html`. Les
-  `séances` du site sont les séances lues, et son `jour` celui de la
-  construction, à Paris.
+  publiés, et chaque couverture des ateliers, en fichiers image, ainsi que le logo et
+  l'image de remplacement des couvertures ; `index.md` donne
+  `_site/index.html`. Les `séances` du site sont les séances lues, et
+  son `jour` celui de la construction, à Paris.
+- Après les cas 1, 3 et 5 : le `tirage` du site est tiré au hasard à
+  chaque construction, parmi ceux que /model/site/tirage permet (not
+  testable).
 - [non-publie] Après les cas 1, 3 et 5 : la page d'un article non
   publié n'est pas dans `_site/`. Ses photos n'y sont pas non plus
   (not testable).

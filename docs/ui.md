@@ -23,8 +23,8 @@ Commun à toutes les pages, dans cet ordre (not testable) :
   - `Actualités`, vers `/actualites` ;
   - `Réalisations`, vers `/realisations` ;
 - le menu des ateliers et de l'association :
-  - chaque page des `ateliers` du site, dans leur ordre, sous son nom
-    court, vers son adresse ;
+  - chaque atelier du site, dans l'ordre des `ateliers` du site, sous
+    son nom court, vers sa page ;
   - `L'association`, vers `/association`.
 
 Dans un menu, l'entrée qui mène à la page affichée est mise en
@@ -36,10 +36,35 @@ Dans un menu, l'entrée qui mène à la page affichée est mise en
 /operations/construire-le-site/generee la rend. Ses objectifs éditoriaux
 sont dans /contents/page-daccueil.
 
-Entre le titre et le corps, la section /ui/articles-en-avant, pour les
-articles en avant sur la page d'accueil (not testable).
+Après le titre, dans cet ordre, où la présentation et le fonctionnement
+sont les deux parties du corps de la page :
+- La présentation de La Fabrique (not testable).
+- La section /ui/articles-en-avant, pour les articles en avant sur la
+  page d'accueil (not testable).
 - [en-avant] Un lien vers la page de chaque article en avant sur la page
   d'accueil.
+- Le sous-titre `Les ateliers`, puis chaque atelier du site, dans
+  l'ordre des `ateliers` du site, dans cet ordre (not testable) :
+  - sa couverture, avec sa description pour texte alternatif, ou sans
+    couverture l'image de remplacement des couvertures, avec le texte
+    alternatif `Photo à venir` ;
+  - son nom, le `title` de sa page, en lien vers sa page ;
+  - son accroche.
+- Le fonctionnement de La Fabrique (not testable).
+- Le sous-titre `Les 7 prochains jours`, puis :
+  - [semaine] Le nom de chaque séance des 7 prochains jours.
+  - Ces séances sont groupées par jour comme sur /ui/page-de-lagenda
+    (not testable).
+  - Sans séance des 7 prochains jours, le texte
+    `Aucune séance dans les 7 prochains jours.` (not testable).
+  - Un lien `Tout l'agenda` vers `/agenda` (not testable).
+- Sans réalisation dans le `tirage`, rien (not testable) ; sinon, le
+  sous-titre `Des réalisations`, puis :
+  - Chaque réalisation du `tirage` du site, dans son ordre : sa
+    première photo, avec sa description pour texte alternatif, puis son
+    titre (not testable).
+  - Un lien `Toutes les réalisations` vers `/realisations` (not
+    testable).
 
 ## Page de l'association
 
@@ -53,7 +78,7 @@ testable).
 
 ## Page d'atelier
 
-À `/ateliers/<nom>` : la page `ateliers/<nom>.md`, telle que
+À `/ateliers/<nom>` : la page `ateliers/<nom>/index.md` d'un atelier, telle que
 /operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
 pages d'atelier sont dans /contents/page-datelier.
 

@@ -15,19 +15,24 @@ Contraintes communes :
 
 ## Page d'accueil
 
-Objectif : souhaiter la bienvenue et mener le visiteur vers la page de
-l'association, puis vers les pages d'atelier.
+Objectifs :
+- le curieux comprend que La Fabrique est une association qui tourne
+  surtout grâce à des bénévoles, qui ouvre à tous des ateliers équipés
+  de machines professionnelles, et qui anime une communauté autour de la
+  création, de l'artisanat et de la réparation ;
+- il comprend que l'usage est payant, et que le lieu n'existe que si
+  ses usagers s'engagent eux-mêmes dans le projet ;
+- il sait qu'il peut venir visiter pendant les portes ouvertes ;
+- il repère l'atelier qui l'attire ;
+- l'usager retrouve en bref comment fonctionne La Fabrique.
 
 Contraintes :
 - Titre : `La Fabrique`.
-- Un lien vers la page de l'association, dans le corps de la page, avant
-  ceux des ateliers.
-- Un lien vers la page de l'agenda.
-- Un lien vers la page des réalisations.
-- Un lien vers la page des actualités.
-- Un lien vers chaque page d'atelier.
-- Les pages d'atelier sont listées sous `Les ateliers`, dans l'ordre
-  des `ateliers` du site.
+- La présentation a un lien vers la page de l'association et un lien
+  vers la page de l'évènement portes ouvertes.
+- Le fonctionnement reprend en bref l'adhésion, les horaires
+  d'ouverture, le ticket et les initiations de la page de
+  l'association, avec un lien vers elle pour le détail.
 
 ## Page de l'agenda
 
@@ -95,12 +100,20 @@ Contraintes :
 Objectifs :
 - le curieux comprend ce qu'est l'association et où se trouve le lieu ;
 - il sait qu'il peut venir visiter pendant les portes ouvertes ;
-- l'usager sait comment adhérer ;
+- l'usager sait comment fonctionne La Fabrique : adhérer, quand venir,
+  ce que coûte l'usage et les initiations ;
 - le bénévole voit comment aider ;
 - le curieux voit les évènements de l'association.
 
 Contraintes :
 - L'adresse est celle de La Fabrique, `lieu` du site.
+- Le fonctionnement donne :
+  - l'adhésion, 10 € pour un an ;
+  - les horaires d'ouverture : jeudi 10 h-16 h, vendredi 13 h-16 h,
+    samedi 10 h-19 h ;
+  - le ticket, 12 € pour une session de 3 h en autonomie ;
+  - les initiations, 30 € sur réservation, obligatoires avant d'utiliser
+    certaines machines.
 - Après son corps, la section `Les évènements` de ses évènements,
   comme celle de la page d'atelier.
 - Un lien vers la page de l'évènement portes ouvertes.
@@ -116,6 +129,9 @@ Objectifs, pour chaque page d'atelier :
 - l'usager et le curieux voient les évènements de la page.
 
 Contraintes :
+- L'accroche dit en une phrase ce qu'on fait dans l'atelier.
+- La description de la couverture dit ce qu'elle montre, en une phrase
+  courte.
 - Un lien vers la page de l'association.
 - Un lien vers la page de l'agenda.
 - Après son corps, une section `Les évènements` liste chacun des

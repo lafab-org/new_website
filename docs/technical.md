@@ -37,9 +37,9 @@
   `TIBILLET_URL` et `TIBILLET_API_KEY`, lues aussi dans le fichier
   `.env` à la racine, que git ignore.
 - `TIBILLET_FICHIER`, variable d'environnement lue aussi dans `.env`,
-  désigne un fichier JSON local qui tient lieu de
-  TiBillet : les évènements et les réservations, au format des réponses
-  de l'API ; la forme qui les réunit est libre.
+  désigne un module JavaScript local qui tient lieu de TiBillet : il
+  exporte par défaut les évènements et les réservations, au format des
+  réponses de l'API ; la forme qui les réunit est libre.
 - Des réservations, la construction ne garde que leur nombre de
   billets : aucune donnée personnelle n'est écrite, ni dans `_site/` ni
   ailleurs.
@@ -66,8 +66,10 @@
 - Outil : `node:test`, dans `tests/`, sans dépendance supplémentaire ;
   `npm test` n'a pas besoin du réseau.
 - Les tests construisent le site avec `TIBILLET_FICHIER` désignant
-  `tests/tibillet.json`, un fichier d'exemple sans donnée personnelle,
-  qui sert aussi au développement local.
+  `tests/tibillet.mjs`, un module d'exemple sans donnée personnelle,
+  qui sert aussi au développement local. Ses dates sont relatives au
+  jour où il est lu, et plusieurs de ses séances ont lieu dans les 7
+  jours qui le commencent.
 - Les tests sont un contrôle de forme du site construit. Ils vident
   `_site/`, le construisent une fois par `npm run build`, puis lisent
   `_site/` : ni serveur, ni navigateur, et sans lire les gabarits. Les
@@ -88,7 +90,10 @@
   sur chaque source d'article, que le nom de son dossier commence par
   une date `AAAA-MM-JJ` valide suivie de `-`, et que sa mise en avant,
   s'il en a une, est bien formée. Sur la page de l'agenda, il vérifie qu'elle montre le nom
-  de chaque séance du fichier d'exemple ; sur la page des actualités,
+  de chaque séance du module d'exemple ; sur la page d'accueil, qu'elle
+  montre le nom de chaque séance du module d'exemple des 7 jours qui
+  commencent le jour où les tests construisent le site, et le titre de
+  trois réalisations distinctes du site, ou de toutes s'il y en a moins ; sur la page des actualités,
   qu'elle a un lien vers chaque article publié, et que la page de
   chaque article non publié n'est pas dans `_site/` ; sur la page d'accueil et sur
   celle de l'agenda, qu'elles ont un lien vers chaque article en avant
