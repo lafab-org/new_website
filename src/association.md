@@ -2,16 +2,11 @@
 title: L'association
 catégories:
   - association
-layout: atelier.njk
-templateEngineOverride: njk,md
+layout: association.njk
 ---
 La Fabrique est un atelier partagé, porté par une association dont les
 membres le font vivre : on y répare, on y fabrique et on y apprend
 ensemble.
-
-## Où nous trouver
-
-{{ site.lieu }}
 
 ## Venir visiter
 
