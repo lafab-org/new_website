@@ -22,9 +22,6 @@
 - `.gitignore` : ignorer `.playwright-mcp/`, le dossier des captures d'écran de l'outil de navigateur.
 - Données d'exemple TiBillet : remplacer `TIBILLET_FICHIER` par une simple activation des données d'exemple, sans citer le chemin du module, et une commande npm dédiée au développement local.
 - Favicon : une icône du site pour l'onglet du navigateur, tirée du logo ; aujourd'hui `/favicon.ico` répond 404.
-- Retour aux éditeurs : quand un enregistrement dans Pages CMS fait échouer le déploiement, le signaler à l'éditeur ou le rendre impossible.
-- Courriels des éditeurs : chaque commit Pages CMS publie le courriel de l'éditeur dans l'historique public ; envisager les adresses noreply de GitHub.
-- Photos orphelines : supprimer du dépôt les photos qu'aucune page n'utilise plus (supprimer une réalisation dans Pages CMS laisse ses photos).
 
 ## Rapports à envoyer
 
