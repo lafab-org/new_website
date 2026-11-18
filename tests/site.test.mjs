@@ -24,8 +24,11 @@ function markdown(dir = "") {
   });
 }
 const pages = () => markdown();
-// The files of the réalisations: the Markdown files under realisations/.
-const realisations = () => (existsSync(join(SRC, "realisations")) ? markdown("realisations") : []);
+// The files of the réalisations: the Markdown files directly in realisations/.
+const realisations = () => (existsSync(join(SRC, "realisations"))
+  ? readdirSync(join(SRC, "realisations"), { withFileTypes: true })
+    .filter((e) => e.isFile() && e.name.endsWith(".md")).map((e) => join("realisations", e.name))
+  : []);
 
 // Address serving a page, and the built file of an address.
 const address = (page) => "/" + page.replace(/\.md$/, "").replace(/(^|\/)index$/, "");
@@ -46,8 +49,9 @@ const hrefs = (html) =>
 const ids = (html) => new Set([...html.matchAll(/\sid\s*=\s*["']([^"']*)["']/gi)].map((m) => m[1]));
 const isEvent = (page) => /^evenements\/[^/]+\.md$/.test(page) && page !== "evenements/index.md";
 
-// The sources of the articles, published or not: actualites/<dossier>/index.md.
-const isArticle = (p) => /^actualites\/[^/]+\/index\.md$/.test(p);
+// The sources of the articles, published or not: the Markdown files
+// directly in actualites/.
+const isArticle = (p) => /^actualites\/[^/]+\.md$/.test(p);
 const articles = () => pages().filter(isArticle);
 
 // The mise en avant of an article page, from its front matter block:
@@ -120,12 +124,18 @@ before(() => {
     stdio: "pipe",
     env: { ...process.env, TIBILLET_FICHIER: TIBILLET },
   });
-  for (const p of all) built[p] = readFileSync(builtFile(address(p)), "utf8");
+  // A page not built reads as empty, and is reported by the test of
+  // /operations/construire-le-site/generee.
+  for (const p of all) {
+    const file = builtFile(address(p));
+    built[p] = existsSync(file) ? readFileSync(file, "utf8") : "";
+  }
 });
 
 test("every page is built as an HTML file, from its Markdown", () => {
   // /operations/construire-le-site/generee
   for (const p of all) {
+    assert.ok(existsSync(builtFile(address(p))), `${p}: not built`);
     assert.match(built[p], /<html[\s>]/i, `${p}: not HTML`);
     assert.doesNotMatch(built[p], /^\s*#{1,6}\s/m, `${p}: Markdown heading left unrendered`);
   }
@@ -232,6 +242,7 @@ const images = (html) => [...html.matchAll(/<img\s[^>]*>/gi)].map((m) => {
 test("every image has a text alternative and leads to a file of _site/", () => {
   // /model/image/texte
   // /model/site/image
+  // /operations/construire-le-site/generee
   const found = all.flatMap((p) => images(built[p]).map((i) => [p, i]));
   assert.ok(found.length > 0, "no image on any page");
   const wrong = [];
@@ -280,13 +291,14 @@ test("the agenda shows the name of every séance of the sample module", async ()
   assert.deepEqual(missing, [], "séances missing from the agenda");
 });
 
-test("every article folder starts with a valid date, then a hyphen", () => {
+test("every article file name starts with a valid date, then a hyphen", () => {
   // /model/article/date
   const found = articles();
+  assert.ok(found.length > 0, "no article");
   for (const p of found) {
-    const folder = p.split("/")[1];
-    const m = folder.match(/^(\d{4})-(\d{2})-(\d{2})-/);
-    assert.ok(m, `${p}: folder does not start with AAAA-MM-JJ-`);
+    const name = p.split("/")[1];
+    const m = name.match(/^(\d{4})-(\d{2})-(\d{2})-/);
+    assert.ok(m, `${p}: file name does not start with AAAA-MM-JJ-`);
     const [y, mo, d] = m.slice(1).map(Number);
     const day = new Date(0);
     day.setUTCFullYear(y, mo - 1, d);
