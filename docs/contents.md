@@ -24,15 +24,13 @@ Objectifs :
   ses usagers s'engagent eux-mêmes dans le projet ;
 - il sait qu'il peut venir visiter pendant les portes ouvertes ;
 - il repère l'atelier qui l'attire ;
-- l'usager retrouve en bref comment fonctionne La Fabrique.
+- l'usager retrouve en bref comment fonctionne La Fabrique, et va sur
+  la page de l'association pour le détail.
 
 Contraintes :
 - Titre : `La Fabrique`.
-- La présentation a un lien vers la page de l'association et un lien
-  vers la page de l'évènement portes ouvertes.
-- Le fonctionnement reprend en bref l'adhésion, les horaires
-  d'ouverture, le ticket et les initiations de la page de
-  l'association, avec un lien vers elle pour le détail.
+- Le corps a un lien vers la page de l'association et un lien vers la
+  page de l'évènement portes ouvertes.
 
 ## Page de l'agenda
 
@@ -107,7 +105,7 @@ Objectifs :
 
 Contraintes :
 - L'adresse est celle de La Fabrique, `lieu` du site.
-- Le fonctionnement donne :
+- La section `Fonctionnement` est brève et donne :
   - l'adhésion, 10 € pour un an ;
   - les horaires d'ouverture : jeudi 10 h-16 h, vendredi 13 h-16 h,
     samedi 10 h-19 h ;

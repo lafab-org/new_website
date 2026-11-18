@@ -11,7 +11,8 @@ lien en cliquant dessus.
   d'accueil.
 - [titre] La page a un seul titre principal (`<h1>`) : son `title`.
 - L'en-tête /ui/en-tete vient en premier, puis le titre principal,
-  puis le corps de la page (not testable).
+  puis le corps de la page, ou, pour la page d'accueil, ses blocs selon
+  /ui/page-daccueil (not testable).
 
 ## En-tête
 
@@ -36,35 +37,33 @@ Dans un menu, l'entrée qui mène à la page affichée est mise en
 /operations/construire-le-site/generee la rend. Ses objectifs éditoriaux
 sont dans /contents/page-daccueil.
 
-Après le titre, dans cet ordre, où la présentation et le fonctionnement
-sont les deux parties du corps de la page :
-- La présentation de La Fabrique (not testable).
-- La section /ui/articles-en-avant, pour les articles en avant sur la
-  page d'accueil (not testable).
-- [en-avant] Un lien vers la page de chaque article en avant sur la page
-  d'accueil.
-- Le sous-titre `Les ateliers`, puis chaque atelier du site, dans
-  l'ordre des `ateliers` du site, dans cet ordre (not testable) :
+Après le titre, chaque bloc de l'`accueil` du site, dans son ordre,
+selon son type (not testable) :
+- `corps` : le corps de la page.
+- `articles-en-avant` : la section /ui/articles-en-avant, pour les
+  articles en avant sur la page d'accueil.
+- `ateliers` : le sous-titre `Les ateliers`, puis chaque atelier du
+  site, dans l'ordre des `ateliers` du site, dans cet ordre :
   - sa couverture, avec sa description pour texte alternatif, ou sans
     couverture l'image de remplacement des couvertures, avec le texte
     alternatif `Photo à venir` ;
   - son nom, le `title` de sa page, en lien vers sa page ;
   - son accroche.
-- Le fonctionnement de La Fabrique (not testable).
-- Le sous-titre `Les 7 prochains jours`, puis :
-  - [semaine] Le nom de chaque séance des 7 prochains jours.
-  - Ces séances sont groupées par jour comme sur /ui/page-de-lagenda
-    (not testable).
+- `section` : la section `<titre>` de sa page, rendue comme sur
+  celle-ci, puis un lien `Plus de détails : <title>` vers cette page,
+  où `<title>` est son `title`.
+- `semaine` : le sous-titre `Les 7 prochains jours`, puis :
+  - Le nom de chaque séance des 7 prochains jours, groupées par jour
+    comme sur /ui/page-de-lagenda.
   - Sans séance des 7 prochains jours, le texte
-    `Aucune séance dans les 7 prochains jours.` (not testable).
-  - Un lien `Tout l'agenda` vers `/agenda` (not testable).
-- Sans réalisation dans le `tirage`, rien (not testable) ; sinon, le
+    `Aucune séance dans les 7 prochains jours.`
+  - Un lien `Tout l'agenda` vers `/agenda`.
+- `realisations` : sans réalisation dans le `tirage`, rien ; sinon, le
   sous-titre `Des réalisations`, puis :
   - Chaque réalisation du `tirage` du site, dans son ordre : sa
     première photo, avec sa description pour texte alternatif, puis son
-    titre (not testable).
-  - Un lien `Toutes les réalisations` vers `/realisations` (not
-    testable).
+    titre.
+  - Un lien `Toutes les réalisations` vers `/realisations`.
 
 ## Page de l'association
 

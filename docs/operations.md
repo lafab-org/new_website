@@ -23,25 +23,29 @@ Inputs, de l'environnement ou du fichier `.env` :
 - `TIBILLET_API_KEY: optional string`
 
 Cases:
-1. [fichier] `TIBILLET_FICHIER` donné, ce qu'exporte son module se lit
+1. L'`accueil` du site ne respecte pas /model/site/blocs ou
+   /model/site/corps, ou
+   l'un de ses blocs ne respecte pas /model/bloc/section : la
+   construction échoue, et `_site/` est inchangé (not testable).
+2. [fichier] `TIBILLET_FICHIER` donné, ce qu'exporte son module se lit
    comme des évènements et des réservations de TiBillet, et chaque
    évènement qui donne une séance a un `name`, un `startDate` et une
    `url` : les séances sont lues dans ce module, sur tous ses
    évènements.
-2. `TIBILLET_FICHIER` donné, dans les autres cas : la construction
+3. `TIBILLET_FICHIER` donné, dans les autres cas : la construction
    échoue, et `_site/` est inchangé (not testable).
-3. `TIBILLET_URL` et `TIBILLET_API_KEY` donnés, TiBillet répond sans
+4. `TIBILLET_URL` et `TIBILLET_API_KEY` donnés, TiBillet répond sans
    erreur à toutes les requêtes, celle des évènements et celles des
    réservations, et chaque évènement qui donne une séance a un `name`,
    un `startDate` et une `url` : les séances sont lues sur TiBillet,
    sur les évènements qu'il donne dont le `endDate`, ou à défaut le
    `startDate`, n'est pas passé (not testable).
-4. `TIBILLET_URL` et `TIBILLET_API_KEY` donnés, dans les autres cas :
+5. `TIBILLET_URL` et `TIBILLET_API_KEY` donnés, dans les autres cas :
    la construction échoue, et `_site/` est inchangé (not testable).
-5. Sinon : aucune séance (not testable).
+6. Sinon : aucune séance (not testable).
 
 Then:
-- [generee] Après les cas 1, 3 et 5 : le résultat est le site généré
+- [generee] Après les cas 2, 4 et 6 : le résultat est le site généré
   sous `_site/`, où chaque page, hors celles des articles non publiés,
   est écrite en HTML, son corps rendu
   depuis le Markdown, et chaque image que montre une page construite, en
@@ -49,10 +53,10 @@ Then:
   compris ; `index.md` donne
   `_site/index.html`. Les `séances` du site sont les séances lues, et
   son `jour` celui de la construction, à Paris.
-- Après les cas 1, 3 et 5 : le `tirage` du site est tiré au hasard à
+- Après les cas 2, 4 et 6 : le `tirage` du site est tiré au hasard à
   chaque construction, parmi ceux que /model/site/tirage permet (not
   testable).
-- [non-publie] Après les cas 1, 3 et 5 : la page d'un article non
+- [non-publie] Après les cas 2, 4 et 6 : la page d'un article non
   publié n'est pas dans `_site/`. Celles de ses photos qu'aucune page
   construite ne montre n'y sont pas non plus (not testable).
 - Un évènement de TiBillet donne une séance quand l'un de ses

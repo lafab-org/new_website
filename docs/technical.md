@@ -100,6 +100,9 @@
 
 - Les pages de la racine de `src/` et les ateliers se modifient dans
   Pages CMS, sans création ni suppression.
+- Les blocs de la page d'accueil se modifient dans Pages CMS : l'éditeur
+  en ajoute, en retire et les ordonne, et choisit la page d'un bloc
+  `section` parmi les pages du site.
 - Les images des pages de la racine vont dans `src/photos/`, celles des
   ateliers dans `src/ateliers/photos/`.
 
@@ -132,14 +135,11 @@
   sur chaque source d'article, que son nom de fichier commence par
   une date `AAAA-MM-JJ` valide suivie de `-`, et que sa mise en avant,
   s'il en a une, est bien formée. Sur la page de l'agenda, il vérifie qu'elle montre le nom
-  de chaque séance du module d'exemple ; sur la page d'accueil, qu'elle
-  montre le nom de chaque séance du module d'exemple des 7 jours qui
-  commencent le jour où les tests construisent le site, et le titre de
-  trois réalisations distinctes du site, ou de toutes s'il y en a moins ; sur la page des actualités,
-  qu'elle a un lien vers chaque article publié, et que la page de
-  chaque article non publié n'est pas dans `_site/` ; sur la page d'accueil et sur
-  celle de l'agenda, qu'elles ont un lien vers chaque article en avant
-  sur elles, le jour où les tests construisent le site.
+  de chaque séance du module d'exemple, et qu'elle a un lien vers chaque
+  article en avant sur elle, le jour où les tests construisent le site ;
+  sur la page des actualités, qu'elle a un lien vers chaque article
+  publié, et que la page de chaque article non publié n'est pas dans
+  `_site/`.
 - Une affirmation de la spécification porte une étiquette seulement si
   le contrôle de forme peut la vérifier ; les autres se terminent par
   `(not testable)`. Elles se vérifient à la relecture, comme le contenu

@@ -17,6 +17,10 @@ Une page du site web, écrite sous forme de fichier source Markdown.
   page montre les évènements ; vide si son front matter n'en donne pas.
   - [categories] Chacun est l'identifiant d'une catégorie du site.
 
+La section `<titre>` d'une page est la partie de son corps qui va de
+son premier titre de niveau 2 dont le texte affiché est `<titre>`,
+compris, au titre de niveau 2 suivant ou à la fin du corps.
+
 Les évènements d'une page sont ceux de ses catégories.
 Ses séances sont les séances du site dont la catégorie est l'une de ses
 catégories, dans l'ordre des `séances` du site.
@@ -180,6 +184,22 @@ Une photo d'une réalisation, d'un article, d'un atelier ou d'un
 - `description: string`, ce que montre la photo.
   - Non vide (not testable).
 
+## Bloc
+
+Une partie de la page d'accueil, à sa place dans l'`accueil` du site.
+
+- `type: one of corps, articles-en-avant, ateliers, section, semaine,
+  realisations`, ce que le bloc montre.
+- `page: optional string`, pour un bloc `section`, l'emplacement sous
+  `src/` de la page dont il montre une section, par exemple
+  `association.md`.
+- `titre: optional string`, pour un bloc `section`, le titre de la
+  section qu'il montre.
+- [section] Un bloc `section`, et lui seul, a une `page` et un `titre` ;
+  `page` est l'emplacement d'une page de `pages` qui n'est pas celle
+  d'un article non publié, et qui a la section `titre`, sans lien
+  fragment (not testable).
+
 ## Site
 
 L'état : tout ce dont le site est fait.
@@ -216,11 +236,17 @@ L'état : tout ce dont le site est fait.
   au plus ancien ; l'ordre de deux articles de même date est libre.
   Leurs pages sont les pages de `pages` dont le fichier Markdown est
   directement dans `actualites/`, chacune celle d'un seul article.
+- `accueil: list of /model/bloc`, les blocs de la page d'accueil, dans
+  leur ordre. Le front matter d'`index.md` les donne dans `blocs`,
+  chacun avec ses champs sous leurs noms.
+  - [blocs] Le front matter d'`index.md` a `blocs`, une liste dont
+    chaque élément a pour `type` l'un de ceux d'un bloc (not testable).
+  - [corps] Au plus un bloc `corps` (not testable).
 - `jour: date`, le jour de sa construction, à Paris.
-- `tirage: list of /model/realisation`, les réalisations que montre la
-  page d'accueil.
+- `tirage: list of /model/realisation`, les réalisations que montre un
+  bloc `realisations`.
   - [tirage] Trois réalisations distinctes de `réalisations`, ou toutes
-    s'il y en a moins de trois.
+    s'il y en a moins de trois (not testable).
 - `séances: list of /model/seance`, les séances, par jour puis par
   heure de début ; l'ordre de deux séances au même début est libre.
 
