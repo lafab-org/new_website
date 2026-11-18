@@ -1,9 +1,13 @@
 ---
-title: "La menuiserie"
-accroche: "Scier, raboter, tourner et assembler le bois, sur des machines professionnelles."
-catégories: ["bois"]
+title: La menuiserie
+accroche: Scier, raboter, tourner et assembler le bois, sur des machines
+  professionnelles.
+catégories:
+  - bois
+couverture:
+  fichier: /ateliers/photos/tlgelogo-couleur.png
+  description: Tiers-Lieux GE
 ---
-
 La menuiserie occupe les travées T2 et T3 de La Fabrique. On y scie, on y
 rabote, on y tourne et on y assemble le bois, pour réparer, fabriquer ou
 apprendre.
