@@ -87,7 +87,7 @@
   d'évènement, il vérifie que les informations pratiques sont
   renseignées et que sa catégorie est une catégorie du site ; sur
   chaque source de page et de réalisation, que ses catégories en sont ;
-  sur chaque source d'article, que le nom de son dossier commence par
+  sur chaque source d'article, que son nom de fichier commence par
   une date `AAAA-MM-JJ` valide suivie de `-`, et que sa mise en avant,
   s'il en a une, est bien formée. Sur la page de l'agenda, il vérifie qu'elle montre le nom
   de chaque séance du module d'exemple ; sur la page d'accueil, qu'elle

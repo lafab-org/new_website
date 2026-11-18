@@ -44,17 +44,17 @@ Then:
 - [generee] Après les cas 1, 3 et 5 : le résultat est le site généré
   sous `_site/`, où chaque page, hors celles des articles non publiés,
   est écrite en HTML, son corps rendu
-  depuis le Markdown, et chaque photo des réalisations et des articles
-  publiés, et chaque couverture des ateliers, en fichiers image, ainsi que le logo et
-  l'image de remplacement des couvertures ; `index.md` donne
+  depuis le Markdown, et chaque image que montre une page construite, en
+  fichiers image, le logo et l'image de remplacement des couvertures
+  compris ; `index.md` donne
   `_site/index.html`. Les `séances` du site sont les séances lues, et
   son `jour` celui de la construction, à Paris.
 - Après les cas 1, 3 et 5 : le `tirage` du site est tiré au hasard à
   chaque construction, parmi ceux que /model/site/tirage permet (not
   testable).
 - [non-publie] Après les cas 1, 3 et 5 : la page d'un article non
-  publié n'est pas dans `_site/`. Ses photos n'y sont pas non plus
-  (not testable).
+  publié n'est pas dans `_site/`. Celles de ses photos qu'aucune page
+  construite ne montre n'y sont pas non plus (not testable).
 - Un évènement de TiBillet donne une séance quand l'un de ses
   `keywords` est l'identifiant d'une catégorie du site ; les autres sont
   ignorés. Sa séance a, aux dates et heures de Paris :

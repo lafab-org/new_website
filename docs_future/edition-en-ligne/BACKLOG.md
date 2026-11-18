@@ -8,14 +8,7 @@ simples, leurs photos dans un dossier commun à chaque sorte.
 
 ## Outline
 
-1. Rangement : /model/atelier, /model/article, /model/realisation,
-   /model/photo, /model/site, /operations/construire-le-site,
-   /ui/page-datelier, /ui/page-darticle,
-   /technical/politique-de-tests-et-de-qualite. Chaque
-   `<dossier>/index.md` existant devient `<dossier>.md`, si bien que les
-   adresses des pages ne changent pas ; ses photos vont dans le dossier
-   de photos de sa sorte, renommées pour y être uniques. La clé du cache
-   des photos réduites, dans le workflow, se calcule sur ces dossiers.
+1. Rangement done
 2. Pages CMS et actualités : /overview/hors-perimetre,
    /technical/edition-du-contenu, /technical/edition-des-actualites.
 3. Réalisations : /technical/edition-des-realisations.

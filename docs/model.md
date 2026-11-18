@@ -53,9 +53,9 @@ identifiant.
 ## Atelier
 
 Une page qui présente un atelier de La Fabrique. Chaque fichier
-`ateliers/<dossier>/index.md` de `src/` est la page d'un atelier, avec
-sa couverture dans le même dossier. Son front matter donne `accroche` et
-`couverture` sous leurs noms.
+Markdown directement dans `ateliers/` de `src/` est la page d'un
+atelier, avec sa couverture dans `ateliers/photos/`. Son front matter
+donne `accroche` et `couverture` sous leurs noms.
 
 - `page: /model/page`, sa page.
 - `nom court: string`, son nom dans le menu de l'en-tête.
@@ -107,10 +107,9 @@ moins.
 ## Réalisation
 
 Un objet fait à La Fabrique, montré en photos. Chaque fichier Markdown
-du dossier `realisations/` de `src/` est une réalisation, et non une
-page : `realisations/<dossier>/index.md`, avec ses photos dans le même
-dossier. Son front matter donne ses champs sous leurs noms, une photo
-par élément de `photos`.
+directement dans `realisations/` de `src/` est une réalisation, et non
+une page, avec ses photos dans `realisations/photos/`. Son front matter
+donne ses champs sous leurs noms, une photo par élément de `photos`.
 
 - `titre: string`, ce qu'elle est.
 - `date: date`, le jour où elle a été présentée.
@@ -124,18 +123,19 @@ par élément de `photos`.
 
 ## Article
 
-Une actualité de La Fabrique. Chaque fichier
-`actualites/<dossier>/index.md` de `src/` est la page d'un article, avec
-ses photos dans le même dossier. Son front matter donne `résumé`,
-`couverture` et `mise-en-avant` sous leurs noms. Le corps de sa page peut montrer des
-photos de son dossier, chacune par son nom de fichier, avec sa
-description pour texte alternatif (not testable).
+Une actualité de La Fabrique. Chaque fichier Markdown directement dans
+`actualites/` de `src/` est la page d'un article, avec ses photos dans
+`actualites/photos/`. Son front matter donne `résumé`, `couverture` et
+`mise-en-avant` sous leurs noms. Le corps de sa page peut montrer des
+photos de ce dossier, chacune par son chemin, comme le `fichier` d'une
+/model/photo, avec sa description pour texte alternatif (not testable).
+Ses photos sont sa couverture et celles que montre son corps.
 
 - `page: /model/page`, sa page.
 - `date: date`, le jour de sa publication : la date `AAAA-MM-JJ` par
-  laquelle commence le nom de son dossier, par exemple
-  `2026-11-17-nouveau-site`.
-  - [date] Le nom du dossier commence par une date `AAAA-MM-JJ` valide,
+  laquelle commence son nom de fichier, par exemple
+  `2026-11-17-nouveau-site.md`.
+  - [date] Le nom de fichier commence par une date `AAAA-MM-JJ` valide,
     suivie de `-`.
 - `résumé: optional string`, ce dont il parle, en une ou deux phrases.
 - `couverture: optional /model/photo`, la photo qui le représente.
@@ -168,9 +168,10 @@ temps. Le front matter de l'article donne ses champs sous leurs noms.
 
 Une photo d'une réalisation, d'un article ou d'un atelier.
 
-- `fichier: string`, le nom du fichier image.
-  - Un fichier du dossier de sa réalisation, de son article ou de son
-    atelier (not testable).
+- `fichier: string`, le chemin du fichier image depuis `src/`, avec un
+  `/` initial, par exemple `/realisations/photos/etabli-1.jpg`.
+  - Un fichier du dossier de photos de sa réalisation, de son article ou
+    de son atelier (not testable).
 - `description: string`, ce que montre la photo.
   - Non vide (not testable).
 
@@ -196,8 +197,8 @@ L'état : tout ce dont le site est fait.
   où le site les présente. Le fichier `src/_data/ateliers.json` les
   donne dans cet ordre, chacun par l'adresse de sa page et son nom
   court.
-  - Leurs pages sont les pages de `pages` dont le fichier est
-    `ateliers/<dossier>/index.md`, chacune celle d'un seul atelier (not
+  - Leurs pages sont les pages de `pages` dont le fichier Markdown est
+    directement dans `ateliers/`, chacune celle d'un seul atelier (not
     testable).
 - `evenements: set of /model/evenement`, tous les évènements. Leurs
   pages sont les pages de `pages` dont le fichier est directement dans
@@ -208,8 +209,8 @@ L'état : tout ce dont le site est fait.
   de même date est libre.
 - `articles: list of /model/article`, tous les articles, du plus récent
   au plus ancien ; l'ordre de deux articles de même date est libre.
-  Leurs pages sont les pages de `pages` dont le fichier est
-  `actualites/<dossier>/index.md`, chacune celle d'un seul article.
+  Leurs pages sont les pages de `pages` dont le fichier Markdown est
+  directement dans `actualites/`, chacune celle d'un seul article.
 - `jour: date`, le jour de sa construction, à Paris.
 - `tirage: list of /model/realisation`, les réalisations que montre la
   page d'accueil.

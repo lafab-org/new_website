@@ -1,10 +1,5 @@
 # Technique
 
-## Politique de tests et de qualité
-
-×   sur chaque source d'article, que le nom de son dossier commence par
-  sur chaque source d'article, que son nom de fichier commence par
-
 ## Édition du contenu
 
 - Le contenu se modifie dans le dépôt, directement ou par Pages CMS,

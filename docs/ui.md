@@ -78,7 +78,7 @@ testable).
 
 ## Page d'atelier
 
-À `/ateliers/<nom>` : la page `ateliers/<nom>/index.md` d'un atelier, telle que
+À `/ateliers/<nom>` : la page `ateliers/<nom>.md` d'un atelier, telle que
 /operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
 pages d'atelier sont dans /contents/page-datelier.
 
@@ -195,7 +195,7 @@ Après le corps de la page :
 
 ## Page d'article
 
-À `/actualites/<dossier>` : la page `actualites/<dossier>/index.md` d'un
+À `/actualites/<nom>` : la page `actualites/<nom>.md` d'un
 article publié, telle que /operations/construire-le-site/generee la rend. Ses
 objectifs éditoriaux sont dans /contents/page-darticle.
 
