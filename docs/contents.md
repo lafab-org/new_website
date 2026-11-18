@@ -51,6 +51,15 @@ Contraintes :
   évènements, dans l'ordre des `catégories` du site : le nom de la
   catégorie en sous-titre, puis un lien vers chacun de ses évènements,
   triés par titre.
+- Un lien vers la page des séances par évènement.
+
+## Page des séances par évènement
+
+Objectif : l'usager voit, pour chaque évènement, toutes ses séances,
+et va réserver.
+
+Contraintes :
+- Titre : `Séances par évènement`.
 
 ## Page des réalisations
 

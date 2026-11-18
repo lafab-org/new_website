@@ -121,6 +121,20 @@ Après le corps de la page, dans cet ordre :
 /operations/construire-le-site/generee la rend. Ses objectifs
 éditoriaux sont dans /contents/page-des-evenements.
 
+## Page des séances par évènement
+
+À `/seances` : la page `seances.md`, telle que
+/operations/construire-le-site/generee la rend. Ses objectifs
+éditoriaux sont dans /contents/page-des-seances-par-evenement.
+
+Après le corps de la page, dans cet ordre (not testable) :
+- un groupe par catégorie qui a des évènements, dans l'ordre des
+  `catégories` du site, son nom en sous-titre ;
+- dans chaque groupe, chacun de ses évènements, triés par titre : son
+  titre en sous-titre, en lien vers sa page, puis ses séances groupées
+  par jour comme sur /ui/page-de-lagenda ; sans séance, le texte
+  `Aucune séance prévue pour l'instant.`
+
 ## Page des réalisations
 
 À `/realisations` : la page `realisations.md`, telle que
