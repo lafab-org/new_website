@@ -16,22 +16,18 @@ Contraintes communes :
 ## Page d'accueil
 
 Objectif : souhaiter la bienvenue et mener le visiteur vers la page de
-l'association, puis vers les pages d'atelier et d'évènement.
+l'association, puis vers les pages d'atelier.
 
 Contraintes :
 - Titre : `La Fabrique`.
 - Un lien vers la page de l'association, dans le corps de la page, avant
-  ceux des ateliers et des évènements.
+  ceux des ateliers.
 - Un lien vers la page de l'agenda.
 - Un lien vers la page des réalisations.
 - Un lien vers la page des actualités.
-- Un lien vers chaque page d'atelier et d'évènement.
+- Un lien vers chaque page d'atelier.
 - Les pages d'atelier sont listées sous `Les ateliers`, dans l'ordre
   des `ateliers` du site.
-- Les évènements sont groupés sous `Les évènements`, un groupe par
-  catégorie qui a des évènements, dans l'ordre des `catégories` du
-  site : le nom de la catégorie en sous-titre, puis un lien vers chacun
-  de ses évènements, triés par titre.
 
 ## Page de l'agenda
 
@@ -42,6 +38,19 @@ Objectifs :
 
 Contraintes :
 - Titre : `Agenda`.
+- Un lien vers la page des évènements, avant les séances.
+
+## Page des évènements
+
+Objectif : le curieux et l'usager voient tous les évènements de La
+Fabrique, par domaine, et vont vers leur page.
+
+Contraintes :
+- Titre : `Évènements`.
+- Les évènements sont groupés, un groupe par catégorie qui a des
+  évènements, dans l'ordre des `catégories` du site : le nom de la
+  catégorie en sous-titre, puis un lien vers chacun de ses évènements,
+  triés par titre.
 
 ## Page des réalisations
 

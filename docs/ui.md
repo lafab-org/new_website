@@ -115,6 +115,12 @@ Après le corps de la page, dans cet ordre :
 - Sans séance, le texte `Aucune séance prévue pour l'instant.` (not
   testable).
 
+## Page des évènements
+
+À `/evenements` : la page `evenements.md`, telle que
+/operations/construire-le-site/generee la rend. Ses objectifs
+éditoriaux sont dans /contents/page-des-evenements.
+
 ## Page des réalisations
 
 À `/realisations` : la page `realisations.md`, telle que

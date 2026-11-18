@@ -21,3 +21,4 @@
 - Contenu de l'accueil : revoir ce que la page présente (texte, ateliers, évènements) pour qu'il corresponde à ce qu'on veut y montrer.
 - Design de l'accueil : son apparence, d'après des maquettes, une fois son contenu revu.
 - `.gitignore` : ignorer `.playwright-mcp/`, le dossier des captures d'écran de l'outil de navigateur.
+- Évènements et leurs séances : une page qui liste chaque évènement avec, en dessous, toutes ses séances, liée depuis la page des évènements.
