@@ -15,7 +15,6 @@ media:
 content:
   - name: actualites
     label: Actualités
-    description: À la création, le nom du fichier doit garder la date AAAA-MM-JJ- par laquelle il commence.
     type: collection
     path: src/actualites
     subfolders: false
@@ -30,6 +29,7 @@ content:
     fields:
       - name: title
         label: Titre
+        description: À la création, le nom du fichier doit garder la date AAAA-MM-JJ- par laquelle il commence.
         type: string
         required: true
       - name: résumé
@@ -42,6 +42,7 @@ content:
         fields:
           - name: fichier
             label: Photo
+            description: 2000 px au plus en largeur et en hauteur.
             type: image
             required: true
           - name: description

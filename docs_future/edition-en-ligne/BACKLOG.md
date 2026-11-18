@@ -42,6 +42,10 @@ simples, leurs photos dans un dossier commun à chaque sorte.
   par `options.media`.
 - 3, 4, 6 : `subfolders: false` sur chaque collection qui a un dossier
   `photos/` ; noms de collections et de médias en ASCII.
+- 3, 4, 6 : Pages CMS n'affiche pas la description d'une collection,
+  seulement celle d'un champ ; il refuse une photo de plus de 3 Mo
+  environ (HTTP 413) ; la description de chaque champ image demande
+  2000 px au plus en largeur et en hauteur.
 
 ## For the human
 
