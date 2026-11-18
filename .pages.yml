@@ -84,5 +84,7 @@ content:
               message: Une date au format AAAA-MM-JJ.
       - name: body
         label: Texte
-        description: Chaque photo insérée a un texte alternatif, qui décrit ce qu'elle montre.
-        type: rich-text
+        description: En Markdown ; une photo s'écrit ![ce qu'elle montre](/actualites/photos/nom.jpg).
+        type: code
+        options:
+          format: markdown

@@ -19,9 +19,10 @@ simples, leurs photos dans un dossier commun à chaque sorte.
 
 ## Lessons
 
-- 5, 6 : l'éditeur visuel de Pages CMS peut perdre les commentaires
-  HTML, que garde son mode Source ; rien ne dépend d'un commentaire dans
-  un corps modifiable.
+- 3, 4, 6 : le corps est un champ `type: code` avec
+  `options.format: markdown`, jamais `rich-text` : l'éditeur visuel
+  change les retours à la ligne en sauts forcés et écrit un paragraphe
+  par ligne ; un champ `code` sans `options` fait échouer Pages CMS.
 - 3, 4, 6 : le `fichier` d'une photo est un chemin depuis `src/`
   commençant par `/` ; le dossier de médias de Pages CMS doit l'écrire
   tel quel (`input: src/<sorte>/photos`, `output: /<sorte>/photos`).
@@ -37,12 +38,10 @@ simples, leurs photos dans un dossier commun à chaque sorte.
   échoue à l'enregistrement quand l'objet est absent ; un `string` avec
   un motif `AAAA-MM-JJ` le remplace.
 - 3, 6 : dès qu'un second dossier de médias existe, `media` devient une
-  liste nommée et chaque champ `image` ou `rich-text` désigne le sien
+  liste nommée et chaque champ `image` désigne le sien
   par `options.media`.
 - 3, 4, 6 : `subfolders: false` sur chaque collection qui a un dossier
   `photos/` ; noms de collections et de médias en ASCII.
-- 4, 6 : une image insérée depuis la médiathèque dans un corps rich-text
-  a un texte alternatif vide ; la description du champ en demande un.
 
 ## For the human
 
