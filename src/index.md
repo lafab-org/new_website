@@ -14,11 +14,3 @@ qu'on peut y fabriquer. Ses [actualités](/actualites) disent ce qui s'y passe.
 {% for p in collections.pagesAtelier -%}
 - [{{ p.data.title }}]({{ p.url }})
 {% endfor %}
-## Les évènements
-{% for groupe in collections.evenementsParCategorie %}
-### {{ groupe.nom }}
-
-{% for p in groupe.pages -%}
-- [{{ p.data.title }}]({{ p.url }})
-{% endfor -%}
-{% endfor %}
