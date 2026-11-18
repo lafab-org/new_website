@@ -1,10 +1,10 @@
 ---
-title: "L'association"
-catégories: ["association"]
+title: L'association
+catégories:
+  - association
 layout: atelier.njk
 templateEngineOverride: njk,md
 ---
-
 La Fabrique est un atelier partagé, porté par une association dont les
 membres le font vivre : on y répare, on y fabrique et on y apprend
 ensemble.
@@ -23,7 +23,7 @@ de 19h à 20h : on vous fera visiter les ateliers.
 ## Adhérer
 
 L'adhésion à l'association coûte 10 € pour un an. Elle se prend sur
-place, en espèces, et certaines activités sont réservées aux adhérents
+place et la plupart des activités sont réservées aux adhérents
 à jour.
 
 ## Fonctionnement
