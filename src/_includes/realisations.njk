@@ -7,7 +7,7 @@ layout: base.njk
 <section class="realisation">
   <div class="photos" style="--n: {{ r.data.photos | length }}">
     {% for photo in r.data.photos %}
-    <img style="--i: {{ loop.index0 }}" sizes="(min-width: 40rem) 12.7rem, calc((100vw - 2.75rem) / 2)" src="{{ r.page.filePathStem | replace('/index', '') }}/{{ photo.fichier }}" alt="{{ photo.description }}">
+    <img style="--i: {{ loop.index0 }}" sizes="(min-width: 40rem) 12.7rem, calc((100vw - 2.75rem) / 2)" src="{{ photo.fichier }}" alt="{{ photo.description }}">
     {% endfor %}
   </div>
   {% if r.data.photos | length > 1 %}

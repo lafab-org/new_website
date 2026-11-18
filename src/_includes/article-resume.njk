@@ -1,6 +1,6 @@
 <section class="article">
   {% if a.data.couverture %}
-  <img sizes="(min-width: 40rem) 13rem, calc(100vw - 2rem)" src="{{ a.page.filePathStem | replace('/index', '') }}/{{ a.data.couverture.fichier }}" alt="{{ a.data.couverture.description }}">
+  <img sizes="(min-width: 40rem) 13rem, calc(100vw - 2rem)" src="{{ a.data.couverture.fichier }}" alt="{{ a.data.couverture.description }}">
   {% endif %}
   <h2><a href="{{ a.url | replace(r/\/$/, '') }}">{{ a.data.title }}</a></h2>
   <p class="date">{{ a.data.dateArticle | jourMoisAnnee }}</p>

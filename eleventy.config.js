@@ -53,12 +53,12 @@ export default function (eleventyConfig) {
   const jourIso = (d) => (d instanceof Date ? d.toISOString().slice(0, 10) : String(d));
   // The réalisations, most recent first.
   eleventyConfig.addCollection("realisations", (api) =>
-    api.getFilteredByGlob("src/realisations/*/index.md")
+    api.getFilteredByGlob("src/realisations/*.md")
       .sort((a, b) => b.data.date - a.data.date));
   // Three réalisations drawn at random at each build, or all of them if
   // there are fewer.
   eleventyConfig.addCollection("tirage", (api) => {
-    const restantes = api.getFilteredByGlob("src/realisations/*/index.md");
+    const restantes = api.getFilteredByGlob("src/realisations/*.md");
     const tirage = [];
     while (tirage.length < 3 && restantes.length > 0) {
       tirage.push(...restantes.splice(Math.floor(Math.random() * restantes.length), 1));
@@ -73,7 +73,7 @@ export default function (eleventyConfig) {
   });
   // The published articles, most recent first.
   eleventyConfig.addCollection("articles", (api) =>
-    api.getFilteredByGlob("src/actualites/*/index.md")
+    api.getFilteredByGlob("src/actualites/*.md")
       .filter((a) => a.data.publie)
       .sort((a, b) => b.data.dateArticle.localeCompare(a.data.dateArticle)));
   // The articles in avant on `page` (accueil or agenda) on the day of the build.

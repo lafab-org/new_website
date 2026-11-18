@@ -1,9 +1,0 @@
----
-titre: "Établi"
-date: 2019-10-27
-auteur: "Julien et Maud"
-catégories: ["bois", "métal"]
-photos:
-  - fichier: "photo-1.jpg"
-    description: "Établi au plateau métallique gris sur des pieds en bois, équipé d'un étau."
----

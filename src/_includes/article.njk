@@ -3,7 +3,7 @@ layout: base.njk
 ---
 <p class="date">{{ dateArticle | jourMoisAnnee }}</p>
 {%- if couverture %}
-<img class="couverture" src="{{ page.filePathStem | replace('/index', '') }}/{{ couverture.fichier }}" alt="{{ couverture.description }}">
+<img class="couverture" src="{{ couverture.fichier }}" alt="{{ couverture.description }}">
 {%- endif %}
 <div class="corps">
 {{ content | safe }}
