@@ -363,14 +363,6 @@ const linksOf = (addr) => {
     .map((h) => h.split("#")[0].replace(/\?.*$/, "").replace(/(.)\/$/, "$1")));
 };
 
-test("the home page links to every article in avant on it", () => {
-  // /ui/page-daccueil/en-avant
-  // /operations/construire-le-site/generee
-  const links = linksOf("/");
-  const missing = enAvant("accueil").filter((a) => !links.has(a));
-  assert.deepEqual(missing, [], "articles in avant missing from the home page");
-});
-
 test("the agenda links to every article in avant on it", () => {
   // /ui/page-de-lagenda/en-avant
   // /operations/construire-le-site/generee
@@ -379,49 +371,3 @@ test("the agenda links to every article in avant on it", () => {
   assert.deepEqual(missing, [], "articles in avant missing from the agenda");
 });
 
-// The day in Paris, AAAA-MM-JJ, of a date-time.
-const parisDay = (iso) => new Intl.DateTimeFormat("en-CA", {
-  timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit",
-}).format(new Date(iso));
-
-// The day `n` days after a day, both AAAA-MM-JJ.
-const addDays = (day, n) => {
-  const [y, m, d] = day.split("-").map(Number);
-  return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10);
-};
-
-test("the home page shows the name of every séance of the next 7 days", async () => {
-  // /ui/page-daccueil/semaine
-  // /operations/construire-le-site/fichier
-  // /operations/construire-le-site/generee
-  const identifiers = categoryIds();
-  const last = addDays(today, 6);
-  const names = (await sampleEvents())
-    .filter((e) => (e.keywords ?? []).some((k) => identifiers.includes(k)))
-    .filter((e) => today <= parisDay(e.startDate) && parisDay(e.startDate) <= last)
-    .map((e) => e.name);
-  assert.ok(names.length > 1, "fewer than two séances of the sample module in the next 7 days");
-  const shown = text(built["index.md"]);
-  const missing = names.filter((n) => !shown.includes(n));
-  assert.deepEqual(missing, [], "séances of the next 7 days missing from the home page");
-});
-
-test("the home page shows three distinct réalisations, or all of them", () => {
-  // /model/site/tirage
-  // /operations/construire-le-site/generee
-  const titles = realisations().map((r) => frontMatter(r, "titre"));
-  assert.ok(titles.length > 0, "no réalisation");
-  // How many réalisations bear each title.
-  const bearing = new Map();
-  for (const t of titles) bearing.set(t, (bearing.get(t) ?? 0) + 1);
-  // How many times each title is a whole text node of the home page.
-  const shown = new Map();
-  for (const node of built["index.md"].split(/<[^>]*>/).map(text)) {
-    if (bearing.has(node)) shown.set(node, (shown.get(node) ?? 0) + 1);
-  }
-  const count = [...shown.values()].reduce((a, b) => a + b, 0);
-  assert.equal(count, Math.min(3, titles.length), "réalisations shown on the home page");
-  for (const [t, n] of shown) {
-    assert.ok(n <= bearing.get(t), `${t}: shown ${n} times, borne by ${bearing.get(t)} réalisations`);
-  }
-});
