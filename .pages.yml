@@ -254,6 +254,23 @@ content:
         description: Ce qu'il coûte et à qui il est ouvert.
         type: string
         required: true
+      - name: couverture
+        label: Couverture
+        description: La photo qui représente l'évènement, sous le titre de sa page.
+        type: object
+        fields:
+          - name: fichier
+            label: Photo
+            description: 2000 px au plus en largeur et en hauteur.
+            type: image
+            required: true
+            options:
+              media: evenements
+          - name: description
+            label: Description
+            description: Ce que montre la photo.
+            type: string
+            required: true
       - name: body
         label: Texte
         description: En Markdown ; une photo s'écrit ![ce qu'elle montre](/evenements/photos/nom.jpg), après l'avoir envoyée dans Médias, Photos des évènements, 2000 px au plus en largeur et en hauteur.

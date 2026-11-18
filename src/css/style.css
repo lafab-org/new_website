@@ -541,7 +541,7 @@ h2 {
   color: var(--date-en-avant);
 }
 
-/* Page d'article : la couverture entière, jamais recadrée. */
+/* Pages d'article et d'évènement : la couverture entière, jamais recadrée. */
 main > .date {
   margin-bottom: 1rem;
 }

@@ -5,6 +5,9 @@ rendez-vous: tous les premiers jeudis du mois
 horaire: 18h - 21h
 catégorie: numérique-électronique
 prix: gratuite et ouverte à tous
+couverture:
+  fichier: /evenements/photos/repar-action-2026-11-05-21-11.jpg
+  description: Des bénévoles penchés sur un ordinateur portable, à l'établi d'électronique de La Fabrique.
 ---
 ## Le principe
 

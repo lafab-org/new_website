@@ -3,6 +3,9 @@ layout: base.njk
 ---
 {%- set parts = page.filePathStem.split("/") -%}
 {%- if parts.length == 3 and parts[1] == "evenements" and parts[2] != "index" %}
+{%- if couverture %}
+<img class="couverture" src="{{ couverture.fichier }}" alt="{{ couverture.description }}">
+{%- endif %}
 {% if accroche %}<p class="accroche">{{ accroche }}</p>{% endif %}
 <ul class="informations">
   <li><span class="libelle">Rendez-vous</span> <span>{{ "rendez-vous" | champ }}</span></li>
