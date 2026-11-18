@@ -88,6 +88,14 @@
   par sa date, son titre et son auteur ; ce nom ne change plus ensuite.
 - Ses photos vont dans `src/realisations/photos/`.
 
+## Édition des évènements
+
+- Une page d'évènement se crée, se modifie et se supprime dans Pages
+  CMS.
+- À sa création, son fichier est nommé `<titre>.md`, par son titre ;
+  l'éditeur peut changer ce nom à la création, plus ensuite.
+- Les images de son corps vont dans `src/evenements/photos/`.
+
 ## Politique de tests et de qualité
 
 - Outil : `node:test`, dans `tests/`, sans dépendance supplémentaire ;

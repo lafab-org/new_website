@@ -11,7 +11,7 @@ simples, leurs photos dans un dossier commun à chaque sorte.
 1. Rangement done
 2. Pages CMS et actualités done
 3. Réalisations done
-4. Évènements : /technical/edition-des-evenements.
+4. Évènements done
 5. Accueil en deux parties : `code-only`, le corps de `index.md` n'est
    plus coupé par le commentaire `<!-- fonctionnement -->` que lit le
    gabarit, mais d'une façon que Pages CMS conserve.

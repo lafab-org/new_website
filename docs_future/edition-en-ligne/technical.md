@@ -1,11 +1,5 @@
 # Technique
 
-## Édition des évènements
-
-- Une page d'évènement se crée, se modifie et se supprime dans Pages
-  CMS.
-- Les images de son corps vont dans `src/evenements/photos/`.
-
 ## Édition des pages et des ateliers
 
 - Les pages de la racine de `src/` et les ateliers se modifient dans
