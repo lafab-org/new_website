@@ -1,13 +1,14 @@
 ---
 layout: base.njk
 ---
-{#- /ui/page-daccueil: the body of index.md is in two parts, the
-    présentation and the fonctionnement, separated by the comment
-    `<!-- fonctionnement -->`; the sections come between and after them. -#}
-{%- set parties = content.split("<!-- fonctionnement -->") %}
-{{ parties[0] | safe }}
+{#- /ui/page-daccueil: the blocks of `blocs`, in their order. -#}
+{%- for bloc in collections.blocsAccueil %}
+{%- if bloc.type == "corps" %}
+{{ content | safe }}
+{%- elif bloc.type == "articles-en-avant" %}
 {%- set pageEnAvant = "accueil" %}
 {%- include "articles-en-avant.njk" %}
+{%- elif bloc.type == "ateliers" %}
 <section class="accueil-ateliers">
 <h2>Les ateliers</h2>
 <ul class="ateliers">
@@ -23,7 +24,12 @@ layout: base.njk
 {%- endfor %}
 </ul>
 </section>
-{{ parties[1] | safe }}
+{%- elif bloc.type == "section" %}
+<section class="accueil-section">
+{{ bloc.markdown | renderContent(bloc.langages, bloc.donnees) | safe }}
+<p class="voir-agenda"><a href="{{ bloc.adresse }}">Plus de détails : {{ bloc.titre }}</a></p>
+</section>
+{%- elif bloc.type == "semaine" %}
 <section class="accueil-semaine">
 <h2>Les 7 prochains jours</h2>
 {%- set semaine = seances | septJours %}
@@ -41,7 +47,7 @@ layout: base.njk
 {%- endif %}
 <p class="voir-agenda"><a href="/agenda">Tout l'agenda</a></p>
 </section>
-{%- if collections.tirage.length %}
+{%- elif bloc.type == "realisations" and collections.tirage.length %}
 <section class="accueil-realisations">
 <h2>Des réalisations</h2>
 <ul class="tirage">
@@ -53,3 +59,4 @@ layout: base.njk
 <p class="voir-agenda"><a href="/realisations">Toutes les réalisations</a></p>
 </section>
 {%- endif %}
+{%- endfor %}

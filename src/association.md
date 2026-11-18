@@ -20,13 +20,11 @@ fonctionne ? Passez pendant la
 [soirée portes ouvertes](/evenements/portes-ouvertes), chaque jeudi soir
 de 19h à 20h : on vous fera visiter les ateliers.
 
-## Adhérer
+## Fonctionnement
 
 L'adhésion à l'association coûte 10 € pour un an. Elle se prend sur
 place et la plupart des activités sont réservées aux adhérents
 à jour.
-
-## Fonctionnement
 
 Les ateliers sont ouverts :
 

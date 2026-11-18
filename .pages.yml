@@ -286,6 +286,8 @@ content:
     type: collection
     path: src
     subfolders: false
+    # The home page has its own entry, below.
+    exclude: [index.md]
     operations:
       create: false
       rename: false
@@ -326,7 +328,68 @@ content:
         hidden: true
       - name: body
         label: Texte
-        description: "En Markdown ; une photo s'écrit ![ce qu'elle montre](/photos/nom.jpg), après l'avoir envoyée dans Médias, Photos des pages, 2000 px au plus en largeur et en hauteur. Laisser en place le code du site, entre {{ }} ou {% %}, et, dans l'accueil, la ligne <!-- fonctionnement -->, qui sépare la présentation du fonctionnement."
+        description: "En Markdown ; une photo s'écrit ![ce qu'elle montre](/photos/nom.jpg), après l'avoir envoyée dans Médias, Photos des pages, 2000 px au plus en largeur et en hauteur. Laisser en place le code du site, entre {{ }} ou {% %}."
+        type: code
+        options:
+          format: markdown
+
+  # The home page: its blocks, in order, and its body, which the corps
+  # block places.
+  - name: accueil
+    label: Accueil
+    type: file
+    path: src/index.md
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+        options:
+          maxlength: 70
+      - name: blocs
+        label: Blocs
+        description: Les parties de la page d'accueil, dans l'ordre où elles s'affichent. Le bloc Texte de la page, au plus une fois, place le texte ci-dessous.
+        type: block
+        list: true
+        blockKey: type
+        blocks:
+          - name: corps
+            label: Texte de la page
+            fields: []
+          - name: articles-en-avant
+            label: Articles en avant
+            fields: []
+          - name: ateliers
+            label: Les ateliers
+            fields: []
+          - name: section
+            label: Section d'une autre page
+            fields:
+              - name: page
+                label: Page
+                type: reference
+                required: true
+                options:
+                  collection: pages
+                  value: "{path}"
+              - name: titre
+                label: Titre de la section
+                description: Le titre de niveau 2 de la section, tel qu'il s'affiche sur sa page ; un lien vers cette page la suit.
+                type: string
+                required: true
+          - name: semaine
+            label: Les 7 prochains jours
+            fields: []
+          - name: realisations
+            label: Des réalisations
+            fields: []
+      # Hidden but kept on save: it chooses the template of the page.
+      - name: layout
+        type: string
+        hidden: true
+      - name: body
+        label: Texte
+        description: "En Markdown ; une photo s'écrit ![ce qu'elle montre](/photos/nom.jpg), après l'avoir envoyée dans Médias, Photos des pages, 2000 px au plus en largeur et en hauteur."
         type: code
         options:
           format: markdown

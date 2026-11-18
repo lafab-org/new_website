@@ -23,6 +23,7 @@
 - `.gitignore` : ignorer `.playwright-mcp/`, le dossier des captures d'écran de l'outil de navigateur.
 - Données d'exemple TiBillet : remplacer `TIBILLET_FICHIER` par une simple activation des données d'exemple, sans citer le chemin du module, et une commande npm dédiée au développement local.
 - Favicon : une icône du site pour l'onglet du navigateur, tirée du logo ; aujourd'hui `/favicon.ico` répond 404.
+- Échec de construction : `_site/` vraiment inchangé, la copie des fichiers fixes (CSS, logos) comprise ; aujourd'hui elle a lieu avant l'échec.
 
 ## Rapports à envoyer
 

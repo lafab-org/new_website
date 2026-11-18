@@ -1,6 +1,15 @@
 ---
 title: La Fabrique
 layout: accueil.njk
+blocs:
+  - type: corps
+  - type: articles-en-avant
+  - type: ateliers
+  - type: section
+    page: association.md
+    titre: Fonctionnement
+  - type: semaine
+  - type: realisations
 ---
 La Fabrique est un atelier partagé à Strasbourg, porté par
 [une association](/association) qui tourne surtout grâce à ses
@@ -17,15 +26,3 @@ Curieux ? Venez visiter pendant les
 [portes ouvertes](/evenements/portes-ouvertes), chaque jeudi soir de
 19 h à 20 h.
 
-<!-- fonctionnement -->
-
-## Comment ça marche
-
-- **Adhésion** : 10 € pour un an.
-- **Horaires** : jeudi de 10 h à 16 h, vendredi de 13 h à 16 h, samedi
-  de 10 h à 19 h.
-- **Ticket** : 12 € pour une session de 3 h en autonomie. D'autres tarifs sont possibles.
-- **Initiations** : 30 €, sur réservation ; certaines machines en
-  demandent une avant de s'en servir.
-
-Le détail est sur la page de [l'association](/association).

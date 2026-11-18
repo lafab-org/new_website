@@ -1,5 +1,6 @@
 import { cpSync, existsSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
+import { RenderPlugin } from "@11ty/eleventy";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 // Where eleventy-img writes the reduced copies, kept between builds so
@@ -8,7 +9,44 @@ const IMAGES_CACHE = ".cache/@11ty/img/";
 
 const byTitle = (a, b) => a.data.title.localeCompare(b.data.title, "fr");
 
+// The types of the blocks of the home page.
+const TYPES_BLOC = ["corps", "articles-en-avant", "ateliers", "section", "semaine", "realisations"];
+
+// The text a Markdown heading displays: its inline marks removed.
+const texteAffiche = (s) => {
+  let t = s.replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1");
+  for (let avant = ""; avant !== t;) {
+    avant = t;
+    t = t.replace(/(\*\*|__|~~|\*|_|`)(?=\S)(.*?\S)\1/g, "$2");
+  }
+  return t.replace(/\\([!-/:-@[-`{-~])/g, "$1").replace(/\s+/g, " ").trim();
+};
+
+// The Markdown of the section `titre` of a body: from its first level-2
+// heading displaying `titre`, included, to the next level-2 heading or
+// the end; undefined if there is none. Fenced code is not a heading.
+const sectionDe = (corps, titre) => {
+  const lignes = corps.split("\n");
+  let cloture = null;
+  const titres = []; // [index, text] of each level-2 heading
+  lignes.forEach((l, i) => {
+    const f = l.match(/^ {0,3}(`{3,}|~{3,})/);
+    if (f) {
+      if (cloture === null) cloture = f[1][0];
+      else if (f[1][0] === cloture) cloture = null;
+      return;
+    }
+    const h = cloture === null && l.match(/^ {0,3}##(?:[ \t]+(.*?))?(?:[ \t]+#+)?[ \t]*$/);
+    if (h) titres.push([i, texteAffiche(h[1] ?? "")]);
+  });
+  const k = titres.findIndex(([, t]) => t === titre);
+  if (k < 0) return undefined;
+  const fin = titres[k + 1]?.[0] ?? lignes.length;
+  return lignes.slice(titres[k][0], fin).join("\n").trimEnd() + "\n";
+};
+
 export default function (eleventyConfig) {
+  eleventyConfig.addPlugin(RenderPlugin);
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/logo.svg");
   eleventyConfig.addPassthroughCopy("src/couverture-a-venir.svg");
@@ -110,6 +148,57 @@ export default function (eleventyConfig) {
     })).filter((g) => g.pages.length > 0);
   });
   eleventyConfig.addCollection("evenements", events);
+  // The blocks of the home page, from `blocs` in the front matter of
+  // index.md, in their order; a `section` block also gets the Markdown of
+  // its section and its page. Collections are built before any page is
+  // written, so an invalid block fails the build with no page of _site/
+  // changed (the passthrough copies are made before).
+  eleventyConfig.addCollection("blocsAccueil", (api) => {
+    const pages = api.getAll();
+    const accueil = pages.find((p) => p.inputPath === "./src/index.md");
+    if (!accueil) return [];
+    const erreur = (m) => new Error(`index.md, blocs : ${m}`);
+    const blocs = accueil.data.blocs;
+    if (!Array.isArray(blocs)) throw erreur("une liste de blocs est attendue.");
+    blocs.forEach((b, i) => {
+      if (!TYPES_BLOC.includes(b?.type)) {
+        throw erreur(`le bloc ${i + 1} a le type « ${b?.type} », qui n'est pas l'un de ${TYPES_BLOC.join(", ")}.`);
+      }
+      if (b.type !== "section" && (b.page != null || b.titre != null)) {
+        throw erreur(`le bloc ${i + 1}, ${b.type}, n'a ni page ni titre.`);
+      }
+    });
+    if (blocs.filter((b) => b.type === "corps").length > 1) throw erreur("il y a plus d'un bloc corps.");
+    return blocs.map((b, i) => {
+      if (b.type !== "section") return { type: b.type };
+      if (typeof b.page !== "string" || typeof b.titre !== "string" || !b.page || !b.titre) {
+        throw erreur(`le bloc ${i + 1}, section, demande une page et un titre.`);
+      }
+      // Pages CMS may store the path from the root of the repository.
+      const chemin = b.page.replace(/^\.?\/?(src\/)?/, "");
+      const page = pages.find((p) => p.inputPath === `./src/${chemin}`);
+      if (!page || !page.url || page.data.publie === false) {
+        throw erreur(`le bloc ${i + 1} reprend une section de « ${b.page} », qui n'est pas une page publiée du site.`);
+      }
+      const markdown = sectionDe(page.rawInput ?? page.data.page?.rawInput ?? "", b.titre);
+      if (markdown === undefined) {
+        throw erreur(`le bloc ${i + 1} reprend la section « ${b.titre} » de ${chemin}, qui n'a pas de titre de niveau 2 « ${b.titre} ».`);
+      }
+      if (/\]\(\s*<?#|^ {0,3}\[[^\]]+\]:\s*<?#|href\s*=\s*["']#/m.test(markdown)) {
+        throw erreur(`la section « ${b.titre} » de ${chemin} a un lien vers une ancre (#…), qui ne mènerait nulle part sur l'accueil.`);
+      }
+      return {
+        type: "section",
+        markdown,
+        // The template languages of its page, which render it there.
+        langages: page.data.templateEngineOverride ?? "md",
+        // A copy: rendering it sets its `page` to the home page.
+        donnees: { ...page.data },
+        adresse: page.url.replace(/(.)\/$/, "$1"),
+        titre: page.data.title,
+      };
+    });
+  });
   // The events of the given categories.
   eleventyConfig.addFilter("deCategories", (list, categories) => {
     const ids = asList(categories);

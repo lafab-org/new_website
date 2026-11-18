@@ -102,7 +102,7 @@
   Pages CMS, sans création ni suppression.
 - Les blocs de la page d'accueil se modifient dans Pages CMS : l'éditeur
   en ajoute, en retire et les ordonne, et choisit la page d'un bloc
-  `section` parmi les pages du site.
+  `section` parmi les pages de la racine de `src/`.
 - Les images des pages de la racine vont dans `src/photos/`, celles des
   ateliers dans `src/ateliers/photos/`.
 
