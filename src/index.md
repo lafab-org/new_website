@@ -1,6 +1,5 @@
 ---
 title: La Fabrique
-layout: accueil.njk
 blocs:
   - type: corps
   - type: articles-en-avant
@@ -10,9 +9,10 @@ blocs:
     titre: Fonctionnement
   - type: semaine
   - type: realisations
+layout: accueil.njk
 ---
 La Fabrique est un atelier partagé à Strasbourg, porté par
-[une association](/association) qui tourne surtout grâce à ses
+[une association](/association) qui tourne grâce à ses
 bénévoles. Elle ouvre à tous des ateliers équipés de machines
 professionnelles, pour travailler le bois, le métal, le textile ou
 l'électronique, et fait vivre une communauté autour de la création, de
