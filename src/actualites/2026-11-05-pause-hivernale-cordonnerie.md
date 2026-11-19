@@ -1,11 +1,12 @@
 ---
-title: "Pause hivernale de la cordonnerie"
-résumé: "Les séances d'auto-réparation en cordonnerie s'arrêtent du 19 novembre 2026 au 25 février 2027 inclus, et reprennent le jeudi 4 mars 2027."
+title: Pause hivernale de la cordonnerie
+résumé: Les séances d'auto-réparation en cordonnerie s'arrêtent du 19 novembre
+  2026 au 25 février 2027 inclus, et reprennent le jeudi 4 mars 2027.
 mise-en-avant:
-  pages: ["accueil", "agenda"]
+  pages:
+    - agenda
   fin: 2027-03-04
 ---
-
 Les séances d'[auto-réparation en cordonnerie](/evenements/cordonnerie)
 font une pause pour l'hiver : il n'y en a pas du 19 novembre 2026 au
 25 février 2027 inclus.
