@@ -31,3 +31,5 @@ pages montrent.
 
 - 2 : les tests qui citent un invariant de /model passent dans `npm run verifier` ; ceux qui restent ne lisent plus `src/`.
 - 3–6 : le contenu d'exemple ajoute un cas seulement quand une affirmation étiquetée le demande.
+- 2 : `scripts/verifier.mjs` est la référence des contrôles d'invariants ; la lecture du front matter de `tests/site.test.mjs` laisse passer une valeur vide.
+- 7 : `/model/bloc/section`, `/model/site/blocs`, `/model/site/corps` et `/model/site/tirage` sont étiquetés mais `(not testable)` : le vérificateur ne les contrôle pas encore ; la construction échoue déjà sur les trois premiers.

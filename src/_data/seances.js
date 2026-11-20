@@ -1,7 +1,7 @@
 // The séances of the site, read at build time from TiBillet, or from a
 // local file standing in for it. Only the number of reserved tickets is
 // kept from the reservations.
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -11,6 +11,11 @@ const RESERVEES = [
   "https://schema.org/ReservationPending",
 ];
 const ANNULEE = "https://schema.org/EventCancelled";
+
+// Where the build writes the TiBillet events it read without drawing a
+// séance from them, for `npm run verifier` to list. Git ignores it.
+const IGNORES = "evenements-ignores.json";
+const ecrireIgnores = (liste) => writeFileSync(IGNORES, JSON.stringify(liste, null, 2) + "\n");
 
 // The variables of `.env`, without overriding those already set.
 if (existsSync(".env")) process.loadEnvFile(".env");
@@ -73,6 +78,7 @@ async function depuisApi(url, cle) {
   };
   const maintenant = Date.now();
   // An event without a valid date is kept, for the checks of the séances.
+  // An event already over is dropped here, so is not listed as ignored.
   const evenements = (await lire("/api/v2/events/?only_futur=1", "évènements"))
     .filter((e) => !(new Date(e.endDate ?? e.startDate).getTime() < maintenant));
   return {
@@ -87,7 +93,10 @@ export default async function () {
   let source;
   if (TIBILLET_FICHIER) source = await depuisFichier(TIBILLET_FICHIER);
   else if (TIBILLET_URL && TIBILLET_API_KEY) source = await depuisApi(TIBILLET_URL, TIBILLET_API_KEY);
-  else return [];
+  else {
+    ecrireIgnores([]);
+    return [];
+  }
 
   const categories = JSON.parse(readFileSync("src/_data/categories.json", "utf8"))
     .map((c) => c.identifiant);
@@ -96,10 +105,14 @@ export default async function () {
     .map((f) => f.replace(/\.md$/, ""));
 
   const seances = [];
+  const ignores = [];
   for (const e of source.evenements) {
     const mots = Array.isArray(e.keywords) ? e.keywords.map((k) => String(k).normalize("NFC")) : [];
     const categorie = categories.find((c) => mots.includes(c));
-    if (categorie === undefined) continue;
+    if (categorie === undefined) {
+      ignores.push({ nom: e.name ?? null, debut: e.startDate ?? null });
+      continue;
+    }
     if (!e.name || !e.startDate || !e.url) {
       throw new Error(`TiBillet : l'évènement ${e.identifier} n'a pas de nom, de début ou d'adresse`);
     }
@@ -124,5 +137,6 @@ export default async function () {
       annulee: e.eventStatus === ANNULEE,
     });
   }
+  ecrireIgnores(ignores);
   return seances.sort((a, b) => (a.jour + a.debut).localeCompare(b.jour + b.debut));
 }
