@@ -167,6 +167,31 @@ h2 {
   color: var(--accroche);
 }
 
+/* La couverture de l'évènement en vignette carrée, à gauche du titre et
+   de l'accroche. eleventy-img met chaque <img> dans un <picture>. */
+.evenements a:has(.evenement-photo) {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 0.75rem;
+  align-items: start;
+}
+.evenements a:has(.evenement-photo) > :is(picture, img) {
+  display: block;
+  grid-row: 1 / span 2;
+}
+.evenement-photo {
+  display: block;
+  width: 4rem;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 0.4rem;
+}
+.evenements a:has(.evenement-photo) > span {
+  grid-column: 2;
+}
+
 @media (min-width: 40rem) {
   .en-tete-haut {
     flex-direction: row;
@@ -241,6 +266,44 @@ h2 {
 }
 .seance p {
   margin: 0;
+}
+/* L'horaire et la catégorie sur toute la largeur, puis la couverture de
+   son évènement en vignette carrée, à gauche du nom et de la
+   participation. */
+.seance:has(.seance-photo) {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  grid-template-rows: auto auto 1fr;
+  column-gap: 0.75rem;
+  align-items: start;
+}
+.seance:has(.seance-photo) > .seance-tete {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  margin-bottom: 0.4rem;
+}
+.seance:has(.seance-photo) > :is(picture, img) {
+  display: block;
+  grid-column: 1;
+  grid-row: 2 / span 2;
+}
+.seance-photo {
+  display: block;
+  width: 4.5rem;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 0.4rem;
+}
+.seance:has(.seance-photo) > .seance-nom {
+  margin-top: 0;
+}
+.seance:has(.seance-photo) > p:not(.seance-tete) {
+  grid-column: 2;
+}
+.seance.annulee .seance-photo {
+  filter: grayscale(1);
+  opacity: 0.6;
 }
 .seance-tete {
   display: flex;

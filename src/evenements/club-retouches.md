@@ -7,7 +7,7 @@ catégorie: matériaux-souples
 prix: 1 ticket La Fabrique
 couverture:
   fichier: /evenements/photos/msouple-couture-bobine-et-machine.jpg
-  description: "Des cônes de fils devant une machine à coudre "
+  description: Des cônes de fils devant une machine à coudre
 ---
 ## Le principe
 

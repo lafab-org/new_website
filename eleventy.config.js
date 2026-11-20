@@ -57,10 +57,11 @@ export default function (eleventyConfig) {
     outputDir: IMAGES_CACHE,
     urlPath: "/img/",
     formats: ["webp", "jpeg"],
-    // Widths close to what the pages display, at 1x to 3x: the gallery
+    // Widths close to what the pages display, at 1x to 3x: the event
+    // thumbnails of the séances and event lists (about 4rem), the gallery
     // and summary thumbnails (about 13rem wide, or half a phone screen)
     // and the full text width (40rem, or a phone screen).
-    widths: [300, 450, 650, 900, 1300],
+    widths: [150, 300, 450, 650, 900, 1300],
     htmlOptions: {
       // By default an image spans the text column (main is 40rem wide,
       // with 1rem padding on each side); the templates of thumbnails
@@ -207,6 +208,9 @@ export default function (eleventyConfig) {
   // The séances of the event whose page is `evenements/<nom>.md`.
   eleventyConfig.addFilter("seancesDe", (list, nom) =>
     (list ?? []).filter((s) => s.evenement === nom));
+  // The cover of the event whose page is `evenements/<nom>.md`, if any.
+  eleventyConfig.addFilter("couvertureDe", (nom, evenements) =>
+    (evenements ?? []).find((e) => e.fileSlug === nom)?.data.couverture);
   // The séances of the given categories.
   eleventyConfig.addFilter("deCategoriesSeances", (list, categories) => {
     const ids = asList(categories);

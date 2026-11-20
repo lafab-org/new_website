@@ -14,6 +14,7 @@ layout: base.njk
   <li><span class="libelle">Activité</span> <span>{{ "prix" | champ }}</span></li>
 </ul>
 {%- set seancesPage = seances | seancesDe(parts[2]) %}
+{%- set seanceSansPhoto = true %}
 {%- include "prochaines-seances.njk" %}
 {%- endif %}
 <div class="corps">

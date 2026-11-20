@@ -1,7 +1,16 @@
-{#- One séance, as /ui/seance shows it. Expects `s`, a séance of `seances`. -#}
+{#- One séance, as /ui/seance shows it. Expects `s`, a séance of `seances`;
+    `seanceSansPhoto` set on an event page. -#}
 {%- set restantes = s.jauge - s.reservees if s.jauge else null %}
 {%- set complete = s.jauge and restantes <= 0 %}
 <li class="seance{% if s.annulee %} annulee{% endif %}">
+{%- if not seanceSansPhoto %}
+  {%- set couv = s.evenement | couvertureDe(collections.evenements) if s.evenement else null %}
+  {%- if couv %}
+  <img class="seance-photo" sizes="4.5rem" src="{{ couv.fichier }}" alt="{{ couv.description }}">
+  {%- else %}
+  <img class="seance-photo" src="/couverture-a-venir.svg" alt="Photo à venir" width="400" height="300" eleventy:ignore>
+  {%- endif %}
+{%- endif %}
   <p class="seance-tete"><span class="seance-heure">{{ s.debut | heure }}{% if s.fin %} - {{ s.fin | heure }}{% endif %}</span> <span class="seance-categorie">{{ s.categorie | nomCategorie(categories) }}</span></p>
   <p class="seance-nom">{% if s.evenement %}<a href="/evenements/{{ s.evenement }}">{{ s.nom }}</a>{% else %}{{ s.nom }}{% endif %}</p>
   <p class="seance-participation">
