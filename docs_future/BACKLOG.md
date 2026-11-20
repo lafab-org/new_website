@@ -17,7 +17,6 @@
 - Reprise des anciennes actualités : les 82 nouvelles de l'ancien site, triées et nettoyées.
 - Couverture partagée : un seul gabarit et une seule déclaration Pages CMS pour la couverture des ateliers, des articles et des évènements.
 - Séance annulée et lecteurs d'écran : l'annulation n'est dite qu'en fin de carte, après le nom barré ; l'annoncer dès le nom.
-- Design de l'accueil : son apparence, d'après des maquettes, une fois son contenu revu.
 - `.gitignore` : ignorer `.playwright-mcp/`, le dossier des captures d'écran de l'outil de navigateur.
 - Données d'exemple TiBillet : remplacer `TIBILLET_FICHIER` par une simple activation des données d'exemple, sans citer le chemin du module, et une commande npm dédiée au développement local.
 - Favicon : une icône du site pour l'onglet du navigateur, tirée du logo ; aujourd'hui `/favicon.ico` répond 404.

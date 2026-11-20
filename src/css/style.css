@@ -111,24 +111,25 @@ h2 {
 
 /* Texte de la page : un trait orange sous chaque sous-titre, des puces
    orange, les liens soulignés d'orange. Le corps d'un article ou d'un
-   évènement est dans .corps. */
-:is(main, .corps) > h2:not([class]),
+   évènement est dans .corps, une section reprise sur l'accueil dans
+   .accueil-section. */
+:is(main, .corps, .accueil-section) > h2:not([class]),
 .prochaines-seances > h2 {
   padding-bottom: 0.3rem;
   font-size: 1.4rem;
   background: linear-gradient(var(--orange), var(--orange))
     left bottom / 6rem var(--filet) no-repeat;
 }
-:is(main, .corps) > ul:not([class]) {
+:is(main, .corps, .accueil-section) > ul:not([class]) {
   padding-left: 1.2rem;
 }
-:is(main, .corps) > ul:not([class]) li {
+:is(main, .corps, .accueil-section) > ul:not([class]) li {
   margin: 0.25rem 0;
 }
-:is(main, .corps) > ul:not([class]) li::marker {
+:is(main, .corps, .accueil-section) > ul:not([class]) li::marker {
   color: var(--orange);
 }
-:is(main, .corps) > :is(p:not([class]), ul:not([class])) a {
+:is(main, .corps, .accueil-section) > :is(p:not([class]), ul:not([class])) a {
   color: var(--texte);
   text-decoration-color: var(--orange);
   text-underline-offset: 0.2em;
