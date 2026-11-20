@@ -1,12 +1,15 @@
 ---
-title: "Auto-réparation en cordonnerie"
-accroche: "Venez apprendre à réparer vos chaussures et accessoires en cuir avec l'aide d'une professionnelle !"
-rendez-vous: "tous les jeudis"
-horaire: "18h - 20h"
-catégorie: "matériaux-souples"
-prix: "1 ticket La Fabrique"
+title: Auto-réparation en cordonnerie
+accroche: Venez apprendre à réparer vos chaussures et accessoires en cuir avec
+  l'aide d'une professionnelle !
+rendez-vous: tous les jeudis
+horaire: 18h - 20h
+catégorie: matériaux-souples
+prix: 1 ticket La Fabrique
+couverture:
+  fichier: /evenements/photos/msouple-cordo-vue-table.jpeg
+  description: Travaux de cordonnerie sur une table
 ---
-
 ## Le principe
 
 Une professionnelle vous accompagne pour apprendre à réparer vos
