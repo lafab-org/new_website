@@ -244,6 +244,41 @@ test("every page is in French, with its browser title", () => {
   }
 });
 
+test("every page declares /favicon.svg as its icon", () => {
+  // /ui/page/icone
+  for (const p of all) {
+    // The value of an attribute of a tag, quoted or not.
+    const attr = (tag, name) => tag.match(new RegExp(`\\s${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s"'>]+))`, "i"))
+      ?.slice(1).find((v) => v !== undefined);
+    const icons = [...built[p].matchAll(/<link\s[^>]*>/gi)].map((m) => m[0])
+      .filter((l) => (attr(l, "rel") ?? "").toLowerCase().split(/\s+/).includes("icon"))
+      .map((l) => attr(l, "href"));
+    assert.ok(icons.includes("/favicon.svg"), `${p}: no icon /favicon.svg declared`);
+  }
+});
+
+test("the site icon is built as favicon.svg and favicon.ico", () => {
+  // /operations/construire-le-site/generee
+  const svg = join(SITE, "favicon.svg");
+  assert.ok(existsSync(svg) && statSync(svg).isFile(), "no favicon.svg");
+  assert.match(readFileSync(svg, "utf8"), /<svg[\s>]/, "favicon.svg is no SVG");
+  const ico = join(SITE, "favicon.ico");
+  assert.ok(existsSync(ico) && statSync(ico).isFile(), "no favicon.ico");
+});
+
+test("favicon.ico holds the icon in 16 and in 32 pixels", () => {
+  // /ui/icone-du-site/favicon
+  const ico = join(SITE, "favicon.ico");
+  assert.ok(existsSync(ico), "no favicon.ico");
+  const b = readFileSync(ico);
+  assert.ok(b.length >= 6 && b.readUInt16LE(0) === 0 && b.readUInt16LE(2) === 1, "favicon.ico is no ICO file");
+  const sizes = Array.from({ length: b.readUInt16LE(4) }, (_, i) => 6 + 16 * i)
+    .filter((o) => o + 16 <= b.length)
+    .map((o) => `${b[o] || 256}x${b[o + 1] || 256}`);
+  assert.ok(sizes.includes("16x16"), `no 16x16 image in favicon.ico: ${sizes}`);
+  assert.ok(sizes.includes("32x32"), `no 32x32 image in favicon.ico: ${sizes}`);
+});
+
 test("every page has a single <h1>, carrying its title", () => {
   // /ui/page/titre
   for (const p of all) {
