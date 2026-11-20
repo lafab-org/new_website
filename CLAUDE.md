@@ -27,6 +27,9 @@ For a content-heavy project, the specification includes `docs/contents.md`:
   `model.md` only if `npm run verifier` can check it; otherwise it
   ends with `(not testable)`. Never add a test of a kind the policy
   does not name, nor a test of a test helper.
+- The coverage check of the tests is
+  `check.py tests tests scripts/verifier.mjs`: the verifier counts as
+  the check of the `model.md` invariants.
 
 A content page that adds no tag (only `ui.md` and `contents.md`) is
 planned without a Tests phase (Specification, Implementation): `npm run
