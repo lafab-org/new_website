@@ -6,8 +6,9 @@ horaire: 18h - 21h
 catégorie: numérique-électronique
 prix: gratuite et ouverte à tous
 couverture:
-  fichier: /evenements/photos/repar-action-2026-11-05-21-11.jpg
-  description: Des bénévoles penchés sur un ordinateur portable, à l'établi d'électronique de La Fabrique.
+  fichier: /evenements/photos/num-reparaction-vue-large.jpg
+  description: Des bénévoles penchés sur un ordinateur portable, à l'établi
+    d'électronique de La Fabrique.
 ---
 ## Le principe
 
@@ -46,3 +47,4 @@ de secret pour vous ? Venez partager votre savoir-faire :
 
 - passez un premier jeudi du mois, de 18h à 20h ;
 - écrivez à [contact@lafab.org](mailto:contact@lafab.org).
+
