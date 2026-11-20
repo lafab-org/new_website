@@ -4,7 +4,11 @@ Site web de La Fabrique, un atelier partagé (maker space) à
 Strasbourg. Site statique construit avec Eleventy.
 
 - `npm install` : installe les dépendances.
-- `npm start` : sert le site en local.
+- `npm start` : sert le site en local. Les séances viennent de
+  TiBillet si `TIBILLET_URL` et `TIBILLET_API_KEY` sont définies ;
+  sinon l'agenda est vide. Pour utiliser plutôt les données d'exemple
+  des tests, depuis la racine du projet :
+  `TIBILLET_FICHIER=tests/tibillet.mjs npm start`.
 - `npm run build` : génère le site dans `_site/`.
 - `npm test` : lance les tests.
 

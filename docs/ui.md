@@ -87,7 +87,10 @@ Après le corps de la page, dans cet ordre (not testable) :
 - la section /ui/prochaines-seances, pour les séances de la page ;
 - sans évènement de la page, rien ; sinon, le sous-titre
   `Les évènements`, puis chacun des évènements de la page, triés par
-  titre : un lien vers sa page, avec son accroche s'il en a une.
+  titre : un lien vers sa page, qui montre sa couverture, avec sa
+  description pour texte alternatif, ou sans couverture l'image de
+  remplacement des couvertures, avec le texte alternatif
+  `Photo à venir`, puis son titre, puis son accroche s'il en a une.
 
 ## Page d'évènement
 
@@ -113,6 +116,10 @@ pour les séances de l'évènement (not testable).
 ## Séance
 
 Montre une séance, dans cet ordre (not testable) :
+- hors d'une page d'évènement, la couverture de son évènement, avec sa
+  description pour texte alternatif, ou, sans évènement ou sans
+  couverture, l'image de remplacement des couvertures, avec le texte
+  alternatif `Photo à venir` ;
 - son début, puis sa fin si elle en a une ;
 - le nom de sa catégorie ;
 - son nom, en lien vers la page de son évènement si elle en a un ;
