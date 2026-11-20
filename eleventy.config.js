@@ -72,7 +72,7 @@ const sectionDe = (corps, titre) => {
 
 export default function (eleventyConfig) {
   eleventyConfig.addPlugin(RenderPlugin);
-  for (const f of ["css", "logo.svg", "couverture-a-venir.svg"]) {
+  for (const f of ["css", "logo.svg", "couverture-a-venir.svg", "favicon.svg", "favicon.ico"]) {
     eleventyConfig.addPassthroughCopy({ [join(ENTREE, f)]: f });
   }
   // The temporary input folder: git ignores it, so Eleventy must not
