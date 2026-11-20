@@ -10,8 +10,7 @@ pages montrent.
 
 1. Vérification du contenu done
 2. Contenu d'exemple done
-3. Pages communes : `tests-only`, étiqueter ce que les tests peuvent
-   observer de /ui/page, /ui/en-tete et /ui/page-daccueil.
+3. Pages communes done
 4. Ateliers et association : `tests-only`, étiqueter ce que les tests
    peuvent observer de /ui/page-datelier et /ui/page-de-lassociation.
 5. Agenda et évènements : `tests-only`, étiqueter ce que les tests
