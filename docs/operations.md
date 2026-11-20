@@ -59,7 +59,7 @@ Then:
 - [non-publie] Après les cas 2, 4 et 6 : la page d'un article non
   publié n'est pas dans `_site/`. Celles de ses photos qu'aucune page
   construite ne montre n'y sont pas non plus (not testable).
-- Un évènement de TiBillet donne une séance quand l'un de ses
+- [seance] Un évènement de TiBillet donne une séance quand l'un de ses
   `keywords` est l'identifiant d'une catégorie du site ; les autres sont
   ignorés. Sa séance a, aux dates et heures de Paris :
   - pour nom, son `name` ;
@@ -77,4 +77,4 @@ Then:
   - pour réservées, la somme des `ticketQuantity` des `reservedTicket`
     de ses réservations confirmées ou en attente ;
   - annulée, si son `eventStatus` est
-    `https://schema.org/EventCancelled` (not testable).
+    `https://schema.org/EventCancelled`.

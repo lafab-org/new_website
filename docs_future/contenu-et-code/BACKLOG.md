@@ -12,11 +12,7 @@ pages montrent.
 2. Contenu d'exemple done
 3. Pages communes done
 4. Ateliers et association done
-5. Agenda et évènements : `tests-only`, étiqueter ce que les tests
-   peuvent observer de /ui/page-devenement, /ui/seance,
-   /ui/page-de-lagenda, /ui/page-des-evenements,
-   /ui/page-des-seances-par-evenement, /ui/prochaines-seances et
-   /operations/construire-le-site.
+5. Agenda et évènements done
 6. Actualités et réalisations : `tests-only`, étiqueter ce que les
    tests peuvent observer de /ui/page-des-realisations,
    /ui/page-des-actualites, /ui/page-darticle et /ui/articles-en-avant.

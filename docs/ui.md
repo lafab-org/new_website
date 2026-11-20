@@ -55,8 +55,7 @@ ordre, selon son type :
   page, où `<title>` est son `title`.
 - [semaine] `semaine` : le sous-titre `Les 7 prochains jours`, puis :
   - [seances-semaine] Le nom de chaque séance des 7 prochains jours.
-  - Elles sont groupées par jour comme sur /ui/page-de-lagenda (not
-    testable).
+  - [jours] Elles sont groupées par jour comme sur /ui/page-de-lagenda.
   - Sans séance des 7 prochains jours, le texte
     `Aucune séance dans les 7 prochains jours.` (not testable).
   - [lien-agenda] Un lien `Tout l'agenda` vers `/agenda`.
@@ -76,8 +75,8 @@ la page de l'association sont dans /contents/page-de-lassociation.
 
 [ordre] Après le corps de la page, dans cet ordre :
 - [lieu] le sous-titre `Où nous trouver`, puis le `lieu` du site ;
-- la section /ui/prochaines-seances, pour les séances de la page (not
-  testable) ;
+- [prochaines-seances] la section /ui/prochaines-seances, pour les
+  séances de la page ;
 - [evenements] la section `Les évènements` de ses évènements, comme sur
   /ui/page-datelier.
 
@@ -88,8 +87,8 @@ la page de l'association sont dans /contents/page-de-lassociation.
 pages d'atelier sont dans /contents/page-datelier.
 
 [ordre] Après le corps de la page, dans cet ordre :
-- la section /ui/prochaines-seances, pour les séances de la page (not
-  testable) ;
+- [prochaines-seances] la section /ui/prochaines-seances, pour les
+  séances de la page ;
 - les évènements de la page :
   - [sans-evenement] Sans évènement de la page, rien.
   - [evenements] Sinon, le sous-titre `Les évènements`, puis chacun des
@@ -105,43 +104,43 @@ pages d'atelier sont dans /contents/page-datelier.
 telle que /operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
 pages d'évènement sont dans /contents/page-devenement.
 
-Entre le titre et le corps, la page montre la couverture de
-l'évènement, s'il en a une, avec sa description pour texte alternatif
-(not testable).
+[couverture] Entre le titre et le corps, la page montre la couverture
+de l'évènement, s'il en a une, avec sa description pour texte
+alternatif.
 
-Puis son accroche, s'il en a une, puis ses informations pratiques, en
-liste, dans cet ordre, chacune son libellé puis sa valeur (not
-testable) :
+[informations] Puis son accroche, s'il en a une, puis ses informations
+pratiques, en liste, dans cet ordre, chacune son libellé puis sa
+valeur :
 - `Rendez-vous`, puis son `rendez-vous` ;
 - `Horaire`, puis son `horaire` ;
 - `Lieu`, puis le `lieu` du site ;
 - `Activité`, puis son `prix`.
 
-Après les informations pratiques, la section /ui/prochaines-seances,
-pour les séances de l'évènement (not testable).
+[prochaines-seances] Après les informations pratiques, la section
+/ui/prochaines-seances, pour les séances de l'évènement.
 
 ## Séance
 
-Montre une séance, dans cet ordre (not testable) :
-- hors d'une page d'évènement, la couverture de son évènement, avec sa
-  description pour texte alternatif, ou, sans évènement ou sans
-  couverture, l'image de remplacement des couvertures, avec le texte
-  alternatif `Photo à venir` ;
-- son début, puis sa fin si elle en a une ;
-- le nom de sa catégorie ;
-- son nom, en lien vers la page de son évènement si elle en a un ;
+[ordre] Montre une séance, dans cet ordre :
+- [couverture] hors d'une page d'évènement, la couverture de son
+  évènement, avec sa description pour texte alternatif, ou, sans
+  évènement ou sans couverture, l'image de remplacement des
+  couvertures, avec le texte alternatif `Photo à venir` ;
+- [horaire] son début, puis sa fin si elle en a une ;
+- [categorie] le nom de sa catégorie ;
+- [nom] son nom, en lien vers la page de son évènement si elle en a un ;
 - sa participation, le premier cas qui s'applique :
-  1. annulée : `Annulée` ;
-  2. accès `libre` : `Accès libre` ;
-  3. accès `sur-place` : `Paiement sur place` ;
-  4. accès `réservation-gratuite` ou `réservation-payante`, ou sans
-     accès : `Réservation gratuite` ou `Réservation payante` selon
-     l'accès, rien sans accès ; puis, si elle a une jauge,
-     `1 place restante` ou `<n> places restantes`, où `<n>` est le
-     nombre de ses places restantes, ou `Complet` si elle est
-     complète ; enfin, sauf si elle est complète, un lien vers sa
-     réservation : `Réserver` avec un accès, `Voir sur TiBillet` sans
-     accès.
+  1. [annulee] annulée : `Annulée` ;
+  2. [libre] accès `libre` : `Accès libre` ;
+  3. [sur-place] accès `sur-place` : `Paiement sur place` ;
+  4. [reservation] accès `réservation-gratuite` ou
+     `réservation-payante`, ou sans accès : `Réservation gratuite` ou
+     `Réservation payante` selon l'accès, rien sans accès ; puis, si
+     elle a une jauge, `1 place restante` ou `<n> places restantes`,
+     où `<n>` est le nombre de ses places restantes, ou `Complet` si
+     elle est complète ; enfin, sauf si elle est complète, un lien
+     vers sa réservation : `Réserver` avec un accès,
+     `Voir sur TiBillet` sans accès.
 
 ## Page de l'agenda
 
@@ -149,15 +148,15 @@ Montre une séance, dans cet ordre (not testable) :
 /operations/construire-le-site/generee la rend. Ses objectifs
 éditoriaux sont dans /contents/page-de-lagenda.
 
-Après le corps de la page, dans cet ordre :
+[ordre] Après le corps de la page, dans cet ordre :
 - La section /ui/articles-en-avant, pour les articles en avant sur la
   page de l'agenda (not testable).
 - [en-avant] Un lien vers la page de chaque article en avant sur la
   page de l'agenda.
 - [seances] Le nom de chaque séance du site.
-- Les séances sont groupées par jour, chaque jour en sous-titre, ses
-  séances sous la forme de /ui/seance, dans l'ordre des `séances` du
-  site (not testable).
+- [jours] Les séances sont groupées par jour, chaque jour en
+  sous-titre, ses séances sous la forme de /ui/seance, dans l'ordre des
+  `séances` du site.
 - Sans séance, le texte `Aucune séance prévue pour l'instant.` (not
   testable).
 
@@ -167,11 +166,10 @@ Après le corps de la page, dans cet ordre :
 /operations/construire-le-site/generee la rend. Ses objectifs
 éditoriaux sont dans /contents/page-des-evenements.
 
-Après le corps de la page, un groupe par catégorie qui a des
+[groupes] Après le corps de la page, un groupe par catégorie qui a des
 évènements, dans l'ordre des `catégories` du site : le nom de la
 catégorie en sous-titre, puis chacun de ses évènements, triés par
-titre, comme dans la section `Les évènements` de /ui/page-datelier
-(not testable).
+titre, comme dans la section `Les évènements` de /ui/page-datelier.
 
 ## Page des séances par évènement
 
@@ -179,7 +177,7 @@ titre, comme dans la section `Les évènements` de /ui/page-datelier
 /operations/construire-le-site/generee la rend. Ses objectifs
 éditoriaux sont dans /contents/page-des-seances-par-evenement.
 
-Après le corps de la page, dans cet ordre (not testable) :
+[groupes] Après le corps de la page, dans cet ordre :
 - un groupe par catégorie qui a des évènements, dans l'ordre des
   `catégories` du site, son nom en sous-titre ;
 - dans chaque groupe, chacun de ses évènements, triés par titre : son
@@ -241,9 +239,8 @@ testable) :
 
 ## Prochaines séances
 
-Une section, montrée par une page pour une liste de séances (not
-testable) :
-- sans séance, rien ;
-- sinon, le sous-titre `Prochaines séances`, puis les cinq premières
-  séances de la liste, groupées par jour comme sur /ui/page-de-lagenda,
-  puis un lien `Voir l'agenda` vers `/agenda`.
+Une section, montrée par une page pour une liste de séances :
+- [sans-seance] sans séance, rien ;
+- [seances] sinon, le sous-titre `Prochaines séances`, puis les cinq
+  premières séances de la liste, groupées par jour comme sur
+  /ui/page-de-lagenda, puis un lien `Voir l'agenda` vers `/agenda`.
