@@ -4,9 +4,9 @@ layout: base.njk
 {{ content | safe }}
 {%- for groupe in collections.evenementsParCategorie %}
 <h2>{{ groupe.nom }}</h2>
-<ul>
+<ul class="evenements">
 {%- for p in groupe.pages %}
-<li><a href="{{ p.url }}">{{ p.data.title }}</a></li>
+  {%- include "carte-evenement.njk" %}
 {%- endfor %}
 </ul>
 {%- endfor %}

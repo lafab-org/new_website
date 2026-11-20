@@ -5,11 +5,7 @@
 <h2>Les évènements</h2>
 <ul class="evenements">
 {%- for p in evenements %}
-  <li><a href="{{ p.url }}">
-  {%- if p.data.couverture %}<img class="evenement-photo" sizes="4rem" src="{{ p.data.couverture.fichier }}" alt="{{ p.data.couverture.description }}">
-  {%- else %}<img class="evenement-photo" src="/couverture-a-venir.svg" alt="Photo à venir" width="400" height="300" eleventy:ignore>{% endif -%}
-  <span class="evenement-titre">{{ p.data.title }}</span>
-  {%- if p.data.accroche %}<span class="evenement-accroche">{{ p.data.accroche }}</span>{% endif %}</a></li>
+  {%- include "carte-evenement.njk" %}
 {%- endfor %}
 </ul>
 {%- endif %}
