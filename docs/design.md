@@ -15,8 +15,9 @@
 - Sur la page d'un article ou d'un évènement, sa couverture est montrée
   entière, jamais recadrée ; dans la liste des actualités et les articles en avant, elle
   peut l'être.
-- Dans une séance et dans la section `Les évènements`, la
-  couverture de l'évènement est une vignette carrée, recadrée.
+- Dans une séance, dans la section `Les évènements` et sur la page
+  des évènements, la couverture de l'évènement est une vignette carrée,
+  recadrée.
 - Sur la page des réalisations, les photos sont des vignettes carrées,
   recadrées, qui en montrent une à la fois : au doigt, on passe de
   l'une à l'autre en glissant ; à la souris, elles défilent en fondu

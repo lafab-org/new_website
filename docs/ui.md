@@ -162,8 +162,9 @@ Après le corps de la page, dans cet ordre :
 
 Après le corps de la page, un groupe par catégorie qui a des
 évènements, dans l'ordre des `catégories` du site : le nom de la
-catégorie en sous-titre, puis un lien vers chacun de ses évènements,
-triés par titre (not testable).
+catégorie en sous-titre, puis chacun de ses évènements, triés par
+titre, comme dans la section `Les évènements` de /ui/page-datelier
+(not testable).
 
 ## Page des séances par évènement
 
