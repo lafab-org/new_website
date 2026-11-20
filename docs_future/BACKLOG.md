@@ -23,7 +23,6 @@
 - Échec de construction : `_site/` vraiment inchangé, la copie des fichiers fixes (CSS, logos) comprise ; aujourd'hui elle a lieu avant l'échec.
 - Tags TiBillet mal orthographiés : bloquer la publication pour un mot-clé qui est une catégorie aux accents et majuscules près.
 - Notification des échecs : un éditeur invité sans compte GitHub pousse peut-être sous le compte de Pages CMS, et l'échec n'envoie alors de courriel à personne.
-- Changement d'heure des données d'exemple : `at()` de `tests/tibillet.mjs` prend le décalage horaire une heure avant l'heure locale ; un jour de changement d'heure, une séance d'exemple peut être décalée et faire échouer `npm test`, donc le déploiement.
 
 ## Rapports à envoyer
 
