@@ -20,15 +20,17 @@ For a content-heavy project, the specification includes `docs/contents.md`:
   fixes: the page source in `src/` is the content.
 - The content is checked by reading the pages in `src/` against their
   objectives, as `design.md` is checked by eye, never by tests.
-- Tests are the form check of the built site that `technical.md`
-  describes. A statement about a page gets a tag only if that check
-  can verify it on `_site/`; otherwise it ends with `(not testable)`.
-  Never add a test of a kind the policy does not name, nor a test of a
-  test helper.
+- Tests validate the code on the sample content of `tests/contenu/`,
+  built outside `_site/`, as `technical.md` describes. A statement of
+  `ui.md` or `operations.md` gets a tag only if the tests can observe
+  it in the files built from that content, and an invariant of
+  `model.md` only if `npm run verifier` can check it; otherwise it
+  ends with `(not testable)`. Never add a test of a kind the policy
+  does not name, nor a test of a test helper.
 
 A content page that adds no tag (only `ui.md` and `contents.md`) is
-planned without a Tests phase (Specification, Implementation): the
-existing tests already run over every page.
+planned without a Tests phase (Specification, Implementation): `npm run
+verifier` already runs over every page.
 
 ## Secrets
 

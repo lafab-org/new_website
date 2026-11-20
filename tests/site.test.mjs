@@ -1,41 +1,55 @@
-// Form check of the built site: build once, then read _site/.
-import { test, before } from "node:test";
+// Tests of the code on the sample content of tests/contenu/: build the
+// site once, from the code of the repository and that content, into a
+// folder other than _site/, then read its files.
+import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs";
 import { execFileSync } from "node:child_process";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const SRC = "src";
-const SITE = "_site";
+// The sample content, laid out like the content of src/.
+const CONTENU = join("tests", "contenu");
 // The sample stand-in for TiBillet the site is built with, a module.
 const TIBILLET = join("tests", "tibillet.mjs");
-// Its events, as the module exports them when read by the tests.
-const sampleEvents = async () =>
-  (await import(pathToFileURL(TIBILLET).href)).default.events.results;
+// Where the site is built: a fresh folder, so that no stale file is read.
+let SITE;
 
-// Markdown files of src/ under `dir`, outside _includes/ and, unless
-// `dir` is inside it, outside realisations/, as paths relative to src/.
+// The cases of the sample articles, by file under tests/contenu/.
+// Not published: its mise en avant starts after the day of the build.
+const NOT_PUBLISHED = ["actualites/2020-03-01-article-a-venir.md"];
+// In avant on the agenda on the day of the build.
+const IN_AVANT_AGENDA = [
+  "actualites/2020-02-01-article-en-avant.md",
+  "actualites/2020-02-15-article-commence.md",
+];
+// Pages that show a photo of the sample content: a published article,
+// by its cover, and the home page, by the photo of a réalisation.
+const PHOTO_PAGES = ["actualites/2020-01-15-article-publie.md", "index.md"];
+// The alternative texts of the logo and of the placeholder of a cover.
+const LOGO = "La Fabrique - accueil";
+const PLACEHOLDER = "Photo à venir";
+
+// Markdown files of the sample content under `dir`, outside
+// realisations/, as paths relative to it.
 function markdown(dir = "") {
-  return readdirSync(join(SRC, dir), { withFileTypes: true }).flatMap((e) => {
+  return readdirSync(join(CONTENU, dir), { withFileTypes: true }).flatMap((e) => {
     const rel = join(dir, e.name);
-    if (e.isDirectory()) return rel === "_includes" || rel === "realisations" ? [] : markdown(rel);
+    if (e.isDirectory()) return rel === "realisations" ? [] : markdown(rel);
     return rel.endsWith(".md") ? [rel] : [];
   });
 }
-const pages = () => markdown();
-// The files of the réalisations: the Markdown files directly in realisations/.
-const realisations = () => (existsSync(join(SRC, "realisations"))
-  ? readdirSync(join(SRC, "realisations"), { withFileTypes: true })
-    .filter((e) => e.isFile() && e.name.endsWith(".md")).map((e) => join("realisations", e.name))
-  : []);
+const isArticle = (p) => /^actualites\/[^/]+\.md$/.test(p);
+const articles = () => markdown().filter(isArticle);
+const published = (p) => !NOT_PUBLISHED.includes(p);
 
 // Address serving a page, and the built file of an address.
 const address = (page) => "/" + page.replace(/\.md$/, "").replace(/(^|\/)index$/, "");
 const builtFile = (addr) => join(SITE, addr, "index.html");
 
 const frontMatter = (page, key) => {
-  const fm = readFileSync(join(SRC, page), "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  const fm = readFileSync(join(CONTENU, page), "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---/);
   const m = fm?.[1].match(new RegExp(`^${key}:\\s*(.*)$`, "m"));
   return m ? m[1].trim().replace(/^(["'])(.*)\1$/, "$2") : "";
 };
@@ -46,83 +60,31 @@ const text = (html) => html.replace(/<[^>]*>/g, " ")
 
 const hrefs = (html) =>
   [...html.matchAll(/<a\s[^>]*?href\s*=\s*["']([^"']*)["']/gi)].map((m) => decodeURI(text(m[1])));
-const ids = (html) => new Set([...html.matchAll(/\sid\s*=\s*["']([^"']*)["']/gi)].map((m) => m[1]));
-const isEvent = (page) => /^evenements\/[^/]+\.md$/.test(page) && page !== "evenements/index.md";
 
-// The sources of the articles, published or not: the Markdown files
-// directly in actualites/.
-const isArticle = (p) => /^actualites\/[^/]+\.md$/.test(p);
-const articles = () => pages().filter(isArticle);
-
-// The mise en avant of an article page, from its front matter block:
-// `{ pages, début, fin }`, each as written, or undefined without one.
-const miseEnAvant = (page) => {
-  const fm = readFileSync(join(SRC, page), "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? "";
-  const lines = fm.split(/\r?\n/);
-  const start = lines.findIndex((l) => /^mise-en-avant:/.test(l));
-  if (start < 0) return undefined;
-  const block = [];
-  const inline = lines[start].replace(/^mise-en-avant:/, "").replace(/\s+#.*$/, "").trim();
-  if (inline !== "") {
-    // A flow mapping, `{ pages: [...], fin: ... }`, read as a block of
-    // its entries; any other value leaves the block empty.
-    const flow = inline.match(/^\{(.*)\}$/)?.[1] ?? "";
-    let depth = 0, entry = "";
-    for (const c of flow + ",") {
-      if (c === "," && depth === 0) { if (entry.trim()) block.push("  " + entry.trim()); entry = ""; continue; }
-      if (c === "[") depth++;
-      if (c === "]") depth--;
-      entry += c;
-    }
-  } else {
-    for (const l of lines.slice(start + 1)) {
-      if (!/^\s/.test(l) && l.trim() !== "") break;
-      block.push(l);
-    }
-  }
-  const unquote = (v) => v.trim().replace(/^(["'])(.*)\1$/, "$2");
-  const value = (key) => block.find((l) => new RegExp(`^\\s+${key}:`).test(l))?.replace(/^[^:]*:/, "").replace(/\s+#.*$/, "").trim();
-  const listed = value("pages");
-  let pages;
-  if (listed === undefined) pages = [];
-  else if (listed.startsWith("[")) {
-    pages = listed.replace(/^\[|\]$/g, "").split(",").map(unquote).filter((v) => v !== "");
-  } else if (listed !== "") pages = [unquote(listed)];
-  else {
-    const i = block.findIndex((l) => /^\s+pages:/.test(l));
-    pages = [];
-    for (const l of block.slice(i + 1)) {
-      const m = l.replace(/\s+#.*$/, "").match(/^\s+-\s*(.*)$/);
-      if (!m) break;
-      pages.push(unquote(m[1]));
-    }
-  }
-  const date = (key) => (value(key) === undefined ? undefined : unquote(value(key)));
-  return { pages, début: date("début"), fin: date("fin") };
+// The pages a built page links to, by address.
+const linksOf = (addr) => {
+  const file = builtFile(addr);
+  assert.ok(existsSync(file), `${addr}: not built`);
+  return new Set(hrefs(readFileSync(file, "utf8"))
+    .map((h) => h.split("#")[0].replace(/\?.*$/, "").replace(/(.)\/$/, "$1")));
 };
 
-// The day in Paris, AAAA-MM-JJ, when the tests run.
-const today = new Intl.DateTimeFormat("en-CA", {
-  timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit",
-}).format(new Date());
+// The <img> elements of a built page, with their `src` and `alt`, if any.
+const images = (html) => [...html.matchAll(/<img\s[^>]*>/gi)].map((m) => {
+  const attr = (name) => m[0].match(new RegExp(`\\s${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, "i"));
+  const value = (a) => (a ? text(a[1] ?? a[2] ?? a[3]) : undefined);
+  return { src: value(attr("src")), alt: value(attr("alt")) };
+});
 
-// An article is published unless its mise en avant starts after today.
-const published = (p) => {
-  const début = miseEnAvant(p)?.début;
-  return début === undefined || début <= today;
-};
-
-// The built pages: all pages, but those of the articles not published
-// on the day the tests run.
+// The built pages: all sample pages but the articles not published.
 let all;
 const built = {};
 before(() => {
-  all = pages().filter((p) => !isArticle(p) || published(p));
-  // Built from an empty _site/, so that no stale file is read.
-  rmSync(SITE, { recursive: true, force: true });
+  all = markdown().filter((p) => !isArticle(p) || published(p));
+  SITE = mkdtempSync(join(tmpdir(), "site-exemple-"));
   execFileSync("npm", ["run", "build"], {
     stdio: "pipe",
-    env: { ...process.env, TIBILLET_FICHIER: TIBILLET },
+    env: { ...process.env, TIBILLET_FICHIER: TIBILLET, CONTENU, SORTIE: SITE },
   });
   // A page not built reads as empty, and is reported by the test of
   // /operations/construire-le-site/generee.
@@ -131,9 +93,11 @@ before(() => {
     built[p] = existsSync(file) ? readFileSync(file, "utf8") : "";
   }
 });
+after(() => { if (SITE) rmSync(SITE, { recursive: true, force: true }); });
 
 test("every page is built as an HTML file, from its Markdown", () => {
   // /operations/construire-le-site/generee
+  assert.ok(all.includes("index.md"), "no index.md in the sample content");
   for (const p of all) {
     assert.ok(existsSync(builtFile(address(p))), `${p}: not built`);
     assert.match(built[p], /<html[\s>]/i, `${p}: not HTML`);
@@ -141,17 +105,32 @@ test("every page is built as an HTML file, from its Markdown", () => {
   }
 });
 
-test("every page is in French, with a non-empty title and its browser title", () => {
+test("every image a built page shows is an image file of the built site", () => {
+  // /operations/construire-le-site/generee
+  const found = all.flatMap((p) => images(built[p]).map((i) => [p, i]));
+  for (const page of PHOTO_PAGES) {
+    assert.ok(found.some(([p, { alt }]) => p === page && alt !== LOGO && alt !== PLACEHOLDER),
+      `${page}: no image other than the logo and the placeholder`);
+  }
+  assert.ok(found.some(([, { alt }]) => alt === LOGO), "no logo shown");
+  assert.ok(found.some(([, { alt }]) => alt === PLACEHOLDER), "no placeholder of a cover shown");
+  const wrong = found.filter(([, { src }]) => {
+    if (src === undefined || !/^\/(?!\/)/.test(src)) return true;
+    const file = join(SITE, decodeURI(src.replace(/[?#].*$/, "")));
+    return !existsSync(file) || !statSync(file).isFile()
+      || !/\.(jpe?g|png|webp|avif|gif|svg)$/i.test(file);
+  }).map(([p, { src }]) => `${p}: ${src}`);
+  assert.deepEqual(wrong, [], "images that are no image file of the built site");
+});
+
+test("every page is in French, with its browser title", () => {
   // /ui/page/francais
-  // /model/page/titre
   // /ui/page/navigateur
   for (const p of all) {
-    const title = frontMatter(p, "title");
     assert.match(built[p], /<html[^>]*\blang="fr"/, `${p}: no lang="fr"`);
-    assert.notEqual(title, "", `${p}: empty title`);
     const shown = built[p].match(/<title>([^<]*)<\/title>/);
     assert.ok(shown, `${p}: no browser title`);
-    const expected = p === "index.md" ? "La Fabrique" : `${title} - La Fabrique`;
+    const expected = p === "index.md" ? "La Fabrique" : `${frontMatter(p, "title")} - La Fabrique`;
     assert.equal(text(shown[1]), expected, `${p}: browser title`);
   }
 });
@@ -165,121 +144,12 @@ test("every page has a single <h1>, carrying its title", () => {
   }
 });
 
-test("every event has its practical information", () => {
-  // /model/evenement/renseigne
-  const events = all.filter(isEvent);
-  assert.ok(events.length > 0, "no event page");
-  for (const p of events) {
-    for (const key of ["rendez-vous", "horaire", "prix"]) {
-      assert.notEqual(frontMatter(p, key), "", `${p}: empty ${key}`);
-    }
-  }
-});
-
-// Identifiers of the categories of the site, from src/_data/categories.json.
-const categoryIds = () => {
-  const file = join(SRC, "_data", "categories.json");
-  assert.ok(existsSync(file), "no src/_data/categories.json");
-  const categories = JSON.parse(readFileSync(file, "utf8"));
-  assert.ok(Array.isArray(categories), "categories.json is not a list");
-  return categories.map((c) => c.identifiant);
-};
-
-// The strings of a front matter list, written inline (`[a, "b"]`) or as
-// block items (`- a`); a single value gives a list of one.
-const frontMatterList = (page, key) => {
-  const fm = readFileSync(join(SRC, page), "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  const m = fm?.[1].match(new RegExp(`^${key}:[ \t]*(.*)((?:\\r?\\n[ \t]*-.*)*)`, "m"));
-  if (!m) return [];
-  const unquote = (v) => v.trim().replace(/^(["'])(.*)\1$/, "$2");
-  const inline = m[1].trim();
-  if (inline.startsWith("[")) {
-    return inline.replace(/^\[|\]$/g, "").split(",").map(unquote).filter((v) => v !== "");
-  }
-  if (inline !== "") return [unquote(inline)];
-  return m[2].split(/\r?\n/).filter((l) => l.trim() !== "").map((l) => unquote(l.replace(/^\s*-/, "")));
-};
-
-test("every event belongs to a category of the site", () => {
-  // /model/evenement/categorie
-  const identifiers = categoryIds();
-  const events = all.filter(isEvent);
-  assert.ok(events.length > 0, "no event page");
-  for (const p of events) {
-    assert.ok(identifiers.includes(frontMatter(p, "catégorie")), `${p}: catégorie`);
-  }
-});
-
-test("every category a page shows is a category of the site", () => {
-  // /model/page/categories
-  const identifiers = categoryIds();
-  const shown = all.flatMap((p) => frontMatterList(p, "catégories").map((c) => [p, c]));
-  assert.ok(shown.length > 0, "no page shows a category");
-  for (const [p, c] of shown) {
-    assert.ok(identifiers.includes(c), `${p}: catégorie ${c}`);
-  }
-});
-
-test("every réalisation belongs to categories of the site", () => {
-  // /model/realisation/categories
-  const identifiers = categoryIds();
-  const files = realisations();
-  assert.ok(files.length > 0, "no réalisation");
-  for (const r of files) {
-    for (const c of frontMatterList(r, "catégories")) {
-      assert.ok(identifiers.includes(c), `${r}: catégorie ${c}`);
-    }
-  }
-});
-
-// The <img> elements of a built page, with their `src` and `alt`, if any.
-const images = (html) => [...html.matchAll(/<img\s[^>]*>/gi)].map((m) => {
-  const attr = (name) => m[0].match(new RegExp(`\\s${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, "i"));
-  const value = (a) => (a ? text(a[1] ?? a[2] ?? a[3]) : undefined);
-  return { src: value(attr("src")), alt: value(attr("alt")) };
-});
-
-test("every image has a text alternative and leads to a file of _site/", () => {
-  // /model/image/texte
-  // /model/site/image
-  // /operations/construire-le-site/generee
-  const found = all.flatMap((p) => images(built[p]).map((i) => [p, i]));
-  assert.ok(found.length > 0, "no image on any page");
-  const wrong = [];
-  for (const [p, { src, alt }] of found) {
-    if (!alt) wrong.push(`${p}: ${src}: no text alternative`);
-    const internal = src !== undefined && /^\/(?!\/)/.test(src);
-    const file = internal ? join(SITE, decodeURI(src)) : "";
-    if (!internal || !existsSync(file) || !statSync(file).isFile()) wrong.push(`${p}: ${src}: no file in _site/`);
-  }
-  assert.deepEqual(wrong, [], "wrong images");
-});
-
-test("no dead link: internal links lead to a page, fragments to an id", () => {
-  // /model/site/lien-interne
-  // /model/site/fragment
-  const byAddress = Object.fromEntries(all.map((p) => [address(p), built[p]]));
-  const dead = [];
-  for (const p of all) {
-    for (const href of hrefs(built[p])) {
-      const [target, fragment] = href.split("#");
-      let page;
-      if (target === "") page = built[p];
-      else if (/^\/(?!\/)/.test(target)) {
-        const addr = target.replace(/\?.*$/, "").replace(/(.)\/$/, "$1");
-        page = byAddress[addr];
-      } else continue;
-      if (!page || (fragment !== undefined && !ids(page).has(fragment))) dead.push(`${p}: ${href}`);
-    }
-  }
-  assert.deepEqual(dead, [], "dead links");
-});
-
 test("the agenda shows the name of every séance of the sample module", async () => {
   // /operations/construire-le-site/fichier
   // /ui/page-de-lagenda/seances
-  const identifiers = categoryIds();
-  const events = await sampleEvents();
+  const categories = JSON.parse(readFileSync(join("src", "_data", "categories.json"), "utf8"));
+  const identifiers = categories.map((c) => c.identifiant);
+  const events = (await import(pathToFileURL(TIBILLET).href)).default.events.results;
   const names = events
     .filter((e) => (e.keywords ?? []).some((k) => identifiers.includes(k)))
     .map((e) => e.name);
@@ -291,83 +161,26 @@ test("the agenda shows the name of every séance of the sample module", async ()
   assert.deepEqual(missing, [], "séances missing from the agenda");
 });
 
-test("every article file name starts with a valid date, then a hyphen", () => {
-  // /model/article/date
-  const found = articles();
-  assert.ok(found.length > 0, "no article");
-  for (const p of found) {
-    const name = p.split("/")[1];
-    const m = name.match(/^(\d{4})-(\d{2})-(\d{2})-/);
-    assert.ok(m, `${p}: file name does not start with AAAA-MM-JJ-`);
-    const [y, mo, d] = m.slice(1).map(Number);
-    const day = new Date(0);
-    day.setUTCFullYear(y, mo - 1, d);
-    const valid = day.getUTCFullYear() === y && day.getUTCMonth() === mo - 1 && day.getUTCDate() === d;
-    assert.ok(valid, `${p}: ${m[0].slice(0, -1)} is not a valid date`);
-  }
+test("the agenda links to every article in avant on it", () => {
+  // /ui/page-de-lagenda/en-avant
+  const links = linksOf("/agenda");
+  const missing = IN_AVANT_AGENDA.map(address).filter((a) => !links.has(a));
+  assert.deepEqual(missing, [], "articles in avant missing from the agenda");
 });
 
 test("the news page links to every published article", () => {
   // /ui/page-des-actualites/articles
   const found = articles().filter(published);
-  const file = builtFile("/actualites");
-  assert.ok(existsSync(file), "no news page built");
-  const links = new Set(hrefs(readFileSync(file, "utf8"))
-    .map((h) => h.split("#")[0].replace(/\?.*$/, "").replace(/(.)\/$/, "$1")));
+  assert.ok(found.length > 1, "fewer than two published articles");
+  const links = linksOf("/actualites");
   const missing = found.map(address).filter((a) => !links.has(a));
   assert.deepEqual(missing, [], "articles missing from the news page");
 });
 
-// A valid day written AAAA-MM-JJ.
-const validDay = (s) => {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s ?? "");
-  if (!m) return false;
-  const [y, mo, d] = m.slice(1).map(Number);
-  const day = new Date(0);
-  day.setUTCFullYear(y, mo - 1, d);
-  return day.getUTCFullYear() === y && day.getUTCMonth() === mo - 1 && day.getUTCDate() === d;
-};
-
-test("every mise en avant is well formed", () => {
-  // /model/mise-en-avant/valide
-  for (const p of articles()) {
-    const m = miseEnAvant(p);
-    if (!m) continue;
-    assert.ok(m.pages.length > 0, `${p}: no page`);
-    for (const page of m.pages) assert.ok(["accueil", "agenda"].includes(page), `${p}: page ${page}`);
-    assert.ok(validDay(m.fin), `${p}: fin ${m.fin}`);
-    if (m.début !== undefined) {
-      assert.ok(validDay(m.début), `${p}: début ${m.début}`);
-      assert.ok(m.début <= m.fin, `${p}: début after fin`);
-    }
-  }
-});
-
 test("the page of an article not published is not built", () => {
   // /operations/construire-le-site/non-publie
-  const unpublished = articles().filter((p) => !published(p));
-  const present = unpublished.map(address).filter((a) => existsSync(builtFile(a)));
+  for (const p of NOT_PUBLISHED) assert.ok(existsSync(join(CONTENU, p)), `${p}: not in the sample content`);
+  assert.ok(existsSync(builtFile("/actualites")), "no news page built");
+  const present = NOT_PUBLISHED.map(address).filter((a) => existsSync(builtFile(a)));
   assert.deepEqual(present, [], "pages of articles not published are built");
 });
-
-// The addresses of the articles in avant on `page` (accueil or agenda) today.
-const enAvant = (page) => articles().filter((p) => {
-  const m = miseEnAvant(p);
-  return m && m.pages.includes(page) && (m.début === undefined || m.début <= today) && today <= m.fin;
-}).map(address);
-
-const linksOf = (addr) => {
-  const file = builtFile(addr);
-  assert.ok(existsSync(file), `${addr}: not built`);
-  return new Set(hrefs(readFileSync(file, "utf8"))
-    .map((h) => h.split("#")[0].replace(/\?.*$/, "").replace(/(.)\/$/, "$1")));
-};
-
-test("the agenda links to every article in avant on it", () => {
-  // /ui/page-de-lagenda/en-avant
-  // /operations/construire-le-site/generee
-  const links = linksOf("/agenda");
-  const missing = enAvant("agenda").filter((a) => !links.has(a));
-  assert.deepEqual(missing, [], "articles in avant missing from the agenda");
-});
-

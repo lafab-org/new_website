@@ -152,6 +152,11 @@
   code du dépôt et de ce contenu, dans un autre dossier que `_site/`,
   puis lisent ses fichiers : ni serveur, ni navigateur, et sans lire
   les gabarits.
+- `npm run build` prend son contenu dans le dossier que désigne la
+  variable d'environnement `CONTENU`, et écrit le site dans celui que
+  désigne `SORTIE` ; sans elles, `src/` et `_site/`. Avec `SORTIE`, la
+  construction n'écrit pas la liste des évènements ignorés. Le fichier
+  `.env` ne les donne pas.
 - Le contenu d'exemple respecte les invariants de `model.md`, n'a
   aucune donnée personnelle, et réunit les cas que demandent les
   affirmations étiquetées.
