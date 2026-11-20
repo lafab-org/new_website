@@ -21,6 +21,8 @@
 - Données d'exemple TiBillet : remplacer `TIBILLET_FICHIER` par une simple activation des données d'exemple, sans citer le chemin du module, et une commande npm dédiée au développement local.
 - Favicon : une icône du site pour l'onglet du navigateur, tirée du logo ; aujourd'hui `/favicon.ico` répond 404.
 - Échec de construction : `_site/` vraiment inchangé, la copie des fichiers fixes (CSS, logos) comprise ; aujourd'hui elle a lieu avant l'échec.
+- Tags TiBillet mal orthographiés : bloquer la publication pour un mot-clé qui est une catégorie aux accents et majuscules près.
+- Notification des échecs : un éditeur invité sans compte GitHub pousse peut-être sous le compte de Pages CMS, et l'échec n'envoie alors de courriel à personne.
 
 ## Rapports à envoyer
 
