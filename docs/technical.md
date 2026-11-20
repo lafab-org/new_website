@@ -123,11 +123,12 @@
 - Il vérifie chaque invariant étiqueté de `model.md`, sur les pages
   énumérées sur `src/`, hors les fichiers des réalisations et ceux des
   articles non publiés le jour où il s'exécute, chacune lue dans son
-  fichier de `_site/`. Chaque vérification cite, en commentaire, le
-  chemin de l'invariant qu'elle vérifie. Les liens externes ne sont pas
+  fichier de `_site/`, et sur les fichiers de `src/`, ceux de données
+  compris. Chaque vérification cite, en commentaire, le chemin de
+  l'invariant qu'elle vérifie. Les liens externes ne sont pas
   vérifiés.
-- Il rapporte tous les problèmes ensemble, chacun avec le fichier
-  source de sa page et l'invariant en cause, et échoue s'il y en a un.
+- Il rapporte tous les problèmes ensemble, chacun avec son fichier
+  source et l'invariant en cause, et échoue s'il y en a un.
 - La construction écrit, dans un fichier hors de `_site/` que git
   ignore, les évènements de TiBillet qu'elle a lus sans en tirer de
   séance. `npm run verifier` les liste à la suite du rapport, chacun

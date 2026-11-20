@@ -48,8 +48,8 @@ Une image d'une page construite.
 Une catégorie d'évènements, selon leur domaine.
 
 - `identifiant: string`, ce que désigne la `catégorie` d'un évènement.
+  - [identifiant] Deux catégories n'ont pas le même.
 - `nom: string`, son nom affiché.
-  - Deux catégories n'ont pas le même identifiant (not testable).
 
 Les évènements d'une catégorie sont ceux dont la `catégorie` est son
 identifiant.
@@ -63,9 +63,9 @@ donne `accroche` et `couverture` sous leurs noms.
 
 - `page: /model/page`, sa page.
 - `nom court: string`, son nom dans le menu de l'en-tête.
-  - Non vide (not testable).
+  - [nom-court] Non vide.
 - `accroche: string`, une phrase d'appel.
-  - Non vide (not testable).
+  - [accroche] Non vide.
 - `couverture: optional /model/photo`, la photo qui le représente.
 
 ## Évènement
@@ -125,9 +125,9 @@ donne ses champs sous leurs noms, une photo par élément de `photos`.
 - `catégories: set of string`, les identifiants des catégories dont
   elle relève.
   - [categories] Chacun est l'identifiant d'une catégorie du site.
-  - Au moins une (not testable).
+  - [une-categorie] Au moins une.
 - `photos: list of /model/photo`, dans l'ordre où elles sont montrées.
-  - Au moins une (not testable).
+  - [une-photo] Au moins une.
 
 ## Article
 
@@ -179,10 +179,10 @@ Une photo d'une réalisation, d'un article, d'un atelier ou d'un
 
 - `fichier: string`, le chemin du fichier image depuis `src/`, avec un
   `/` initial, par exemple `/realisations/photos/etabli-1.jpg`.
-  - Un fichier du dossier de photos de sa réalisation, de son article,
-    de son atelier ou de son évènement (not testable).
+  - [fichier] Un fichier du dossier de photos de sa réalisation, de son
+    article, de son atelier ou de son évènement.
 - `description: string`, ce que montre la photo.
-  - Non vide (not testable).
+  - [description] Non vide.
 
 ## Bloc
 
@@ -198,7 +198,7 @@ Une partie de la page d'accueil, à sa place dans l'`accueil` du site.
 - [section] Un bloc `section`, et lui seul, a une `page` et un `titre` ;
   `page` est l'emplacement d'une page de `pages` qui n'est pas celle
   d'un article non publié, et qui a la section `titre`, sans lien
-  fragment (not testable).
+  fragment.
 
 ## Site
 
@@ -222,9 +222,9 @@ L'état : tout ce dont le site est fait.
   où le site les présente. Le fichier `src/_data/ateliers.json` les
   donne dans cet ordre, chacun par l'adresse de sa page et son nom
   court.
-  - Leurs pages sont les pages de `pages` dont le fichier Markdown est
-    directement dans `ateliers/`, chacune celle d'un seul atelier (not
-    testable).
+  - [ateliers] Leurs pages sont les pages de `pages` dont le fichier
+    Markdown est directement dans `ateliers/`, chacune celle d'un seul
+    atelier.
 - `evenements: set of /model/evenement`, tous les évènements. Leurs
   pages sont les pages de `pages` dont le fichier est directement dans
   `evenements/`, hors `evenements/index.md`, chacune celle d'un seul
@@ -240,13 +240,13 @@ L'état : tout ce dont le site est fait.
   leur ordre. Le front matter d'`index.md` les donne dans `blocs`,
   chacun avec ses champs sous leurs noms.
   - [blocs] Le front matter d'`index.md` a `blocs`, une liste dont
-    chaque élément a pour `type` l'un de ceux d'un bloc (not testable).
-  - [corps] Au plus un bloc `corps` (not testable).
+    chaque élément a pour `type` l'un de ceux d'un bloc.
+  - [corps] Au plus un bloc `corps`.
 - `jour: date`, le jour de sa construction, à Paris.
 - `tirage: list of /model/realisation`, les réalisations que montre un
   bloc `realisations`.
   - [tirage] Trois réalisations distinctes de `réalisations`, ou toutes
-    s'il y en a moins de trois (not testable).
+    s'il y en a moins de trois.
 - `séances: list of /model/seance`, les séances, par jour puis par
   heure de début ; l'ordre de deux séances au même début est libre.
 
