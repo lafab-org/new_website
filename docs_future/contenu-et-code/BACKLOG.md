@@ -28,7 +28,12 @@ pages montrent.
 
 ## Lessons
 
-- 2 : les tests qui citent un invariant de /model passent dans `npm run verifier` ; ceux qui restent ne lisent plus `src/`.
 - 3–6 : le contenu d'exemple ajoute un cas seulement quand une affirmation étiquetée le demande.
-- 2 : `scripts/verifier.mjs` est la référence des contrôles d'invariants ; la lecture du front matter de `tests/site.test.mjs` laisse passer une valeur vide.
+- 3–6 : un cas qui dépend du jour se fixe par des dates lointaines (2020, 2999), jamais par des dates proches.
+- 3–6 : les tests reconnaissent une image par son texte alternatif, non par son adresse, que la spécification laisse libre.
+- 3–7 : la couverture des invariants de /model se vérifie par `check.py tests tests scripts/verifier.mjs` ; sans argument, le script ne lit pas le vérificateur.
 - 7 : `/model/bloc/section`, `/model/site/blocs`, `/model/site/corps` et `/model/site/tirage` sont étiquetés mais `(not testable)` : le vérificateur ne les contrôle pas encore ; la construction échoue déjà sur les trois premiers.
+
+## For the human
+
+- Contrôle de couverture : dire dans `CLAUDE.md` de lancer `check.py tests tests scripts/verifier.mjs`, et signaler à Dev43 que `check.py tests` sans argument ignore un vérificateur hors de `tests/`.

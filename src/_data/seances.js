@@ -2,8 +2,8 @@
 // local file standing in for it. Only the number of reserved tickets is
 // kept from the reservations.
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
-import { pathToFileURL } from "node:url";
+import { join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const ACCES = ["libre", "sur-place", "réservation-gratuite", "réservation-payante"];
 const RESERVEES = [
@@ -14,8 +14,14 @@ const ANNULEE = "https://schema.org/EventCancelled";
 
 // Where the build writes the TiBillet events it read without drawing a
 // séance from them, for `npm run verifier` to list. Git ignores it.
+// With SORTIE, read before `.env` is, the build does not write it.
 const IGNORES = "evenements-ignores.json";
-const ecrireIgnores = (liste) => writeFileSync(IGNORES, JSON.stringify(liste, null, 2) + "\n");
+const SORTIE = process.env.SORTIE;
+const ecrireIgnores = (liste) => {
+  if (!SORTIE) writeFileSync(IGNORES, JSON.stringify(liste, null, 2) + "\n");
+};
+// The input folder of the build: the parent of this data folder.
+const ENTREE = fileURLToPath(new URL("..", import.meta.url));
 
 // The variables of `.env`, without overriding those already set.
 if (existsSync(".env")) process.loadEnvFile(".env");
@@ -98,9 +104,9 @@ export default async function () {
     return [];
   }
 
-  const categories = JSON.parse(readFileSync("src/_data/categories.json", "utf8"))
+  const categories = JSON.parse(readFileSync(join(ENTREE, "_data", "categories.json"), "utf8"))
     .map((c) => c.identifiant);
-  const pagesEvenement = readdirSync("src/evenements")
+  const pagesEvenement = readdirSync(join(ENTREE, "evenements"))
     .filter((f) => f.endsWith(".md") && f !== "index.md")
     .map((f) => f.replace(/\.md$/, ""));
 

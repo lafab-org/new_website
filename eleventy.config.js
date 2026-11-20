@@ -1,11 +1,36 @@
-import { cpSync, existsSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, rmSync, statSync } from "node:fs";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { RenderPlugin } from "@11ty/eleventy";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 // Where eleventy-img writes the reduced copies, kept between builds so
 // that a photo already reduced is not reduced again.
 const IMAGES_CACHE = ".cache/@11ty/img/";
+
+// The content folder and the output folder of the build, from the
+// environment only: read here, before a data file loads `.env`.
+const CONTENU = process.env.CONTENU;
+const SORTIE = process.env.SORTIE || "_site";
+
+// The input folder: src/ itself, or, with CONTENU, a temporary folder
+// holding the code of src/ (everything but the Markdown files and the
+// photos/ folders) and the content of CONTENU over it. It is under the
+// project, which Eleventy needs to apply the directory data files, in
+// .cache/, which git ignores.
+const estContenu = (chemin) => chemin.endsWith(".md") || chemin.split(sep).includes("photos");
+let ENTREE = "src";
+if (CONTENU) {
+  mkdirSync(".cache", { recursive: true });
+  ENTREE = relative(".", mkdtempSync(join(".cache", "entree-")));
+  cpSync("src", ENTREE, { recursive: true, filter: (f) => !estContenu(relative("src", f)) });
+  cpSync(CONTENU, ENTREE, { recursive: true });
+}
+
+// The templates whose file is directly in the folder `dossier` of the input.
+const dansDossier = (api, dossier) => api.getAllSorted().filter((p) =>
+  p.inputPath.endsWith(".md") && dirname(resolve(p.inputPath)) === resolve(ENTREE, dossier));
+// Whether a template is the file `chemin` of the input.
+const estFichier = (p, chemin) => resolve(p.inputPath) === resolve(ENTREE, chemin);
 
 const byTitle = (a, b) => a.data.title.localeCompare(b.data.title, "fr");
 
@@ -47,9 +72,15 @@ const sectionDe = (corps, titre) => {
 
 export default function (eleventyConfig) {
   eleventyConfig.addPlugin(RenderPlugin);
-  eleventyConfig.addPassthroughCopy("src/css");
-  eleventyConfig.addPassthroughCopy("src/logo.svg");
-  eleventyConfig.addPassthroughCopy("src/couverture-a-venir.svg");
+  for (const f of ["css", "logo.svg", "couverture-a-venir.svg"]) {
+    eleventyConfig.addPassthroughCopy({ [join(ENTREE, f)]: f });
+  }
+  // The temporary input folder: git ignores it, so Eleventy must not
+  // follow .gitignore; it is removed when the build ends, failed or not.
+  if (CONTENU) {
+    eleventyConfig.setUseGitIgnore(false);
+    process.on("exit", () => rmSync(ENTREE, { recursive: true, force: true }));
+  }
   // Each <img> of the built pages becomes a <picture> of reduced copies,
   // served under /img/: written to the cache, then copied into _site/img/
   // after each build (see eleventy.after below).
@@ -92,12 +123,12 @@ export default function (eleventyConfig) {
   const jourIso = (d) => (d instanceof Date ? d.toISOString().slice(0, 10) : String(d));
   // The réalisations, most recent first.
   eleventyConfig.addCollection("realisations", (api) =>
-    api.getFilteredByGlob("src/realisations/*.md")
+    dansDossier(api, "realisations")
       .sort((a, b) => b.data.date - a.data.date));
   // Three réalisations drawn at random at each build, or all of them if
   // there are fewer.
   eleventyConfig.addCollection("tirage", (api) => {
-    const restantes = api.getFilteredByGlob("src/realisations/*.md");
+    const restantes = dansDossier(api, "realisations");
     const tirage = [];
     while (tirage.length < 3 && restantes.length > 0) {
       tirage.push(...restantes.splice(Math.floor(Math.random() * restantes.length), 1));
@@ -112,7 +143,7 @@ export default function (eleventyConfig) {
   });
   // The published articles, most recent first.
   eleventyConfig.addCollection("articles", (api) =>
-    api.getFilteredByGlob("src/actualites/*.md")
+    dansDossier(api, "actualites")
       .filter((a) => a.data.publie)
       .sort((a, b) => b.data.dateArticle.localeCompare(a.data.dateArticle)));
   // The articles in avant on `page` (accueil or agenda) on the day of the build.
@@ -126,7 +157,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("champ", function (name) {
     return this.ctx[name];
   });
-  const events = (api) => api.getFilteredByGlob("src/evenements/*.md").sort(byTitle);
+  const events = (api) => dansDossier(api, "evenements").sort(byTitle);
   // A value of the front matter as a list: a single value gives a list of
   // one, none an empty list.
   const asList = (v) => (v == null ? [] : [].concat(v));
@@ -156,7 +187,7 @@ export default function (eleventyConfig) {
   // changed (the passthrough copies are made before).
   eleventyConfig.addCollection("blocsAccueil", (api) => {
     const pages = api.getAll();
-    const accueil = pages.find((p) => p.inputPath === "./src/index.md");
+    const accueil = pages.find((p) => estFichier(p, "index.md"));
     if (!accueil) return [];
     const erreur = (m) => new Error(`index.md, blocs : ${m}`);
     const blocs = accueil.data.blocs;
@@ -177,7 +208,7 @@ export default function (eleventyConfig) {
       }
       // Pages CMS may store the path from the root of the repository.
       const chemin = b.page.replace(/^\.?\/?(src\/)?/, "");
-      const page = pages.find((p) => p.inputPath === `./src/${chemin}`);
+      const page = pages.find((p) => estFichier(p, chemin));
       if (!page || !page.url || page.data.publie === false) {
         throw erreur(`le bloc ${i + 1} reprend une section de « ${b.page} », qui n'est pas une page publiée du site.`);
       }
@@ -244,7 +275,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("nomCategorie", (id, categories) =>
     (categories ?? []).find((c) => c.identifiant === id)?.nom ?? id);
   return {
-    dir: { input: "src", output: "_site", includes: "_includes" },
+    dir: { input: ENTREE, output: SORTIE, includes: "_includes" },
     markdownTemplateEngine: false,
     htmlTemplateEngine: "njk",
   };
