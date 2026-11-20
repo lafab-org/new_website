@@ -1,12 +1,14 @@
 ---
-title: "Soirée portes ouvertes"
-accroche: "Venez découvrir La Fabrique !"
-rendez-vous: "tous les jeudis soirs"
-horaire: "19h - 20h"
-catégorie: "association"
-prix: "gratuite et ouverte à tous"
+title: Soirée portes ouvertes
+accroche: Venez découvrir La Fabrique !
+rendez-vous: tous les jeudis soirs
+horaire: 19h - 20h
+catégorie: association
+prix: gratuite et ouverte à tous
+couverture:
+  fichier: /evenements/photos/asso-porte.jpg
+  description: Porte d'entrée rouge à deux battants
 ---
-
 ## Le principe
 
 Chaque jeudi soir, La Fabrique ouvre ses portes pour que vous
