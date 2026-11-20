@@ -149,8 +149,8 @@ valeur :
 éditoriaux sont dans /contents/page-de-lagenda.
 
 [ordre] Après le corps de la page, dans cet ordre :
-- La section /ui/articles-en-avant, pour les articles en avant sur la
-  page de l'agenda (not testable).
+- [articles-en-avant] La section /ui/articles-en-avant, pour les
+  articles en avant sur la page de l'agenda.
 - [en-avant] Un lien vers la page de chaque article en avant sur la
   page de l'agenda.
 - [seances] Le nom de chaque séance du site.
@@ -191,8 +191,8 @@ titre, comme dans la section `Les évènements` de /ui/page-datelier.
 /operations/construire-le-site/generee la rend. Ses objectifs
 éditoriaux sont dans /contents/page-des-realisations.
 
-Après le corps de la page, chaque réalisation du site, dans l'ordre des
-`réalisations` du site, dans cet ordre (not testable) :
+[realisations] Après le corps de la page, chaque réalisation du site,
+dans l'ordre des `réalisations` du site, dans cet ordre :
 - ses photos, dans leur ordre, chacune avec sa description pour texte
   alternatif ;
 - `<nombre> photos`, si elle en a plus d'une ;
@@ -208,8 +208,8 @@ Après le corps de la page, chaque réalisation du site, dans l'ordre des
 
 Après le corps de la page :
 - [articles] Un lien vers la page de chaque article publié du site.
-- Chaque article publié du site, dans l'ordre des `articles` du site,
-  dans cet ordre (not testable) :
+- [contenu] Chaque article publié du site, dans l'ordre des `articles`
+  du site, dans cet ordre :
   - sa couverture, s'il en a une, avec sa description pour texte
     alternatif ;
   - son titre, en sous-titre, en lien vers sa page ;
@@ -224,18 +224,17 @@ Après le corps de la page :
 article publié, telle que /operations/construire-le-site/generee la rend. Ses
 objectifs éditoriaux sont dans /contents/page-darticle.
 
-Entre le titre et le corps, sa date, comme sur
+[ordre] Entre le titre et le corps, sa date, comme sur
 /ui/page-des-actualites, puis sa couverture s'il en a une, avec sa
 description pour texte alternatif ; après le corps, un lien
-`Toutes les actualités` vers `/actualites` (not testable).
+`Toutes les actualités` vers `/actualites`.
 
 ## Articles en avant
 
-Une section, montrée par une page pour une liste d'articles (not
-testable) :
-- sans article, rien ;
-- sinon, chaque article de la liste, dans son ordre, avec le même
-  contenu que sur /ui/page-des-actualites.
+Une section, montrée par une page pour une liste d'articles :
+- sans article, rien (not testable) ;
+- [articles] sinon, chaque article de la liste, dans son ordre, avec le
+  même contenu que sur /ui/page-des-actualites.
 
 ## Prochaines séances
 

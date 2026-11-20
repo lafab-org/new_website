@@ -13,9 +13,7 @@ pages montrent.
 3. Pages communes done
 4. Ateliers et association done
 5. Agenda et évènements done
-6. Actualités et réalisations : `tests-only`, étiqueter ce que les
-   tests peuvent observer de /ui/page-des-realisations,
-   /ui/page-des-actualites, /ui/page-darticle et /ui/articles-en-avant.
+6. Actualités et réalisations done
 7. Invariants du contenu : `code-only`, étiqueter les invariants de
    `model.md` que `npm run verifier` peut vérifier, et les lui faire
    vérifier.
