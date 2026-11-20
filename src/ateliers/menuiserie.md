@@ -4,6 +4,9 @@ accroche: Scier, raboter, tourner et assembler le bois, sur des machines
   professionnelles.
 catégories:
   - bois
+couverture:
+  fichier: /ateliers/photos/bois-atelier-2016.jpg
+  description: Vue d'un atelier de menuiserie dans une travée blanche
 ---
 La menuiserie occupe les travées T2 et T3 de La Fabrique. On y scie, on y
 rabote, on y tourne et on y assemble le bois, pour réparer, fabriquer ou
@@ -17,12 +20,12 @@ apprendre.
 ## Le matériel
 
 - en T2 : la scie à format, la dégauchisseuse, la raboteuse, la scie à
-  ruban, la scie à panneaux verticale, la toupie ;
+ruban, la scie à panneaux verticale, la toupie ;
 - en T3 : deux tours à bois, des scies radiales, la perceuse à colonne,
-  les établis, le stockage du bois ;
+les établis, le stockage du bois ;
 - l'électroportatif : perceuses-visseuses, scie circulaire plongeante,
-  scie sauteuse, ponceuse orbitale, défonceuse, machine à lamelles
-  (Lamello).
+scie sauteuse, ponceuse orbitale, défonceuse, machine à lamelles
+(Lamello).
 
 ## Les règles d'usage
 
@@ -32,7 +35,7 @@ Certaines machines exigent une initiation avant usage :
 
 - la scie à format et la scie à ruban : l'initiation scier, débiter ;
 - la dégauchisseuse et la raboteuse : l'initiation travailler le bois
-  massif ;
+massif ;
 - les tours : l'initiation tournage sur bois.
 
 La toupie n'est accessible que pendant les accompagnements.
@@ -66,3 +69,4 @@ Pour aider à la menuiserie, vous pouvez :
 - venir un jeudi soir ;
 - venir à la réunion mensuelle du conseil d'administration ;
 - écrire à [contact@lafab.org](mailto:contact@lafab.org).
+
