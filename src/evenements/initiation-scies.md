@@ -1,12 +1,14 @@
 ---
 title: "Initiation : débiter du bois, les scies"
-accroche: "Initiation obligatoire pour utiliser la scie à format en autonomie."
-rendez-vous: "date variable"
-horaire: "18h45 - 21h15"
-catégorie: "bois"
-prix: "30 €"
+accroche: Initiation obligatoire pour utiliser la scie à format en autonomie.
+rendez-vous: date variable
+horaire: 18h45 - 21h15
+catégorie: bois
+prix: 30 €
+couverture:
+  fichier: /evenements/photos/bois-initiation-scie.jpeg
+  description: Deux personnes utilisant une scie à format
 ---
-
 ## Le principe
 
 Cette initiation apprend à utiliser en sécurité les scies de l'atelier
@@ -24,7 +26,7 @@ outils à main ou électroportatifs est un plus.
 - les cheveux attachés ;
 - une protection auditive : casque anti-bruit ou bouchons d'oreilles ;
 - des espèces, pour adhérer à l'association sur place si vous n'êtes
-  pas encore à jour (10 € pour un an).
+pas encore à jour (10 € pour un an).
 
 ## Annulation
 
