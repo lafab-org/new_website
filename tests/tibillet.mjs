@@ -123,6 +123,89 @@ export default {
         "keywords": [
           "privé"
         ]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000008",
+        "name": "Couture créative",
+        "startDate": at(4, "10:00"),
+        "endDate": at(4, "12:00"),
+        "url": "https://tibillet.example/event/couture-creative/",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": [
+          "matériaux-souples",
+          "textile",
+          "club-retouches"
+        ]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000009",
+        "name": "Initiation menuiserie",
+        "startDate": at(10, "14:00"),
+        "endDate": at(10, "16:30"),
+        "url": "https://tibillet.example/event/initiation-menuiserie/",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": [
+          "bois",
+          "sur-place"
+        ]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000010",
+        "name": "Tournage sur bois",
+        "startDate": at(12, "09:00"),
+        "endDate": at(12, "12:00"),
+        "url": "https://tibillet.example/event/tournage-bois/",
+        "maximumAttendeeCapacity": 3,
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": [
+          "bois",
+          "réservation-payante",
+          "libre"
+        ]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000011",
+        "name": "Affûtage des outils",
+        "startDate": at(14, "18:30"),
+        "endDate": at(14, "20:00"),
+        "url": "https://tibillet.example/event/affutage-outils/",
+        "maximumAttendeeCapacity": 0,
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": [
+          "bois",
+          "réservation-gratuite"
+        ]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000012",
+        "name": "Fabrication de nichoirs",
+        "startDate": at(16, "10:00"),
+        "url": "https://tibillet.example/event/fabrication-nichoirs/",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": [
+          "métal",
+          "bois"
+        ]
+      },
+      {
+        "@type": "Event",
+        "identifier": "00000000-0000-4000-8000-000000000013",
+        "name": "Club retouches du soir",
+        "startDate": at(9, "18:00"),
+        "endDate": at(9, "20:00"),
+        "url": "https://tibillet.example/event/club-retouches-soir/",
+        "maximumAttendeeCapacity": 8,
+        "eventStatus": "https://schema.org/EventScheduled",
+        "keywords": [
+          "matériaux-souples",
+          "club-retouches",
+          "réservation-gratuite"
+        ]
       }
     ]
   },
@@ -221,6 +304,42 @@ export default {
       "results": []
     },
     "00000000-0000-4000-8000-000000000007": {
+      "results": []
+    },
+    "00000000-0000-4000-8000-000000000008": {
+      "results": []
+    },
+    "00000000-0000-4000-8000-000000000009": {
+      "results": []
+    },
+    "00000000-0000-4000-8000-000000000010": {
+      "results": [
+        {
+          "@type": "Reservation",
+          "identifier": "10000000-0000-4000-8000-000000000005",
+          "reservationFor": {
+            "@type": "Event",
+            "identifier": "00000000-0000-4000-8000-000000000010",
+            "name": "Tournage sur bois"
+          },
+          "reservationStatus": "https://schema.org/ReservationConfirmed",
+          "reservedTicket": [
+            {
+              "@type": "Ticket",
+              "identifier": "20000000-0000-4000-8000-000000000006",
+              "ticketQuantity": 2
+            }
+          ]
+        }
+      ]
+    },
+    "00000000-0000-4000-8000-000000000011": {
+      "results": []
+    },
+    "00000000-0000-4000-8000-000000000012": {
+      "results": []
+    },
+    "00000000-0000-4000-8000-000000000013": {
       "results": []
     }
   }

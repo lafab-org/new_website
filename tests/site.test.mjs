@@ -93,14 +93,15 @@ const images = (html) => [...html.matchAll(/<img\s[^>]*>/gi)].map((m) => {
 
 // The reading order of an HTML fragment: each run of text, and each
 // image with its alternative text, with the address of the link it is
-// in, if any.
+// in, if any; a run of text in a heading below <h1> is marked `heading`.
 function items(html) {
   const out = [];
   let href;
+  let heading = false;
   for (const m of html.matchAll(/<(\/?)([a-z][a-z0-9]*)\b([^>]*)>|<!--[\s\S]*?-->|([^<]+)/gi)) {
     if (m[4] !== undefined) {
       const t = text(m[4]);
-      if (t) out.push({ text: t, href });
+      if (t) out.push(heading ? { text: t, href, heading } : { text: t, href });
       continue;
     }
     if (!m[2]) continue;
@@ -109,6 +110,7 @@ function items(html) {
       return a ? text(a[1] ?? a[2] ?? a[3]) : undefined;
     };
     const tag = m[2].toLowerCase();
+    if (/^h[2-6]$/.test(tag)) heading = !m[1];
     if (tag === "a") href = m[1] ? undefined : decodeURI(attr("href") ?? "");
     else if (tag === "img" && !m[1]) out.push({ alt: attr("alt"), href });
   }
@@ -137,13 +139,50 @@ const plusDays = (day, n) => {
   return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10);
 };
 
-// The séances of the sample module, by name and day in Paris.
+// The day (AAAA-MM-JJ), hour and minute of a date-time, in Paris.
+const paris = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit",
+  hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+});
+const inParis = (iso) => {
+  const p = Object.fromEntries(paris.formatToParts(new Date(iso)).map((x) => [x.type, x.value]));
+  return { day: `${p.year}-${p.month}-${p.day}`, hour: Number(p.hour), minute: Number(p.minute) };
+};
+const ACCES = ["libre", "sur-place", "réservation-gratuite", "réservation-payante"];
+const RESERVED = ["https://schema.org/ReservationConfirmed", "https://schema.org/ReservationPending"];
+// The sample module, as TiBillet would answer.
+const tibillet = async () => (await import(pathToFileURL(TIBILLET).href)).default;
+
+// The séances the sample module gives, in the order of the séances of the
+// site: by day, then by start. Each with its name, day, start, end if any,
+// category (identifier and name), event (its page under tests/contenu/)
+// if any, access if any, reservation address, places left if it has a
+// jauge, and whether it is cancelled.
 async function seances() {
   const categories = JSON.parse(readFileSync(join("src", "_data", "categories.json"), "utf8"));
-  const identifiers = categories.map((c) => c.identifiant);
-  const events = (await import(pathToFileURL(TIBILLET).href)).default.events.results;
-  return events.filter((e) => (e.keywords ?? []).some((k) => identifiers.includes(k)))
-    .map((e) => ({ name: e.name, day: e.startDate.slice(0, 10) }));
+  const { events, reservations } = await tibillet();
+  const eventFiles = markdown("evenements").filter(isEvent);
+  return events.results.flatMap((e) => {
+    const keywords = e.keywords ?? [];
+    const category = categories.find((c) => keywords.includes(c.identifiant));
+    if (!category) return [];
+    const start = inParis(e.startDate);
+    const end = e.endDate ? inParis(e.endDate) : undefined;
+    const event = keywords.map((k) => `evenements/${k}.md`).find((f) => eventFiles.includes(f));
+    const jauge = e.maximumAttendeeCapacity > 0 ? e.maximumAttendeeCapacity : undefined;
+    const reserved = (reservations[e.identifier]?.results ?? [])
+      .filter((r) => RESERVED.includes(r.reservationStatus))
+      .flatMap((r) => r.reservedTicket ?? []).reduce((n, t) => n + t.ticketQuantity, 0);
+    return [{
+      name: e.name, day: start.day, start,
+      end: end?.day === start.day ? end : undefined,
+      category: category.identifiant, categoryName: category.nom,
+      event, access: keywords.find((k) => ACCES.includes(k)), url: e.url,
+      left: jauge === undefined ? undefined : jauge - reserved,
+      cancelled: e.eventStatus === "https://schema.org/EventCancelled",
+    }];
+  }).sort((a, b) => (a.day + String(a.start.hour).padStart(2, "0") + String(a.start.minute).padStart(2, "0"))
+    .localeCompare(b.day + String(b.start.hour).padStart(2, "0") + String(b.start.minute).padStart(2, "0")));
 }
 
 // The built pages: all sample pages but the articles not published.
@@ -481,12 +520,59 @@ const bodyEnd = (page, list) => {
   return k;
 };
 
-test("the page of the association shows, after its body, where to find it, then its events", () => {
+
+// The names of all the séances of the sample module.
+const seanceNames = async () => (await seances()).map((s) => s.name);
+// Checks that `list` groups the séances `expected` by day, each day under
+// a subtitle showing its day of the month, in their order, and returns
+// each séance with its items. Outside an event page, a séance starts
+// with an image; on one, the sample has at most one séance a day.
+function checkDays(where, list, expected, all, eventPage = false) {
+  const days = [...new Set(expected.map((s) => s.day))];
+  const heads = list.flatMap((i, n) => (i.heading && !all.includes(i.text) ? [n] : []));
+  assert.equal(heads.length, days.length, `${where}: one subtitle per day`);
+  assert.deepEqual(list.slice(0, heads[0]).filter((i) => all.includes(i.text)), [], `${where}: séance before the first day`);
+  return days.flatMap((day, j) => {
+    const dayNumber = Number(day.slice(8));
+    assert.match(list[heads[j]].text, new RegExp(`(?<!\\d)0?${dayNumber}(?!\\d)`), `${where}: subtitle of ${day}`);
+    const region = list.slice(heads[j] + 1, heads[j + 1] ?? list.length);
+    const ofDay = expected.filter((s) => s.day === day);
+    assert.deepEqual(region.filter((i) => all.includes(i.text)).map((i) => i.text), ofDay.map((s) => s.name),
+      `${where}: séances of ${day}, in order`);
+    if (eventPage) {
+      assert.equal(ofDay.length, 1, `${where}: the sample has one séance a day on an event page`);
+      return [{ seance: ofDay[0], items: region }];
+    }
+    assert.ok(region[0]?.alt !== undefined, `${where}: séance of ${day} not starting with an image`);
+    const starts = region.flatMap((i, n) => (i.alt !== undefined ? [n] : []));
+    assert.equal(starts.length, ofDay.length, `${where}: one image per séance on ${day}`);
+    return ofDay.map((seance, n) => ({ seance, items: region.slice(starts[n], starts[n + 1]) }));
+  });
+}
+// Checks the section Prochaines séances of a page, after the item `from`
+// of its reading order, for the séances `expected`; returns where it
+// starts and where it ends, at its link to the agenda.
+function checkNext(where, list, from, expected, all, eventPage = false) {
+  const k = list.findIndex((i, n) => n >= from && i.text === "Prochaines séances");
+  assert.ok(k >= 0, `${where}: no section Prochaines séances`);
+  const end = list.findIndex((i, n) => n > k && i.text === "Voir l'agenda" && i.href === "/agenda");
+  assert.ok(end >= 0, `${where}: no link Voir l'agenda after Prochaines séances`);
+  checkDays(where, list.slice(k + 1, end), expected.slice(0, 5), all, eventPage);
+  return [k, end];
+}
+// The séances of a page that shows those of its catégories.
+const seancesOf = (page, all) => all.filter((s) => listOf(page, "catégories").includes(s.category));
+
+test("the page of the association shows, after its body, where to find it, its next séances, then its events", async () => {
   // /ui/page-de-lassociation/ordre
   // /ui/page-de-lassociation/lieu
+  // /ui/page-de-lassociation/prochaines-seances
   // /ui/page-de-lassociation/evenements
   const page = "association.md";
   assert.ok(eventsOf(page).length > 0, `${page}: no event in the sample content`);
+  const all = await seances();
+  const mine = seancesOf(page, all);
+  assert.ok(mine.length > 0, `${page}: no séance in the sample module`);
   const { lieu } = JSON.parse(readFileSync(join("src", "_data", "site.json"), "utf8"));
   const list = afterTitleOf(page);
   const body = bodyEnd(page, list);
@@ -494,14 +580,21 @@ test("the page of the association shows, after its body, where to find it, then 
   assert.ok(k >= 0, `${page}: no subtitle Où nous trouver after its body`);
   const l = list.findIndex((i, n) => n > k && i.text === lieu);
   assert.ok(l >= 0, `${page}: no lieu after Où nous trouver`);
-  checkEvents(page, list, l + 1);
+  const [, end] = checkNext(page, list, l + 1, mine, all.map((s) => s.name));
+  checkEvents(page, list, end + 1);
 });
 
-test("the page of an atelier shows its events after its body, sorted by title, or nothing without", () => {
+test("the page of an atelier shows its next séances after its body, then its events, sorted by title, or nothing without", async () => {
   // /ui/page-datelier/ordre
+  // /ui/page-datelier/prochaines-seances
   // /ui/page-datelier/evenements
   // /ui/page-datelier/sans-evenement
+  // /ui/prochaines-seances/seances
   const ateliers = markdown("ateliers");
+  const all = await seances();
+  const names = all.map((s) => s.name);
+  assert.ok(ateliers.every((p) => seancesOf(p, all).length > 0), "an atelier without séance in the sample module");
+  assert.ok(ateliers.some((p) => seancesOf(p, all).length > 5), "no atelier with more than five séances");
   const events = ateliers.map(eventsOf);
   assert.ok(events.some((e) => e.length === 0), "no atelier without an event");
   const many = events.filter((e) => e.length > 1);
@@ -514,8 +607,269 @@ test("the page of an atelier shows its events after its body, sorted by title, o
   for (const page of ateliers) {
     const list = afterTitleOf(page);
     const body = bodyEnd(page, list);
+    const [, end] = checkNext(page, list, body + 1, seancesOf(page, all), names);
     if (eventsOf(page).length === 0) {
       assert.ok(!list.some((i) => i.text === "Les évènements"), `${page}: section Les évènements without an event`);
-    } else checkEvents(page, list, body + 1);
+    } else checkEvents(page, list, end + 1);
   }
+});
+
+
+// The reading order of the agenda after its articles in avant: its séances.
+const agendaSeances = () => {
+  const list = afterTitleOf("agenda.md");
+  const avant = new Set(IN_AVANT_AGENDA.map(address));
+  const last = list.findLastIndex((i) => avant.has(i.href));
+  assert.ok(last >= 0, "agenda: no article in avant");
+  return { list, last };
+};
+
+test("the agenda shows its articles in avant, then its séances grouped by day, in their order", async () => {
+  // /ui/page-de-lagenda/ordre
+  // /ui/page-de-lagenda/jours
+  const all = await seances();
+  const names = all.map((s) => s.name);
+  assert.ok(new Set(all.map((s) => s.day)).size < all.length, "no day with several séances in the sample module");
+  const { list, last } = agendaSeances();
+  assert.ok(list.slice(0, last + 1).every((i) => !names.includes(i.text)), "agenda: séance before an article in avant");
+  checkDays("agenda", list.slice(last + 1), all, names);
+});
+
+test("the home page groups the séances of the next 7 days by day", async () => {
+  // /ui/page-daccueil/jours
+  const all = await seances();
+  const last = plusDays(today, 6);
+  const inWeek = all.filter((s) => s.day >= today && s.day <= last);
+  assert.ok(new Set(inWeek.map((s) => s.day)).size < inWeek.length, "no day with several séances in the 7 days");
+  const list = region("semaine");
+  const link = list.findIndex((i) => i.text === "Tout l'agenda" && i.href === "/agenda");
+  assert.ok(link > 0, "home page: no link to the agenda in the semaine block");
+  checkDays("home page", list.slice(1, link), inWeek, all.map((s) => s.name));
+});
+
+// Whether `shown` holds the strings `expected`, in this order.
+const textsInOrder = (shown, expected) => {
+  let from = 0;
+  for (const e of expected) {
+    const k = shown.indexOf(e, from);
+    if (k < 0) return false;
+    from = k + e.length;
+  }
+  return true;
+};
+// The numbers a time shows, without zeros: `9:30` and `9 h 30` give
+// [9, 30], `14:00` and `14 h` give [14].
+const timeNumbers = (...times) => times.flatMap((t) => [t.hour, t.minute]).filter((n) => n !== 0);
+
+// Checks how a séance shows, from its items, outside an event page.
+function checkSeance(where, items, s) {
+  const at = `${where}: ${s.name}`;
+  const k = items.findIndex((i) => i.text === s.name);
+  const cover = s.event ? descriptions(s.event, "couverture")[0] : undefined;
+  assert.equal(items[0].alt, cover ?? PLACEHOLDER, `${at}: cover`);
+  const head = items.slice(1, k).filter((i) => i.text).map((i) => i.text).join(" ");
+  assert.ok(head.endsWith(s.categoryName), `${at}: name of its category before its name`);
+  const time = head.slice(0, -s.categoryName.length);
+  const numbers = (time.match(/\d+/g) ?? []).map(Number).filter((n) => n !== 0);
+  assert.deepEqual(numbers, timeNumbers(s.start, ...(s.end ? [s.end] : [])), `${at}: start, then end`);
+  assert.equal(items[k].href, s.event ? address(s.event) : undefined, `${at}: link of its name`);
+  const after = items.slice(k + 1);
+  const shown = after.filter((i) => i.text).map((i) => i.text).join(" ");
+  const link = (label) => assert.ok(after.some((i) => i.text === label && i.href === designated(s.url)),
+    `${at}: link ${label} to its reservation`);
+  // The texts of the other cases of the participation, and its links.
+  const others = (...but) => ["Annulée", "Accès libre", "Paiement sur place", "Réservation gratuite",
+    "Réservation payante", "place restante", "places restantes", "Complet"].filter((t) => !but.includes(t));
+  const noLink = () => assert.ok(!after.some((i) => i.text === "Réserver" || i.text === "Voir sur TiBillet"),
+    `${at}: link to its reservation`);
+  const only = (label) => {
+    assert.ok(shown.includes(label), `${at}: ${label}`);
+    for (const t of others(label)) assert.ok(!shown.includes(t), `${at}: ${t} with ${label}`);
+    noLink();
+  };
+  if (s.cancelled) return only("Annulée");
+  if (s.access === "libre") return only("Accès libre");
+  if (s.access === "sur-place") return only("Paiement sur place");
+  const label = { "réservation-gratuite": "Réservation gratuite", "réservation-payante": "Réservation payante" }[s.access];
+  if (!label) {
+    assert.ok(!/Réservation (gratuite|payante)/.test(shown), `${at}: kind of reservation without an access`);
+  }
+  const full = s.left !== undefined && s.left <= 0;
+  if (s.left === undefined) {
+    for (const t of ["place restante", "places restantes", "Complet"]) assert.ok(!shown.includes(t), `${at}: ${t} without a jauge`);
+  }
+  if (full) noLink();
+  const places = s.left === undefined ? [] : [full ? "Complet" : s.left === 1 ? "1 place restante" : `${s.left} places restantes`];
+  const linkText = label ? "Réserver" : "Voir sur TiBillet";
+  assert.ok(textsInOrder(shown, [...(label ? [label] : []), ...places, ...(full ? [] : [linkText])]),
+    `${at}: participation`);
+  if (!full) link(linkText);
+}
+
+test("each séance of the agenda shows its cover, times, category, name and participation, as TiBillet gives it", async () => {
+  // /operations/construire-le-site/seance
+  // /ui/seance/ordre
+  // /ui/seance/couverture
+  // /ui/seance/horaire
+  // /ui/seance/categorie
+  // /ui/seance/nom
+  // /ui/seance/annulee
+  // /ui/seance/libre
+  // /ui/seance/sur-place
+  // /ui/seance/reservation
+  const { events } = await tibillet();
+  const categories = JSON.parse(readFileSync(join("src", "_data", "categories.json"), "utf8")).map((c) => c.identifiant);
+  const all = await seances();
+  const names = all.map((s) => s.name);
+  // The sample module has the cases the séances need.
+  const kw = events.results.map((e) => e.keywords ?? []);
+  const ignored = events.results.filter((e, n) => !kw[n].some((k) => categories.includes(k)));
+  assert.ok(ignored.length > 0, "no event without a category");
+  assert.ok(kw.some((k) => {
+    const c = k.filter((x) => categories.includes(x));
+    return c.length > 1 && categories.indexOf(c[0]) > categories.indexOf(c[1]);
+  }), "no event whose categories come in another order than the site's");
+  assert.ok(kw.some((k) => k.filter((x) => ACCES.includes(x)).length > 1), "no event with two accesses");
+  assert.ok(kw.some((k) => k.filter((x) => isEvent(`evenements/${x}.md`) && existsSync(join(CONTENU, `evenements/${x}.md`))).length > 1),
+    "no event naming two event pages");
+  const has = (f, what) => assert.ok(all.some(f), `no séance ${what}`);
+  has((s) => s.event && descriptions(s.event, "couverture").length, "of an event with a cover");
+  has((s) => s.event && !descriptions(s.event, "couverture").length, "of an event without a cover");
+  has((s) => !s.event, "without an event");
+  has((s) => s.end, "with an end");
+  has((s) => !s.end, "without an end");
+  has((s) => s.start.minute !== 0, "starting at a time with minutes");
+  has((s) => s.cancelled, "cancelled");
+  for (const a of ACCES) has((s) => !s.cancelled && s.access === a, `with access ${a}`);
+  has((s) => !s.cancelled && !s.access, "without access");
+  has((s) => s.access?.startsWith("réservation") && s.left === undefined, "on reservation without a jauge");
+  has((s) => s.left === 1, "with one place left");
+  has((s) => s.left > 1, "with several places left");
+  has((s) => s.left <= 0, "full");
+  assert.ok(events.results.some((e) => e.endDate && inParis(e.endDate).day !== inParis(e.startDate).day),
+    "no event ending another day");
+  const { list, last } = agendaSeances();
+  for (const e of ignored) assert.ok(!list.some((i) => i.text === e.name), `agenda: ignored event ${e.name} shown`);
+  for (const { seance, items } of checkDays("agenda", list.slice(last + 1), all, names)) {
+    checkSeance("agenda", items, seance);
+  }
+});
+
+test("an event page shows its cover, its accroche, its practical information, then its next séances", async () => {
+  // /ui/page-devenement/couverture
+  // /ui/page-devenement/informations
+  // /ui/page-devenement/prochaines-seances
+  // /ui/prochaines-seances/sans-seance
+  // /ui/seance/couverture
+  const { lieu } = JSON.parse(readFileSync(join("src", "_data", "site.json"), "utf8"));
+  const all = await seances();
+  const names = all.map((s) => s.name);
+  const pages = markdown("evenements").filter(isEvent);
+  const covers = pages.map((p) => descriptions(p, "couverture").length > 0);
+  assert.ok(covers.includes(true) && covers.includes(false), "no event with a cover and one without");
+  assert.ok(pages.some((p) => frontMatter(p, "accroche")) && pages.some((p) => !frontMatter(p, "accroche")),
+    "no event with an accroche and one without");
+  const counts = pages.map((p) => all.filter((s) => s.event === p).length);
+  assert.ok(counts.includes(0) && counts.some((c) => c > 0), "no event with séances and one without");
+  for (const page of pages) {
+    const list = afterTitleOf(page);
+    const body = list.findIndex((i) => i.text === text(firstLine(page)));
+    assert.ok(body >= 0, `${page}: no body after its title`);
+    const [cover] = descriptions(page, "couverture");
+    if (!cover) assert.ok(!list.slice(0, body).some((i) => i.alt !== undefined), `${page}: image without a cover`);
+    const accroche = frontMatter(page, "accroche");
+    const infos = [
+      ["Rendez-vous", frontMatter(page, "rendez-vous")],
+      ["Horaire", frontMatter(page, "horaire")],
+      ["Lieu", lieu],
+      ["Activité", frontMatter(page, "prix")],
+    ];
+    const expected = [
+      ...(cover ? [{ alt: cover }] : []),
+      ...(accroche ? [{ text: accroche }] : []),
+      ...infos.flat().map((t) => ({ text: t })),
+    ];
+    assert.ok(holdsInOrder(list.slice(0, body), expected), `${page}: cover, accroche, then practical information`);
+    const html = built[page];
+    for (const [label] of infos) {
+      assert.match(html, new RegExp(`<li\\b[^>]*>(?:(?!</li>)[\\s\\S])*${label}`), `${page}: ${label} not in a list`);
+    }
+    const prix = list.findIndex((i) => i.text === infos[3][1]);
+    const mine = all.filter((s) => s.event === page);
+    if (mine.length === 0) {
+      assert.ok(!list.some((i) => i.text === "Prochaines séances"), `${page}: section Prochaines séances without a séance`);
+    } else {
+      const [k, end] = checkNext(page, list, prix + 1, mine, names, true);
+      // /ui/seance/couverture: no cover in a séance on an event page.
+      assert.ok(!list.slice(k, end).some((i) => i.alt !== undefined), `${page}: image in a séance`);
+    }
+  }
+});
+
+test("the events page shows a group per category with events, in order, each with its events sorted by title", () => {
+  // /ui/page-des-evenements/groupes
+  const categories = JSON.parse(readFileSync(join("src", "_data", "categories.json"), "utf8"));
+  const events = markdown("evenements").filter(isEvent);
+  const of = (c) => events.filter((e) => frontMatter(e, "catégorie") === c.identifiant)
+    .sort((a, b) => frontMatter(a, "title").localeCompare(frontMatter(b, "title"), "fr"));
+  const groups = categories.filter((c) => of(c).length > 0);
+  assert.ok(groups.length > 1 && groups.length < categories.length, "the sample needs several categories with events, and one without");
+  assert.ok(groups.some((c) => of(c).join() !== events.filter((e) => of(c).includes(e)).join()),
+    "no category whose events sort by title otherwise than by file");
+  const list = afterTitleOf("evenements.md");
+  for (const c of categories.filter((x) => !groups.includes(x))) {
+    assert.ok(!list.some((i) => i.text === c.nom), `events page: category ${c.nom} without event shown`);
+  }
+  const heads = [];
+  for (const c of groups) {
+    const k = list.findIndex((i, n) => n > (heads.at(-1) ?? -1) && i.text === c.nom);
+    assert.ok(k >= 0, `events page: group ${c.nom} missing, or out of order`);
+    heads.push(k);
+  }
+  groups.forEach((c, n) => {
+    const group = list.slice(heads[n] + 1, heads[n + 1] ?? list.length);
+    assert.ok(holdsInOrder(group, of(c).flatMap(eventItems)), `events page: events of ${c.nom}, in order of title`);
+    const linked = new Set(group.map((i) => i.href).filter((h) => /^\/evenements\/./.test(h ?? "")));
+    assert.deepEqual([...linked].sort(), of(c).map(address).sort(), `events page: events of ${c.nom}`);
+  });
+});
+
+test("the séances page shows, per category with events, each event sorted by title with its séances by day, or a text without", async () => {
+  // /ui/page-des-seances-par-evenement/groupes
+  const categories = JSON.parse(readFileSync(join("src", "_data", "categories.json"), "utf8"));
+  const all = await seances();
+  const names = all.map((s) => s.name);
+  const events = markdown("evenements").filter(isEvent);
+  const of = (c) => events.filter((e) => frontMatter(e, "catégorie") === c.identifiant)
+    .sort((a, b) => frontMatter(a, "title").localeCompare(frontMatter(b, "title"), "fr"));
+  const groups = categories.filter((c) => of(c).length > 0);
+  assert.ok(groups.length < categories.length, "no category without event");
+  const counts = events.map((e) => all.filter((s) => s.event === e).length);
+  assert.ok(counts.includes(0) && counts.some((n) => n > 0), "no event with séances and one without");
+  assert.ok(events.some((e) => new Set(all.filter((s) => s.event === e).map((s) => s.day)).size > 1),
+    "no event with séances on several days");
+  const list = afterTitleOf("seances.md");
+  for (const c of categories.filter((x) => !groups.includes(x))) {
+    assert.ok(!list.some((i) => i.text === c.nom), `séances page: category ${c.nom} without event shown`);
+  }
+  // Each category name, then each of its events, in order.
+  const marks = [];
+  for (const c of groups) {
+    const k = list.findIndex((i, n) => n > (marks.at(-1)?.k ?? -1) && i.text === c.nom);
+    assert.ok(k >= 0, `séances page: group ${c.nom} missing, or out of order`);
+    marks.push({ k });
+    for (const e of of(c)) {
+      const t = list.findIndex((i, n) => n > marks.at(-1).k && i.text === frontMatter(e, "title") && i.href === address(e));
+      assert.ok(t >= 0, `séances page: ${e} missing in ${c.nom}, or out of order`);
+      marks.push({ k: t, e });
+    }
+  }
+  marks.forEach(({ k, e }, n) => {
+    if (!e) return;
+    const region = list.slice(k + 1, marks[n + 1]?.k ?? list.length);
+    const mine = all.filter((s) => s.event === e);
+    if (mine.length === 0) {
+      assert.ok(region.some((i) => i.text === "Aucune séance prévue pour l'instant."), `séances page: ${e}: no text without séance`);
+    } else checkDays(`séances page: ${e}`, region, mine, names);
+  });
 });
