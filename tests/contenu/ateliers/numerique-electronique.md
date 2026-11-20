@@ -1,6 +1,6 @@
 ---
 title: Atelier numérique
-accroche: Accroche de l'atelier d'exemple.
+accroche: Accroche de l'atelier numérique.
 catégories:
   - numérique-électronique
 ---

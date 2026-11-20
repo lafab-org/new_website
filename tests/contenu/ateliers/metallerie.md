@@ -1,6 +1,6 @@
 ---
 title: Atelier métal
-accroche: Accroche de l'atelier d'exemple.
+accroche: Accroche de l'atelier métal.
 catégories:
   - métal
 ---

@@ -1,6 +1,6 @@
 ---
 title: Atelier matériaux souples
-accroche: Accroche de l'atelier d'exemple.
+accroche: Accroche de l'atelier matériaux souples.
 catégories:
   - matériaux-souples
 ---

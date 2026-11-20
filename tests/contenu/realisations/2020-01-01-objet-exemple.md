@@ -7,4 +7,6 @@ catégories:
 photos:
   - fichier: /realisations/photos/exemple.jpg
     description: Un carré gris
+  - fichier: /realisations/photos/exemple-2.jpg
+    description: Un second carré gris
 ---
