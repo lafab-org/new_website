@@ -9,10 +9,18 @@ lien en cliquant dessus.
 - [navigateur] Le titre du navigateur est `<titre> - La Fabrique`, où
   `<titre>` est le `title` de la page, et `La Fabrique` pour la page
   d'accueil.
+- [icone] La page déclare comme icône `/favicon.svg`, l'icône du site
+  /ui/icone-du-site.
 - [titre] La page a un seul titre principal (`<h1>`) : son `title`.
 - [ordre] L'en-tête /ui/en-tete vient en premier, puis le titre
   principal, puis le corps de la page, ou, pour la page d'accueil, ses
   blocs selon /ui/page-daccueil.
+
+## Icône du site
+
+À `/favicon.svg` et à `/favicon.ico`.
+
+- [favicon] `/favicon.ico` a l'icône en 16 et en 32 pixels.
 
 ## En-tête
 

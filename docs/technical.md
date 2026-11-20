@@ -23,6 +23,8 @@
   que les pages construites utilisent.
   Chaque image annonce par `sizes` la largeur où elle s'affiche, et les
   largeurs produites en sont proches, jusqu'à une densité d'écran de 3.
+- `src/favicon.ico` est produit une fois depuis `src/favicon.svg` et
+  versionné ; la construction le copie tel quel.
 - Commandes : `npm run build` génère le site ; `npm start` le sert en
   local avec rechargement, sur `http://localhost:8080`.
 - Les messages vus par l'utilisateur ne sont pas spécifiés.
