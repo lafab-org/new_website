@@ -454,9 +454,9 @@ test("the realisations block shows the first photo then the title of each réali
   assert.equal(list[0].text, "Des réalisations");
   const link = list.findIndex((i) => i.text === "Toutes les réalisations" && i.href === "/realisations");
   assert.ok(link >= 0, "no link to the réalisations");
+  assert.ok(files.some((f) => descriptions(f, "photos").length > 1), "no réalisation with several photos");
   for (const f of files) {
     const [first, ...others] = descriptions(f, "photos");
-    assert.ok(others.length > 0, `${f}: the sample needs several photos`);
     const k = next(list, 1, (i) => i.alt === first, `${f}: first photo`);
     next(list, k + 1, (i) => i.text === frontMatter(f, "titre"), `${f}: title after its photo`);
     assert.ok(list.findIndex((i) => i.text === frontMatter(f, "titre")) < link, `${f}: link before it`);
@@ -871,5 +871,125 @@ test("the séances page shows, per category with events, each event sorted by ti
     if (mine.length === 0) {
       assert.ok(region.some((i) => i.text === "Aucune séance prévue pour l'instant."), `séances page: ${e}: no text without séance`);
     } else checkDays(`séances page: ${e}`, region, mine, names);
+  });
+});
+
+// The names of the months, in French.
+const MONTHS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août",
+  "septembre", "octobre", "novembre", "décembre"];
+// The date (AAAA-MM-JJ) of an article, from its file name.
+const articleDate = (p) => p.match(/^actualites\/(\d{4}-\d{2}-\d{2})-/)[1];
+// Whether a text shows the day `day` (AAAA-MM-JJ) as `13 janvier 2015`.
+const showsDay = (t, day) => {
+  const [y, m, d] = day.split("-").map(Number);
+  return new RegExp(`^0?${d}(er)? ${MONTHS[m - 1]} ${y}$`, "i").test(t ?? "");
+};
+// Articles sorted from the most recent to the oldest.
+const byDate = (pages) => [...pages].sort((a, b) => articleDate(b).localeCompare(articleDate(a)));
+// Checks that `list`, from the item `from`, shows the articles `pages`
+// in this order, each with its cover if any, its title as a subtitle in
+// a link to its page, its date, then its résumé if any; returns the
+// index of the last item of the last article.
+function checkArticles(where, list, from, pages) {
+  let end = from - 1;
+  pages.forEach((p) => {
+    const at = `${where}: ${p}`;
+    const href = address(p);
+    const title = list.findIndex((i, k) => k > end && i.text === frontMatter(p, "title") && i.href === href);
+    assert.ok(title >= 0, `${at}: title in a link to its page, missing or out of order`);
+    assert.ok(list[title].heading, `${at}: title not a subtitle`);
+    const [cover] = descriptions(p, "couverture");
+    const before = list.slice(end + 1, title).filter((i) => i.alt !== undefined).map((i) => i.alt);
+    assert.deepEqual(before, cover ? [cover] : [], `${at}: cover before its title`);
+    const date = title + 1 + list.slice(title + 1).findIndex((i) => i.text);
+    assert.ok(showsDay(list[date].text, articleDate(p)), `${at}: date after its title`);
+    const resume = frontMatter(p, "résumé");
+    if (resume) {
+      assert.equal(list.slice(date + 1).find((i) => i.text)?.text, resume, `${at}: résumé after its date`);
+      end = date + 1 + list.slice(date + 1).findIndex((i) => i.text === resume);
+    } else end = date;
+  });
+  return end;
+}
+// The reading order of a page after its body, or after its title if it
+// has no body.
+const afterBody = (page) => {
+  const list = afterTitleOf(page);
+  return { list, from: firstLine(page) ? bodyEnd(page, list) + 1 : 0 };
+};
+
+test("the news page shows each published article, most recent first: cover, title to its page, date, résumé", () => {
+  // /ui/page-des-actualites/contenu
+  const pages = byDate(articles().filter(published));
+  assert.equal(new Set(pages.map(articleDate)).size, pages.length, "two published articles of the same date");
+  assert.ok(pages.some((p) => descriptions(p, "couverture").length) && pages.some((p) => !descriptions(p, "couverture").length),
+    "no published article with a cover and one without");
+  assert.ok(pages.some((p) => frontMatter(p, "résumé")) && pages.some((p) => !frontMatter(p, "résumé")),
+    "no published article with a résumé and one without");
+  const { list, from } = afterBody("actualites.md");
+  checkArticles("news page", list, from, pages);
+});
+
+test("the page of an article shows its date then its cover before its body, and a link to the news after it", () => {
+  // /ui/page-darticle/ordre
+  const pages = articles().filter(published);
+  for (const p of pages) {
+    const list = afterTitleOf(p);
+    const body = list.findIndex((i) => i.text === text(firstLine(p)));
+    assert.ok(body >= 0, `${p}: no body after its title`);
+    const date = list.findIndex((i) => i.text);
+    assert.ok(date < body && showsDay(list[date].text, articleDate(p)), `${p}: date before its body`);
+    const [cover] = descriptions(p, "couverture");
+    const images = list.slice(0, body).filter((i) => i.alt !== undefined);
+    assert.deepEqual(images.map((i) => i.alt), cover ? [cover] : [], `${p}: cover before its body`);
+    if (cover) assert.ok(list.findIndex((i) => i.alt === cover) > date, `${p}: cover before its date`);
+    const end = bodyEnd(p, list);
+    assert.ok(list.some((i, n) => n > end && i.text === "Toutes les actualités" && i.href === "/actualites"),
+      `${p}: no link Toutes les actualités after its body`);
+  }
+});
+
+test("the agenda and the home page show their articles in avant, in order, as on the news page", () => {
+  // /ui/articles-en-avant/articles
+  // /ui/page-de-lagenda/articles-en-avant
+  const agenda = byDate(IN_AVANT_AGENDA);
+  assert.ok(agenda.length > 1, "fewer than two articles in avant on the agenda");
+  assert.ok(agenda.some((p) => descriptions(p, "couverture").length && frontMatter(p, "résumé")),
+    "no article in avant with a cover and a résumé");
+  const { list, from } = afterBody("agenda.md");
+  checkArticles("agenda", list, from, agenda);
+  const linked = new Set(list.map((i) => i.href).filter((h) => /^\/actualites\/./.test(h ?? "")));
+  assert.deepEqual([...linked].sort(), agenda.map(address).sort(), "agenda: articles shown");
+  const home = afterBody("index.md");
+  checkArticles("home page", home.list, home.from, byDate(IN_AVANT_ACCUEIL));
+});
+
+test("the réalisations page shows each réalisation, most recent first: photos, their number, title, author and month", () => {
+  // /ui/page-des-realisations/realisations
+  const files = readdirSync(join(CONTENU, "realisations")).filter((f) => f.endsWith(".md"))
+    .map((f) => join("realisations", f))
+    .sort((a, b) => frontMatter(b, "date").localeCompare(frontMatter(a, "date")));
+  assert.equal(new Set(files.map((f) => frontMatter(f, "date"))).size, files.length, "two réalisations of the same date");
+  const counts = files.map((f) => descriptions(f, "photos").length);
+  assert.ok(counts.includes(1) && counts.some((c) => c > 1), "no réalisation with one photo and one with several");
+  const { list, from } = afterBody("realisations.md");
+  let k = from;
+  files.forEach((f, n) => {
+    const photos = descriptions(f, "photos");
+    const start = list.findIndex((i, j) => j >= k && i.alt === photos[0]);
+    assert.ok(start >= 0, `${f}: first photo missing, or out of order`);
+    const stop = files[n + 1] ? list.findIndex((i, j) => j > start && i.alt === descriptions(files[n + 1], "photos")[0]) : list.length;
+    assert.ok(stop > start, `${f}: next réalisation missing, or out of order`);
+    const region = list.slice(start, stop);
+    const title = region.findIndex((i) => i.text === frontMatter(f, "titre"));
+    assert.ok(title >= 0 && region[title].heading, `${f}: title as a subtitle`);
+    assert.deepEqual(region.slice(0, title).filter((i) => i.alt !== undefined).map((i) => i.alt), photos, `${f}: photos, in order`);
+    const count = region.slice(0, title).filter((i) => i.text).map((i) => i.text);
+    assert.deepEqual(count, photos.length > 1 ? [`${photos.length} photos`] : [], `${f}: number of photos`);
+    const [y, m] = frontMatter(f, "date").split("-").map(Number);
+    const credit = region.slice(title + 1).filter((i) => i.text).map((i) => i.text).join(" ").replace(/\s+/g, " ");
+    const escape = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    assert.match(credit, new RegExp(`^Par ${escape(frontMatter(f, "auteur"))} · ${MONTHS[m - 1]} ${y}`, "i"), `${f}: author and month`);
+    k = stop;
   });
 });

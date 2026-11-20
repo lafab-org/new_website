@@ -20,17 +20,9 @@ pages montrent.
 
 ## Lessons
 
-- 6 : le contenu d'exemple ajoute un cas seulement quand une affirmation étiquetée le demande.
-- 6 : un cas qui dépend du jour se fixe par des dates lointaines (2020, 2999), jamais par des dates proches.
-- 6 : les tests reconnaissent une image par son texte alternatif, non par son adresse, que la spécification laisse libre.
-- 6 : les tests lisent une page dans l'ordre de lecture, avant et après son <h1>, jamais par le nom d'un élément (<header>, <main>, classes) que la spécification ne fixe pas.
-- 6 : un cas vide d'un bloc ou d'une section (sans séance, sans réalisation, sans article) reste (not testable) : les tests construisent une seule fois, avec un contenu qui a ces éléments.
-- 6 : une liste ordonnée dont un élément renvoie à une section encore (not testable) porte son étiquette `[ordre]` sur les seuls éléments observables ; cet élément reste (not testable) en entier, sa place comprise.
-- 6–7 : la couverture des invariants de /model se vérifie par `check.py tests tests scripts/verifier.mjs` ; sans argument, le script ne lit pas le vérificateur.
-- 6 : en étiquetant /ui/articles-en-avant, étiqueter aussi son élément dans /ui/page-de-lagenda/ordre, qui ne couvre jusqu'ici que les liens `[en-avant]` et les séances.
-- 6 : sur l'agenda, les titres des articles en avant sont des titres (h2–h6) ; `agendaSeances` coupe la page après le dernier lien vers un article en avant, et `checkDays` compte comme jour tout titre qui ne porte pas un nom de séance.
-- 6 : `tests/tibillet.mjs` réunit désormais les cas de /ui/seance ; un nouvel évènement d'exemple change les blocs `semaine`, Prochaines séances (5 premières) et la page des séances par évènement.
+- 7 : la couverture des invariants de /model se vérifie par `check.py tests tests scripts/verifier.mjs` ; sans argument, le script ne lit pas le vérificateur.
 - 7 : `/model/bloc/section`, `/model/site/blocs`, `/model/site/corps` et `/model/site/tirage` sont étiquetés mais `(not testable)` : le vérificateur ne les contrôle pas encore ; la construction échoue déjà sur les trois premiers.
+- 7 : `tests/contenu/realisations/` a désormais trois réalisations, dont une à une seule photo ; le tirage les prend toutes (au plus trois) — une quatrième rendrait le bloc `realisations` aléatoire.
 
 ## For the human
 
