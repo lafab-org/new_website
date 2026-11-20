@@ -11,8 +11,7 @@ pages montrent.
 1. Vérification du contenu done
 2. Contenu d'exemple done
 3. Pages communes done
-4. Ateliers et association : `tests-only`, étiqueter ce que les tests
-   peuvent observer de /ui/page-datelier et /ui/page-de-lassociation.
+4. Ateliers et association done
 5. Agenda et évènements : `tests-only`, étiqueter ce que les tests
    peuvent observer de /ui/page-devenement, /ui/seance,
    /ui/page-de-lagenda, /ui/page-des-evenements,

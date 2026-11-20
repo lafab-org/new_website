@@ -74,10 +74,11 @@ ordre, selon son type :
 /operations/construire-le-site/generee la rend. Les objectifs éditoriaux de
 la page de l'association sont dans /contents/page-de-lassociation.
 
-Après le corps de la page, dans cet ordre (not testable) :
-- le sous-titre `Où nous trouver`, puis le `lieu` du site ;
-- la section /ui/prochaines-seances, pour les séances de la page ;
-- la section `Les évènements` de ses évènements, comme sur
+[ordre] Après le corps de la page, dans cet ordre :
+- [lieu] le sous-titre `Où nous trouver`, puis le `lieu` du site ;
+- la section /ui/prochaines-seances, pour les séances de la page (not
+  testable) ;
+- [evenements] la section `Les évènements` de ses évènements, comme sur
   /ui/page-datelier.
 
 ## Page d'atelier
@@ -86,14 +87,17 @@ Après le corps de la page, dans cet ordre (not testable) :
 /operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
 pages d'atelier sont dans /contents/page-datelier.
 
-Après le corps de la page, dans cet ordre (not testable) :
-- la section /ui/prochaines-seances, pour les séances de la page ;
-- sans évènement de la page, rien ; sinon, le sous-titre
-  `Les évènements`, puis chacun des évènements de la page, triés par
-  titre : un lien vers sa page, qui montre sa couverture, avec sa
-  description pour texte alternatif, ou sans couverture l'image de
-  remplacement des couvertures, avec le texte alternatif
-  `Photo à venir`, puis son titre, puis son accroche s'il en a une.
+[ordre] Après le corps de la page, dans cet ordre :
+- la section /ui/prochaines-seances, pour les séances de la page (not
+  testable) ;
+- les évènements de la page :
+  - [sans-evenement] Sans évènement de la page, rien.
+  - [evenements] Sinon, le sous-titre `Les évènements`, puis chacun des
+    évènements de la page, triés par titre : un lien vers sa page, qui
+    montre sa couverture, avec sa description pour texte alternatif, ou
+    sans couverture l'image de remplacement des couvertures, avec le
+    texte alternatif `Photo à venir`, puis son titre, puis son accroche
+    s'il en a une.
 
 ## Page d'évènement
 
