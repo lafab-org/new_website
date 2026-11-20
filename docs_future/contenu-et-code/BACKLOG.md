@@ -9,8 +9,7 @@ pages montrent.
 ## Outline
 
 1. Vérification du contenu done
-2. Contenu d'exemple : /technical/politique-de-tests-et-de-qualite ; le
-   paragraphe des tests dans `CLAUDE.md` suit la nouvelle politique.
+2. Contenu d'exemple done
 3. Pages communes : `tests-only`, étiqueter ce que les tests peuvent
    observer de /ui/page, /ui/en-tete et /ui/page-daccueil.
 4. Ateliers et association : `tests-only`, étiqueter ce que les tests
