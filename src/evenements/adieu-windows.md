@@ -1,12 +1,14 @@
 ---
-title: "Adieu Windows"
-accroche: "Venez faire revivre votre ordinateur sous Windows en le passant à Linux !"
-rendez-vous: "tous les quatrièmes jeudis du mois"
-horaire: "18h - 21h"
-catégorie: "numérique-électronique"
-prix: "gratuite, sur inscription préalable obligatoire"
+title: Adieu Windows
+accroche: Venez faire revivre votre ordinateur sous Windows en le passant à Linux !
+rendez-vous: tous les quatrièmes jeudis du mois
+horaire: 18h - 21h
+catégorie: numérique-électronique
+prix: gratuite, sur inscription préalable obligatoire
+couverture:
+  fichier: /evenements/photos/num-install-party.jpg
+  description: Séance d'installation de Linux
 ---
-
 ## Le principe
 
 Le support de Windows 10 prend fin. Les bénévoles de La Fabrique vous
