@@ -424,3 +424,98 @@ test("the realisations block shows the first photo then the title of each réali
     for (const o of others) assert.ok(!list.some((i) => i.alt === o), `${f}: photo ${o} shown`);
   }
 });
+
+// The address of the page a link designates: without fragment,
+// parameters, or final `/` other than that of `/`.
+const designated = (href) => href?.split("#")[0].replace(/\?.*$/, "").replace(/(.)\/$/, "$1");
+// The values of a front matter key given as a list, in order.
+const listOf = (page, key) => {
+  const m = source(page)?.[1].match(new RegExp(`^${key}:[ \\t]*\\r?\\n((?:[ \\t]+-.*(?:\\r?\\n|$))*)`, "m"));
+  return m ? [...m[1].matchAll(/^[ \t]*-\s*(.*)$/gm)].map((v) => unquote(v[1])) : [];
+};
+const isEvent = (p) => /^evenements\/[^/]+\.md$/.test(p) && p !== "evenements/index.md";
+// The events of a page, sorted by title, from the sample content.
+const eventsOf = (page) => {
+  const categories = listOf(page, "catégories");
+  return markdown("evenements").filter(isEvent)
+    .filter((e) => categories.includes(frontMatter(e, "catégorie")))
+    .sort((a, b) => frontMatter(a, "title").localeCompare(frontMatter(b, "title"), "fr"));
+};
+// The items an event shows in a section `Les évènements`, in order, all
+// in a link to its page.
+const eventItems = (e) => {
+  const href = address(e);
+  const [cover] = descriptions(e, "couverture");
+  const accroche = frontMatter(e, "accroche");
+  return [
+    { alt: cover ?? PLACEHOLDER, href },
+    { text: frontMatter(e, "title"), href },
+    ...(accroche ? [{ text: accroche, href }] : []),
+  ];
+};
+// The reading order of a built page after its title, each link by the
+// address of the page it designates.
+const afterTitleOf = (page) => afterTitle(built[page]).map((i) => ({ ...i, href: designated(i.href) }));
+// Checks the section `Les évènements` of a page, after the item `from`
+// of its reading order, and returns where it starts.
+const checkEvents = (page, list, from) => {
+  const events = eventsOf(page);
+  const k = list.findIndex((i, n) => n >= from && i.text === "Les évènements");
+  assert.ok(k >= 0, `${page}: no section Les évènements after its body`);
+  const section = list.slice(k + 1);
+  assert.ok(holdsInOrder(section, events.flatMap(eventItems)), `${page}: events, in order of title`);
+  const linked = new Set(section.map((i) => i.href).filter((h) => /^\/evenements\/./.test(h ?? "")));
+  assert.deepEqual([...linked].sort(), events.map(address).sort(), `${page}: events shown`);
+  return k;
+};
+// The last line of text of the body of a page, if any.
+const lastLine = (page) => (source(page)?.[2] ?? "").split(/\r?\n/)
+  .map((l) => l.trim()).findLast((l) => l && !l.startsWith("#"));
+// The index of the end of the body of a page in its reading order: its
+// last line of text, after its first.
+const bodyEnd = (page, list) => {
+  const first = list.findIndex((i) => i.text === text(firstLine(page)));
+  assert.ok(first >= 0, `${page}: no body after its title`);
+  const k = list.findIndex((i, n) => n >= first && i.text === text(lastLine(page)));
+  assert.ok(k >= 0, `${page}: no end of its body`);
+  return k;
+};
+
+test("the page of the association shows, after its body, where to find it, then its events", () => {
+  // /ui/page-de-lassociation/ordre
+  // /ui/page-de-lassociation/lieu
+  // /ui/page-de-lassociation/evenements
+  const page = "association.md";
+  assert.ok(eventsOf(page).length > 0, `${page}: no event in the sample content`);
+  const { lieu } = JSON.parse(readFileSync(join("src", "_data", "site.json"), "utf8"));
+  const list = afterTitleOf(page);
+  const body = bodyEnd(page, list);
+  const k = list.findIndex((i, n) => n > body && i.text === "Où nous trouver");
+  assert.ok(k >= 0, `${page}: no subtitle Où nous trouver after its body`);
+  const l = list.findIndex((i, n) => n > k && i.text === lieu);
+  assert.ok(l >= 0, `${page}: no lieu after Où nous trouver`);
+  checkEvents(page, list, l + 1);
+});
+
+test("the page of an atelier shows its events after its body, sorted by title, or nothing without", () => {
+  // /ui/page-datelier/ordre
+  // /ui/page-datelier/evenements
+  // /ui/page-datelier/sans-evenement
+  const ateliers = markdown("ateliers");
+  const events = ateliers.map(eventsOf);
+  assert.ok(events.some((e) => e.length === 0), "no atelier without an event");
+  const many = events.filter((e) => e.length > 1);
+  assert.ok(many.some((e) => e.join() !== [...e].sort().join()), "no atelier whose events sort by title otherwise than by file");
+  const shown = events.flat();
+  assert.ok(shown.some((e) => descriptions(e, "couverture").length) && shown.some((e) => !descriptions(e, "couverture").length),
+    "no event of an atelier with a cover and one without");
+  assert.ok(shown.some((e) => frontMatter(e, "accroche")) && shown.some((e) => !frontMatter(e, "accroche")),
+    "no event of an atelier with an accroche and one without");
+  for (const page of ateliers) {
+    const list = afterTitleOf(page);
+    const body = bodyEnd(page, list);
+    if (eventsOf(page).length === 0) {
+      assert.ok(!list.some((i) => i.text === "Les évènements"), `${page}: section Les évènements without an event`);
+    } else checkEvents(page, list, body + 1);
+  }
+});
