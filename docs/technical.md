@@ -50,8 +50,9 @@
 - Un workflow GitHub Actions déploie le site : à chaque push sur
   `main`, chaque jour à 3 h UTC (4 h ou 5 h à Paris), et à la demande
   depuis l'onglet Actions.
-- Il lance `npm test`, construit le site avec l'API de TiBillet, puis le
-  publie. Il garde `.cache/` d'un déploiement à l'autre. Si une étape
+- Il lance `npm test`, construit le site avec l'API de TiBillet, en
+  vérifie le contenu par `npm run verifier`, puis le publie. Il garde
+  `.cache/` d'un déploiement à l'autre. Si une étape
   échoue, ou si l'adresse ou la clé de TiBillet manque, rien n'est
   publié et la version précédente reste en ligne.
 - La CI a sa propre clé TiBillet, dans le secret `TIBILLET_API_KEY` du
@@ -108,6 +109,33 @@
   `section` parmi les pages de la racine de `src/`.
 - Les images des pages de la racine vont dans `src/photos/`, celles des
   ateliers dans `src/ateliers/photos/`.
+
+## Vérification du contenu
+
+- Le contenu est ce que les éditeurs modifient, dans le dépôt ou par
+  Pages CMS : les fichiers Markdown de `src/`, front matter compris, et
+  les images de leurs dossiers `photos/`. Le reste du dépôt est le
+  code, que seul un incrément change. Les évènements de TiBillet sont
+  aussi du contenu, modifié dans TiBillet.
+- `npm run verifier` vérifie le contenu du site déjà construit : il lit
+  `src/` et `_site/`, sans construire le site, et sans dépendance
+  supplémentaire.
+- Il vérifie chaque invariant étiqueté de `model.md`, sur les pages
+  énumérées sur `src/`, hors les fichiers des réalisations et ceux des
+  articles non publiés le jour où il s'exécute, chacune lue dans son
+  fichier de `_site/`. Chaque vérification cite, en commentaire, le
+  chemin de l'invariant qu'elle vérifie. Les liens externes ne sont pas
+  vérifiés.
+- Il rapporte tous les problèmes ensemble, chacun avec le fichier
+  source de sa page et l'invariant en cause, et échoue s'il y en a un.
+- La construction écrit, dans un fichier hors de `_site/` que git
+  ignore, les évènements de TiBillet qu'elle a lus sans en tirer de
+  séance. `npm run verifier` les liste à la suite du rapport, chacun
+  avec son nom et sa date de début, sans échouer pour eux.
+- Dans GitHub Actions, il écrit ce rapport dans le résumé de
+  l'exécution, et chaque problème en annotation sur son fichier source ;
+  ailleurs, dans le terminal.
+- Il n'a pas de tests.
 
 ## Politique de tests et de qualité
 

@@ -8,9 +8,7 @@ pages montrent.
 
 ## Outline
 
-1. Vérification du contenu : /technical/hebergement-et-deploiement,
-   /technical/edition-des-pages-et-des-ateliers,
-   /technical/verification-du-contenu.
+1. Vérification du contenu done
 2. Contenu d'exemple : /technical/politique-de-tests-et-de-qualite ; le
    paragraphe des tests dans `CLAUDE.md` suit la nouvelle politique.
 3. Pages communes : `tests-only`, étiqueter ce que les tests peuvent
