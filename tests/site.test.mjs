@@ -93,15 +93,17 @@ const images = (html) => [...html.matchAll(/<img\s[^>]*>/gi)].map((m) => {
 
 // The reading order of an HTML fragment: each run of text, and each
 // image with its alternative text, with the address of the link it is
-// in, if any; a run of text in a heading below <h1> is marked `heading`.
+// in, if any, and the `target` of that link, if it has one; a run of
+// text in a heading below <h1> is marked `heading`.
 function items(html) {
   const out = [];
   let href;
+  let target;
   let heading = false;
   for (const m of html.matchAll(/<(\/?)([a-z][a-z0-9]*)\b([^>]*)>|<!--[\s\S]*?-->|([^<]+)/gi)) {
     if (m[4] !== undefined) {
       const t = text(m[4]);
-      if (t) out.push(heading ? { text: t, href, heading } : { text: t, href });
+      if (t) out.push({ text: t, href, ...(target ? { target } : {}), ...(heading ? { heading } : {}) });
       continue;
     }
     if (!m[2]) continue;
@@ -111,8 +113,10 @@ function items(html) {
     };
     const tag = m[2].toLowerCase();
     if (/^h[2-6]$/.test(tag)) heading = !m[1];
-    if (tag === "a") href = m[1] ? undefined : decodeURI(attr("href") ?? "");
-    else if (tag === "img" && !m[1]) out.push({ alt: attr("alt"), href });
+    if (tag === "a") {
+      href = m[1] ? undefined : decodeURI(attr("href") ?? "");
+      target = m[1] ? undefined : attr("target");
+    } else if (tag === "img" && !m[1]) out.push({ alt: attr("alt"), href, ...(target ? { target } : {}) });
   }
   return out;
 }
@@ -710,8 +714,11 @@ function checkSeance(where, items, s) {
   assert.equal(items[k].href, s.event ? address(s.event) : undefined, `${at}: link of its name`);
   const after = items.slice(k + 1);
   const shown = after.filter((i) => i.text).map((i) => i.text).join(" ");
-  const link = (label) => assert.ok(after.some((i) => i.text === label && i.href === designated(s.url)),
-    `${at}: link ${label} to its reservation`);
+  const link = (label) => {
+    const l = after.find((i) => i.text === label && i.href === designated(s.url));
+    assert.ok(l, `${at}: link ${label} to its reservation`);
+    assert.equal(l.target, "_blank", `${at}: link ${label} in a new tab`);
+  };
   // The texts of the other cases of the participation, and its links.
   const others = (...but) => ["Annulée", "Accès libre", "Paiement sur place", "Réservation gratuite",
     "Réservation payante", "place restante", "places restantes", "Complet"].filter((t) => !but.includes(t));
@@ -752,6 +759,7 @@ test("each séance of the agenda shows its cover, times, category, name and part
   // /ui/seance/libre
   // /ui/seance/sur-place
   // /ui/seance/reservation
+  // /ui/seance/nouvel-onglet
   const { events } = await tibillet();
   const categories = JSON.parse(readFileSync(join("src", "_data", "categories.json"), "utf8")).map((c) => c.identifiant);
   const all = await seances();
