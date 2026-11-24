@@ -4,7 +4,7 @@
 // In GitHub Actions, the report goes to the step summary and each problem
 // becomes an annotation on its source file; elsewhere, to the terminal.
 import { appendFileSync, existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { join, posix } from "node:path";
+import { join, posix, resolve, sep } from "node:path";
 
 const SRC = "src";
 const SITE = "_site";
@@ -527,7 +527,19 @@ function verifier() {
   const parAdresse = Object.fromEntries(pages.map((p) => [address(p), built[p]]));
   for (const p of pages) {
     const source = join(SRC, p);
-    for (const href of hrefs(built[p])) {
+    // The links of the illustrations, which lead to files, not to pages.
+    const galerie = built[p].match(/<ul\s(?:[^>]*\s)?class\s*=\s*["'](?:[^"']*\s)?illustrations(?:\s[^"']*)?["'][\s\S]*?<\/ul>/i)?.[0] ?? "";
+    const liensIllustrations = hrefs(galerie);
+    for (const href of liensIllustrations) {
+      // /model/site/lien-illustration
+      const interne = /^\/(?!\/)/.test(href);
+      const file = interne ? resolve(SITE, href.split(/[?#]/)[0].slice(1)) : "";
+      if (!interne || !file.startsWith(resolve(SITE) + sep) || !existsSync(file) || !statSync(file).isFile()) {
+        signaler(source, "/model/site/lien-illustration", `le lien d'illustration \`${href}\` ne mène à aucun fichier du site.`);
+      }
+    }
+    const aVerifier = hrefs(built[p].replace(galerie, ""));
+    for (const href of aVerifier) {
       const [cible, fragment] = href.split("#");
       if (cible === "") {
         // /model/site/fragment
