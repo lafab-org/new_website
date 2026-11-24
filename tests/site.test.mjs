@@ -849,6 +849,36 @@ test("an event page shows its cover, its accroche, its practical information, th
   }
 });
 
+// The `fichier` of each photo a front matter key lists, in order.
+const listFiles = (page, key) => {
+  const m = source(page)?.[1].match(new RegExp(`^${key}:[ \\t]*\\r?\\n((?:[ \\t]+.*(?:\\r?\\n|$))*)`, "m"));
+  return m ? [...m[1].matchAll(/^[ \t-]*fichier:\s*(.*)$/gm)].map((d) => unquote(d[1])) : [];
+};
+test("an event page shows its illustrations after its body, each in a link to its photo, or nothing without", () => {
+  // /ui/page-devenement/illustrations
+  const pages = markdown("evenements").filter(isEvent);
+  const counts = pages.map((p) => descriptions(p, "illustrations").length);
+  assert.ok(counts.some((n) => n > 1) && counts.includes(0), "no event with several illustrations and one without");
+  for (const page of pages) {
+    const list = afterTitleOf(page);
+    const body = list.findIndex((i) => i.text === text(firstLine(page)));
+    assert.ok(body >= 0, `${page}: no body after its title`);
+    const shown = list.slice(body).filter((i) => i.alt !== undefined);
+    const expected = descriptions(page, "illustrations");
+    assert.deepEqual(shown.map((i) => i.alt), expected, `${page}: illustrations after its body, in order`);
+    const files = listFiles(page, "illustrations");
+    const targets = shown.map((i) => {
+      // The link may be relative: resolve it against the address of the page.
+      const file = join(SITE, new URL(i.href ?? "", `http://x${address(page)}/`).pathname);
+      assert.ok(i.href && existsSync(file) && statSync(file).isFile(),
+        `${page}: the link of illustration ${i.alt} is not a file of the site`);
+      return file;
+    });
+    // Two different photos are not the same link.
+    assert.equal(new Set(targets).size, new Set(files).size, `${page}: illustrations of different photos link to the same file`);
+  }
+});
+
 test("the events page shows a group per category with events, in order, each with its events sorted by title", () => {
   // /ui/page-des-evenements/groupes
   const categories = JSON.parse(readFileSync(join("src", "_data", "categories.json"), "utf8"));
