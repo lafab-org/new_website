@@ -619,6 +619,36 @@ main > .date {
   margin-bottom: 1rem;
 }
 
+/* Illustrations d'un évènement : trois vignettes 3:2 par ligne.
+   eleventy-img met chaque <img> dans un <picture>. */
+.illustrations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.illustrations a,
+.illustrations picture,
+.illustrations img {
+  display: block;
+}
+
+.illustrations img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+@media (min-width: 40rem) {
+  .illustrations {
+    gap: 1rem;
+  }
+}
+
 .retour {
   margin-top: 2rem;
   padding-top: 1rem;

@@ -44,3 +44,11 @@ verifier` already runs over every page.
   valeurs : `sed 's/=.*/=<masqué>/' .env`.
 - Le code lit la clé depuis l'environnement, jamais en dur, et elle
   n'apparaît jamais dans `_site/`.
+
+## Processus en arrière-plan
+
+- Pour arrêter un serveur lancé en arrière-plan, ne jamais utiliser
+  `pkill -f` ni `pkill` sur un motif de la ligne de commande : le motif
+  figure dans la commande de l'outil Bash elle-même, qui se tue. Garder
+  le PID du processus au lancement (`$!`), ou chercher le PID par son
+  port (`ss -ltnp`), puis `kill <pid>`.

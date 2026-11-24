@@ -20,3 +20,10 @@ layout: base.njk
 <div class="corps">
 {{ content | safe }}
 </div>
+{%- if illustrations and illustrations.length %}
+<ul class="illustrations">
+{%- for photo in illustrations %}
+  <li><a href="{{ photo.fichier | agrandie }}"><img src="{{ photo.fichier }}" alt="{{ photo.description }}" sizes="(min-width: 40rem) 13rem, 30vw"></a></li>
+{%- endfor %}
+</ul>
+{%- endif %}

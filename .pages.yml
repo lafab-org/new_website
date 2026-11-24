@@ -272,6 +272,24 @@ content:
             description: Ce que montre la photo.
             type: string
             required: true
+      - name: illustrations
+        label: Illustrations
+        description: Des photos de l'activité, en galerie sous le texte de la page.
+        type: object
+        list: true
+        fields:
+          - name: fichier
+            label: Photo
+            description: 2000 px au plus en largeur et en hauteur.
+            type: image
+            required: true
+            options:
+              media: evenements
+          - name: description
+            label: Description
+            description: Ce que montre la photo, en une phrase courte.
+            type: string
+            required: true
       - name: body
         label: Texte
         description: Une photo s'insère depuis Médias, Photos des évènements, 2000 px au plus en largeur et en hauteur, avec ce qu'elle montre pour texte alternatif.

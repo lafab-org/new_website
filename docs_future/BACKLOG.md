@@ -15,6 +15,7 @@
 - Réalisations sur les pages d'atelier : quelques réalisations de ses catégories, avec un lien vers la page des réalisations.
 - Données personnelles des photos : métadonnées, visages et noms d'auteurs des réalisations.
 - Pagination de la page des réalisations.
+- Chemin des photos : le build refuse une photo hors de son dossier `photos/` (aujourd'hui seul `npm run verifier` le contrôle), et le décrire dans `security.md`.
 - Reprise des anciennes actualités : les 82 nouvelles de l'ancien site, triées et nettoyées.
 - Couverture partagée : un seul gabarit et une seule déclaration Pages CMS pour la couverture des ateliers, des articles et des évènements.
 - Séance annulée et lecteurs d'écran : l'annulation n'est dite qu'en fin de carte, après le nom barré ; l'annoncer dès le nom.

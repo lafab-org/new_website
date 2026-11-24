@@ -9,6 +9,16 @@ couverture:
   fichier: /evenements/photos/num-reparaction-vue-large.jpg
   description: Des bénévoles penchés sur un ordinateur portable, à l'établi
     d'électronique de La Fabrique.
+illustrations:
+  - fichier: /evenements/photos/num-reparaction-aspi.jpg
+    description: Deux paires de mains inspectent la carte électronique d'un
+      aspirateur ouvert.
+  - fichier: /evenements/photos/num-reparaction-clim.jpg
+    description: Trois bénévoles démontent ensemble un climatiseur mobile sur
+      l'établi.
+  - fichier: /evenements/photos/num-reparaction-soudage.jpg
+    description: Un bénévole guide une personne qui soude un fil à l'établi
+      d'électronique.
 ---
 ## Le principe
 

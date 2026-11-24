@@ -1,7 +1,7 @@
 import { cpSync, existsSync, mkdirSync, mkdtempSync, rmSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { RenderPlugin } from "@11ty/eleventy";
-import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import Image, { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 
 // Where eleventy-img writes the reduced copies, kept between builds so
 // that a photo already reduced is not reduced again.
@@ -242,6 +242,16 @@ export default function (eleventyConfig) {
   // The cover of the event whose page is `evenements/<nom>.md`, if any.
   eleventyConfig.addFilter("couvertureDe", (nom, evenements) =>
     (evenements ?? []).find((e) => e.fileSlug === nom)?.data.couverture);
+  // The address of a photo shown large, from its `fichier`: a reduced
+  // copy in the cache, copied after the build like those of the pages.
+  eleventyConfig.addAsyncFilter("agrandie", async (fichier) => {
+    const source = typeof fichier === "string" ? resolve(ENTREE, fichier.replace(/^\/+/, "")) : "";
+    if (!source.startsWith(resolve(ENTREE) + sep)) throw new Error(`photo hors du contenu : ${fichier}`);
+    const copies = await Image(source, {
+      widths: [1300], formats: ["jpeg"], outputDir: IMAGES_CACHE, urlPath: "/img/",
+    });
+    return copies.jpeg[0].url;
+  });
   // The séances of the given categories.
   eleventyConfig.addFilter("deCategoriesSeances", (list, categories) => {
     const ids = asList(categories);
