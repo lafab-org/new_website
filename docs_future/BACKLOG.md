@@ -1,5 +1,6 @@
 # Backlog
 
+- Écrire le modèle de menace (`specify-existing`).
 - Suspension de la reconstruction quotidienne : GitHub suspend la tâche planifiée après 60 jours sans activité sur le dépôt ; la réactiver automatiquement, ou passer à une offre payante.
 - Photos des ateliers : intégrer aux pages une sélection de photos (redimensionnées, avec texte alternatif) ; les pages métallerie et Répar'Action les recevront.
 - Pied de page : adresse, contact et liens utiles sur toutes les pages.

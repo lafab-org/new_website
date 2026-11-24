@@ -4,7 +4,8 @@
 - [technical.md](technical.md) : pile technique et conventions.
 - [model.md](model.md) : les concepts du logiciel, qui fixent le vocabulaire.
 - [operations.md](operations.md) : la construction du site.
-- [design.md](design.md) et [design/](design/) : les règles d'apparence
+- [design.md](design.md) et [_design/](_design/) : les règles d'apparence
   et les maquettes, vérifiées à l'œil.
 - [ui.md](ui.md) : les pages.
+- [security.md](security.md) : le modèle de menace.
 - [contents.md](contents.md) : les objectifs éditoriaux des pages, dont le texte est dans `src/`, vérifié à la relecture.
