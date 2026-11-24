@@ -23,7 +23,7 @@
     {%- if s.acces == "réservation-payante" %}{% set parts = (parts.push("Réservation payante"), parts) %}{% endif %}
     {%- if s.jauge and not complete %}{% set parts = (parts.push("1 place restante" if restantes == 1 else restantes + " places restantes"), parts) %}{% endif %}
     {%- if parts.length or complete %}<span>{{ parts | join(" · ") }}{% if complete %}{% if parts.length %} · {% endif %}<span class="alerte">Complet</span>{% endif %}</span>{% endif %}
-    {%- if not complete %} <a class="bouton" href="{{ s.reservation }}">{{ "Réserver" if s.acces else "Voir sur TiBillet" }}</a>{% endif %}
+    {%- if not complete %} <a class="bouton" href="{{ s.reservation }}" target="_blank" rel="noopener">{{ "Réserver" if s.acces else "Voir sur TiBillet" }}</a>{% endif %}
   {%- endif -%}
   </p>
 </li>
