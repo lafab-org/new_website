@@ -127,6 +127,11 @@ valeur :
 [prochaines-seances] Après les informations pratiques, la section
 /ui/prochaines-seances, pour les séances de l'évènement.
 
+[illustrations] Après le corps de la page, s'il a des illustrations,
+une galerie qui les montre dans leur ordre, chacune avec sa description
+pour texte alternatif et en lien vers le fichier de la photo. Sans
+illustration, rien.
+
 ## Séance
 
 [ordre] Montre une séance, dans cet ordre :

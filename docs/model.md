@@ -71,9 +71,10 @@ donne `accroche` et `couverture` sous leurs noms.
 ## Évènement
 
 Une page qui présente un évènement, avec ses informations pratiques et
-sa couverture dans `evenements/photos/`. Son front matter donne
-`accroche`, `rendez-vous`, `horaire`, `prix`, `catégorie` et
-`couverture` sous leurs noms.
+sa couverture et ses illustrations dans `evenements/photos/`. Son front
+matter donne `accroche`, `rendez-vous`, `horaire`, `prix`, `catégorie`,
+`couverture` et `illustrations` sous leurs noms, une photo par élément
+de `illustrations`.
 
 - `page: /model/page`, sa page.
 - `accroche: optional string`, une phrase d'appel.
@@ -84,6 +85,8 @@ sa couverture dans `evenements/photos/`. Son front matter donne
 - `catégorie: string`, la catégorie dont il relève.
   - [categorie] L'identifiant d'une catégorie du site.
 - `couverture: optional /model/photo`, la photo qui le représente.
+- `illustrations: list of /model/photo`, des photos de l'activité, dans
+  l'ordre où elles sont montrées. Sans le champ, la liste est vide.
 
 Ses séances sont les séances du site dont il est l'évènement, dans
 l'ordre des `séances` du site.
@@ -175,7 +178,7 @@ temps. Le front matter de l'article donne ses champs sous leurs noms.
 ## Photo
 
 Une photo d'une réalisation, d'un article, d'un atelier ou d'un
-évènement.
+évènement, couverture ou illustration.
 
 - `fichier: string`, le chemin du fichier image depuis `src/`, avec un
   `/` initial, par exemple `/realisations/photos/etabli-1.jpg`.

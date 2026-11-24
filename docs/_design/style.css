@@ -250,6 +250,24 @@ h2 {
   height: auto;
   margin-bottom: 1rem;
 }
+.illustrations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.illustrations a,
+.illustrations img {
+  display: block;
+}
+.illustrations img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
 .retour {
   margin-top: 2rem;
   padding-top: 1rem;
@@ -406,6 +424,9 @@ h2 {
 }
 
 @container (min-width: 40rem) {
+  .illustrations {
+    gap: 1rem;
+  }
   .galerie {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem 1rem;

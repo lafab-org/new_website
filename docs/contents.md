@@ -132,8 +132,10 @@ Objectifs, pour chaque page d'évènement :
 - le curieux comprend le principe de l'évènement et a envie de venir ;
 - l'usager sait quand venir, comment participer et quoi apporter ou
   prévoir ;
-- le bénévole voit comment aider.
+- le bénévole voit comment aider ;
+- les illustrations, quand il y en a, montrent l'activité en train de
+  se faire.
 
 Contraintes :
-- La description de la couverture dit ce qu'elle montre, en une phrase
-  courte.
+- La description de la couverture et celle de chaque illustration
+  disent ce que la photo montre, en une phrase courte.

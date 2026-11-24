@@ -15,6 +15,10 @@
 - Sur la page d'un article ou d'un évènement, sa couverture est montrée
   entière, jamais recadrée ; dans la liste des actualités et les articles en avant, elle
   peut l'être.
+- Sur la page d'un évènement, les illustrations sont des vignettes
+  rectangulaires de proportions 3 sur 2, recadrées, en galerie sous le
+  corps : trois par ligne, petites et serrées sur un écran étroit, plus
+  grandes et espacées sur un écran large.
 - Dans une séance, dans la section `Les évènements` et sur la page
   des évènements, la couverture de l'évènement est une vignette carrée,
   recadrée.
