@@ -6,10 +6,7 @@ import { join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const ACCES = ["libre", "sur-place", "réservation-gratuite", "réservation-payante"];
-const RESERVEES = [
-  "https://schema.org/ReservationConfirmed",
-  "https://schema.org/ReservationPending",
-];
+const RESERVEE = "https://schema.org/ReservationConfirmed";
 const ANNULEE = "https://schema.org/EventCancelled";
 
 // Where the build writes the TiBillet events it read without drawing a
@@ -126,7 +123,7 @@ export default async function () {
     const fin = e.endDate ? enParis(e.endDate) : null;
     let reservees = 0;
     for (const r of await source.reservationsDe(e.identifier)) {
-      if (!RESERVEES.includes(r.reservationStatus)) continue;
+      if (r.reservationStatus !== RESERVEE) continue;
       for (const t of r.reservedTicket ?? []) reservees += Number(t.ticketQuantity) || 0;
     }
     seances.push({
