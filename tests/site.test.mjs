@@ -153,7 +153,7 @@ const inParis = (iso) => {
   return { day: `${p.year}-${p.month}-${p.day}`, hour: Number(p.hour), minute: Number(p.minute) };
 };
 const ACCES = ["libre", "sur-place", "réservation-gratuite", "réservation-payante"];
-const RESERVED = ["https://schema.org/ReservationConfirmed", "https://schema.org/ReservationPending"];
+const RESERVED = ["https://schema.org/ReservationConfirmed"];
 // The sample module, as TiBillet would answer.
 const tibillet = async () => (await import(pathToFileURL(TIBILLET).href)).default;
 
@@ -760,7 +760,7 @@ test("each séance of the agenda shows its cover, times, category, name and part
   // /ui/seance/sur-place
   // /ui/seance/reservation
   // /ui/seance/nouvel-onglet
-  const { events } = await tibillet();
+  const { events, reservations } = await tibillet();
   const categories = JSON.parse(readFileSync(join("src", "_data", "categories.json"), "utf8")).map((c) => c.identifiant);
   const all = await seances();
   const names = all.map((s) => s.name);
@@ -789,6 +789,11 @@ test("each séance of the agenda shows its cover, times, category, name and part
   has((s) => s.left === 1, "with one place left");
   has((s) => s.left > 1, "with several places left");
   has((s) => s.left <= 0, "full");
+  assert.ok(events.results.some((e, n) => kw[n].some((k) => categories.includes(k)) && e.maximumAttendeeCapacity > 0
+    && e.eventStatus !== "https://schema.org/EventCancelled" && kw[n].some((k) => k.startsWith("réservation"))
+    && (reservations[e.identifier]?.results ?? []).some((r) => !RESERVED.includes(r.reservationStatus)
+      && r.reservedTicket?.some((t) => t.ticketQuantity > 0))),
+    "no séance with a jauge and a reservation not confirmed");
   assert.ok(events.results.some((e) => e.endDate && inParis(e.endDate).day !== inParis(e.startDate).day),
     "no event ending another day");
   const { list, last } = agendaSeances();
