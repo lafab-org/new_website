@@ -150,6 +150,9 @@ valeur :
      vers sa réservation : `Réserver` avec un accès,
      `Voir sur TiBillet` sans accès.
 
+[nouvel-onglet] Le lien vers la réservation de la séance s'ouvre dans un
+nouvel onglet.
+
 ## Page de l'agenda
 
 À `/agenda` : la page `agenda.md`, telle que
