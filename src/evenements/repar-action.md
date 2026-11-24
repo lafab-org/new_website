@@ -14,21 +14,15 @@ illustrations:
     description: Deux paires de mains inspectent la carte électronique d'un
       aspirateur ouvert.
   - fichier: /evenements/photos/num-reparaction-clim.jpg
-    description: Trois bénévoles démontent ensemble un climatiseur mobile sur
-      l'établi.
+    description: Trois bénévoles démontent ensemble un climatiseur mobile sur l'établi.
   - fichier: /evenements/photos/num-reparaction-soudage.jpg
-    description: Un bénévole guide une personne qui soude un fil à l'établi
-      d'électronique.
+    description: Un bénévole guide une personne qui soude un fil à l'établi d'électronique.
 ---
 ## Le principe
 
-Dans l'esprit des Repair Cafés, Répar'Action est un moment collaboratif  
-d'échange de savoirs. Des bénévoles passionné⋅es de bricolage ou  
-d'électronique partagent leur savoir-faire avec les personnes qui  
-apportent leurs objets en panne, pour les réparer ensemble.
+Dans l'esprit des Repair Cafés, Répar'Action est un moment collaboratif d'échange de savoirs. Des bénévoles passionné⋅es de bricolage ou d'électronique partagent leur savoir-faire avec les personnes qui apportent leurs objets en panne, pour les réparer ensemble.
 
-On cherche la panne et on répare avec les compétences de chacun, dans
-une ambiance détendue.
+On cherche la panne et on répare avec les compétences de chacun, dans une ambiance détendue.
 
 ## Pourquoi réparer
 
@@ -42,5 +36,4 @@ Vous pouvez venir avec vos cafetières, aspirateurs, sèche-cheveux ou autres pe
 
 ## La participation
 
-L’activité est gratuite et sans adhésion obligatoire. Si vous le souhaitez, vous pouvez laisser une  
-pièce dans la tirelire.
+L’activité est gratuite et sans adhésion obligatoire. Si vous le souhaitez, vous pouvez laisser une pièce dans la tirelire.
