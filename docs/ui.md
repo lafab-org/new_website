@@ -28,8 +28,8 @@ lien en cliquant dessus.
 - le logo de La Fabrique, en lien vers `/`, avec le texte alternatif
   `La Fabrique - accueil` ;
 - le menu principal :
-  - `Agenda`, vers `/agenda` ;
   - `Actualités`, vers `/actualites` ;
+  - `Agenda`, vers `/agenda` ;
   - `Réalisations`, vers `/realisations` ;
 - le menu des ateliers et de l'association :
   - chaque atelier du site, dans l'ordre des `ateliers` du site, sous
