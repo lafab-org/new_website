@@ -350,8 +350,8 @@ test("every page has the header, with the logo and both menus in order", () => {
   const ateliers = JSON.parse(readFileSync(join("src", "_data", "ateliers.json"), "utf8"));
   const expected = [
     { alt: LOGO, href: "/" },
-    { text: "Agenda", href: "/agenda" },
     { text: "Actualités", href: "/actualites" },
+    { text: "Agenda", href: "/agenda" },
     { text: "Réalisations", href: "/realisations" },
     ...ateliers.map((a) => ({ text: a.menu, href: a.adresse })),
     { text: "L'association", href: "/association" },
