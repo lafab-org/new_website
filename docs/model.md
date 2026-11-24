@@ -34,6 +34,9 @@ celle de la page. Un lien est un fragment si son adresse commence par
 `#`. Le fragment d'un lien, `#…`, désigne un identifiant (`id`) d'une
 page construite. L'adresse d'une image est interne si elle commence par
 un seul `/` ; elle désigne alors le fichier de `_site/` à ce chemin.
+Il en est de même du lien d'une illustration. Les illustrations d'une
+page d'évènement sont celles de son évènement, et le lien d'une
+illustration est le lien qui entoure son image.
 
 ## Image
 
@@ -210,9 +213,12 @@ L'état : tout ce dont le site est fait.
 - `lieu: string`, l'adresse de La Fabrique, la même pour tous les
   évènements. Elle est dans le fichier `src/_data/site.json`.
 - `pages: set of /model/page`, toutes les pages.
-  - [lien-interne] Chaque lien interne d'une page désigne une page de
-    `pages` qui n'est pas celle d'un article non publié ; s'il a un
-    fragment, cette page porte l'identifiant.
+  - [lien-interne] Chaque lien interne d'une page, hors ceux de ses
+    illustrations, désigne une page de `pages` qui n'est pas celle d'un
+    article non publié ; s'il a un fragment, cette page porte
+    l'identifiant.
+  - [lien-illustration] Le lien de chaque illustration d'une page est
+    interne et désigne un fichier de `_site/`.
   - [fragment] Chaque lien fragment d'une page désigne un identifiant
     de cette page.
   - [image] L'adresse de chaque image d'une page est interne et désigne

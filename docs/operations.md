@@ -50,7 +50,8 @@ Then:
   est écrite en HTML, son corps rendu
   depuis le Markdown, et chaque image que montre une page construite, en
   fichiers image, le logo et l'image de remplacement des couvertures
-  compris, ainsi que l'icône du site, `favicon.svg` et `favicon.ico` ;
+  compris, et chaque fichier vers lequel mène le lien d'une
+  illustration, ainsi que l'icône du site, `favicon.svg` et `favicon.ico` ;
   `index.md` donne `_site/index.html`. Les `séances` du site sont les séances lues, et
   son `jour` celui de la construction, à Paris.
 - Après les cas 2, 4 et 6 : le `tirage` du site est tiré au hasard à
