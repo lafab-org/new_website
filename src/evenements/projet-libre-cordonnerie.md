@@ -6,7 +6,7 @@ catégorie: matériaux-souples
 prix: 55 €
 couverture:
   fichier: /evenements/photos/msouple-etabli-cordo.jpg
-  description: Des outils de cordonnerie et un sandale
+  description: Des outils de cordonnerie et une sandale
 ---
 ## Le principe
 
