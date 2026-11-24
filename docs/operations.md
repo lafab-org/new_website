@@ -76,6 +76,7 @@ Then:
   - pour réservation, son `url` ;
   - pour jauge, son `maximumAttendeeCapacity`, s'il est supérieur à 0 ;
   - pour réservées, la somme des `ticketQuantity` des `reservedTicket`
-    de ses réservations confirmées ou en attente ;
+    de ses réservations dont le `reservationStatus` est
+    `https://schema.org/ReservationConfirmed` ;
   - annulée, si son `eventStatus` est
     `https://schema.org/EventCancelled`.
