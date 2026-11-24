@@ -1,12 +1,14 @@
 ---
-title: "Initiation au soudage à l'électrode enrobée"
+title: Initiation au soudage à l'électrode enrobée
 accroche: "Initiation au soudage pour les débutants : principes généraux et pratique."
-rendez-vous: "date variable"
-horaire: "14h - 17h"
-catégorie: "métal"
-prix: "30 €"
+rendez-vous: date variable
+horaire: 14h - 17h
+catégorie: métal
+prix: 30 €
+couverture:
+  fichier: /evenements/photos/metal-soudage.jpg
+  description: Deux personnes soudant du métal ensemble
 ---
-
 ## Le principe
 
 Cette initiation s'adresse aux débutants. Vous apprendrez les règles de
@@ -21,13 +23,13 @@ s'entraîner sont fournis.
 
 - des chaussures de sécurité ;
 - des vêtements en coton à manches longues : les synthétiques peuvent
-  fondre ou brûler avec les étincelles ;
+fondre ou brûler avec les étincelles ;
 - des gants de protection en cuir, ou utilisez l'une des quelques
-  paires disponibles sur place ;
+paires disponibles sur place ;
 - pas de lentilles de contact, déconseillées à cause des poussières et
-  des fumées ;
+des fumées ;
 - des espèces, pour adhérer à l'association sur place si vous n'êtes
-  pas encore à jour (10 € pour un an).
+pas encore à jour (10 € pour un an).
 
 ## Annulation
 
