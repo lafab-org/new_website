@@ -5,6 +5,9 @@ rendez-vous: "date variable"
 horaire: "18h45 - 21h15"
 catégorie: "bois"
 prix: "30 €"
+couverture:
+  fichier: /evenements/photos/bois-degau.jpeg
+  description: Une machine-outil dégauchisseuse
 ---
 
 ## Le principe
