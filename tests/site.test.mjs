@@ -859,16 +859,22 @@ const listFiles = (page, key) => {
   const m = source(page)?.[1].match(new RegExp(`^${key}:[ \\t]*\\r?\\n((?:[ \\t]+.*(?:\\r?\\n|$))*)`, "m"));
   return m ? [...m[1].matchAll(/^[ \t-]*fichier:\s*(.*)$/gm)].map((d) => unquote(d[1])) : [];
 };
-test("an event page shows its illustrations after its body, each in a link to its photo, or nothing without", () => {
+test("an event or atelier page shows its illustrations after its body, each in a link to its photo, or nothing without", () => {
   // /ui/page-devenement/illustrations
-  const pages = markdown("evenements").filter(isEvent);
+  // /ui/page-datelier/illustrations
+  for (const pages of [markdown("evenements").filter(isEvent), markdown("ateliers")]) checkIllustrations(pages);
+});
+function checkIllustrations(pages) {
   const counts = pages.map((p) => descriptions(p, "illustrations").length);
-  assert.ok(counts.some((n) => n > 1) && counts.includes(0), "no event with several illustrations and one without");
+  assert.ok(counts.some((n) => n > 1) && counts.includes(0), "no page with several illustrations and one without");
   for (const page of pages) {
     const list = afterTitleOf(page);
     const body = list.findIndex((i) => i.text === text(firstLine(page)));
     assert.ok(body >= 0, `${page}: no body after its title`);
-    const shown = list.slice(body).filter((i) => i.alt !== undefined);
+    // The gallery ends where the next section begins.
+    const after = list.slice(body);
+    const next = after.findIndex((i) => i.text === "Prochaines séances" || i.text === "Les évènements");
+    const shown = (next < 0 ? after : after.slice(0, next)).filter((i) => i.alt !== undefined);
     const expected = descriptions(page, "illustrations");
     assert.deepEqual(shown.map((i) => i.alt), expected, `${page}: illustrations after its body, in order`);
     const files = listFiles(page, "illustrations");
@@ -881,6 +887,20 @@ test("an event page shows its illustrations after its body, each in a link to it
     });
     // Two different photos are not the same link.
     assert.equal(new Set(targets).size, new Set(files).size, `${page}: illustrations of different photos link to the same file`);
+  }
+}
+
+test("an atelier page shows its cover between its title and its body, or none without", () => {
+  // /ui/page-datelier/couverture
+  const pages = markdown("ateliers");
+  const covers = pages.map((p) => descriptions(p, "couverture").length > 0);
+  assert.ok(covers.includes(true) && covers.includes(false), "no atelier with a cover and one without");
+  for (const page of pages) {
+    const list = afterTitleOf(page);
+    const body = list.findIndex((i) => i.text === text(firstLine(page)));
+    assert.ok(body >= 0, `${page}: no body after its title`);
+    const shown = list.slice(0, body).filter((i) => i.alt !== undefined).map((i) => i.alt);
+    assert.deepEqual(shown, descriptions(page, "couverture"), `${page}: cover before its body`);
   }
 });
 
