@@ -1,9 +1,12 @@
 ---
-title: "La métallerie"
-accroche: "Découper, souder, plier et assembler le métal, et réparer son vélo."
-catégories: ["métal"]
+title: La métallerie
+accroche: Découper, souder, plier et assembler le métal, et réparer son vélo.
+catégories:
+  - métal
+couverture:
+  fichier: /ateliers/photos/metal-meuleuse.jpg
+  description: Une personne utilisant une meuleuse.
 ---
-
 La métallerie occupe la travée T1 de La Fabrique. On y découpe, on y
 soude, on y plie et on y assemble le métal, pour réparer, fabriquer ou
 apprendre.
@@ -55,3 +58,4 @@ Pour aider à la métallerie, vous pouvez :
 - venir un jeudi soir ;
 - venir à la réunion mensuelle du conseil d'administration ;
 - écrire à [contact@lafab.org](mailto:contact@lafab.org).
+
