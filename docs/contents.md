@@ -117,12 +117,14 @@ Objectifs, pour chaque page d'atelier :
   avant d'utiliser une machine, et sait qu'elles se réservent sur
   l'agenda ;
 - le bénévole voit comment aider ;
-- l'usager et le curieux voient les évènements de la page.
+- l'usager et le curieux voient les évènements de la page ;
+- les illustrations, quand il y en a, montrent l'activité en train de
+  se faire.
 
 Contraintes :
 - L'accroche dit en une phrase ce qu'on fait dans l'atelier.
-- La description de la couverture dit ce qu'elle montre, en une phrase
-  courte.
+- La description de la couverture et celle de chaque illustration
+  disent ce que la photo montre, en une phrase courte.
 - Un lien vers la page de l'association.
 - Un lien vers la page de l'agenda.
 

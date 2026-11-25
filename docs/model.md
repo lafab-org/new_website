@@ -35,8 +35,9 @@ celle de la page. Un lien est un fragment si son adresse commence par
 page construite. L'adresse d'une image est interne si elle commence par
 un seul `/` ; elle désigne alors le fichier de `_site/` à ce chemin.
 Il en est de même du lien d'une illustration. Les illustrations d'une
-page d'évènement sont celles de son évènement, et le lien d'une
-illustration est le lien qui entoure son image.
+page d'évènement ou d'atelier sont celles de son évènement ou de son
+atelier, et le lien d'une illustration est le lien qui entoure son
+image.
 
 ## Image
 
@@ -61,8 +62,10 @@ identifiant.
 
 Une page qui présente un atelier de La Fabrique. Chaque fichier
 Markdown directement dans `ateliers/` de `src/` est la page d'un
-atelier, avec sa couverture dans `ateliers/photos/`. Son front matter
-donne `accroche` et `couverture` sous leurs noms.
+atelier, avec sa couverture et ses illustrations dans
+`ateliers/photos/`. Son front matter donne `accroche`, `couverture` et
+`illustrations` sous leurs noms, une photo par élément de
+`illustrations`.
 
 - `page: /model/page`, sa page.
 - `nom court: string`, son nom dans le menu de l'en-tête.
@@ -70,6 +73,8 @@ donne `accroche` et `couverture` sous leurs noms.
 - `accroche: string`, une phrase d'appel.
   - [accroche] Non vide.
 - `couverture: optional /model/photo`, la photo qui le représente.
+- `illustrations: list of /model/photo`, des photos de l'atelier, dans
+  l'ordre où elles sont montrées. Sans le champ, la liste est vide.
 
 ## Évènement
 

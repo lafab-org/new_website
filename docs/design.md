@@ -12,10 +12,10 @@
   que de défiler.
 - Sur un écran étroit, le menu principal passe sous le logo, sur sa
   propre ligne.
-- Sur la page d'un article ou d'un évènement, sa couverture est montrée
+- Sur la page d'un article, d'un évènement ou d'un atelier, sa couverture est montrée
   entière, jamais recadrée ; dans la liste des actualités et les articles en avant, elle
   peut l'être.
-- Sur la page d'un évènement, les illustrations sont des vignettes
+- Sur la page d'un évènement ou d'un atelier, les illustrations sont des vignettes
   rectangulaires de proportions 3 sur 2, recadrées, en galerie sous le
   corps : trois par ligne, petites et serrées sur un écran étroit, plus
   grandes et espacées sur un écran large.

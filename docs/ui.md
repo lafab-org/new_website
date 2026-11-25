@@ -94,7 +94,14 @@ la page de l'association sont dans /contents/page-de-lassociation.
 /operations/construire-le-site/generee la rend. Les objectifs éditoriaux des
 pages d'atelier sont dans /contents/page-datelier.
 
+[couverture] Entre le titre et le corps, la page montre la couverture
+de l'atelier, s'il en a une, avec sa description pour texte
+alternatif.
+
 [ordre] Après le corps de la page, dans cet ordre :
+- [illustrations] s'il a des illustrations, une galerie qui les montre
+  dans leur ordre, chacune avec sa description pour texte alternatif et
+  en lien vers une copie agrandie de la photo ; sans illustration, rien ;
 - [prochaines-seances] la section /ui/prochaines-seances, pour les
   séances de la page ;
 - les évènements de la page :
