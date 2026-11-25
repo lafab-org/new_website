@@ -8,6 +8,7 @@ layout: base.njk
 {{ content | safe }}
 </div>
 {%- if illustrations and illustrations.length %}
+<h2>L'atelier en images</h2>
 <ul class="illustrations">
 {%- for photo in illustrations %}
   <li><a href="{{ photo.fichier | agrandie }}"><img src="{{ photo.fichier }}" alt="{{ photo.description }}" sizes="(min-width: 40rem) 13rem, 30vw"></a></li>
