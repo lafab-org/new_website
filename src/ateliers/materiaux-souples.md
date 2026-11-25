@@ -1,9 +1,13 @@
 ---
-title: "Atelier matériaux souples"
-accroche: "Coudre, retoucher et réparer le tissu et le cuir, de la couture à la cordonnerie."
-catégories: ["matériaux-souples"]
+title: Atelier matériaux souples
+accroche: Coudre, retoucher et réparer le tissu et le cuir, de la couture à la
+  cordonnerie.
+catégories:
+  - matériaux-souples
+couverture:
+  fichier: /ateliers/photos/msouple-couture-outils.jpg
+  description: Des outils de couture
 ---
-
 L'atelier des matériaux souples occupe la cabane C3 de La Fabrique, dans
 le bâtiment. On y coud et on y répare le cuir et le tissu, pour réparer,
 fabriquer ou apprendre.
@@ -24,13 +28,13 @@ La couture :
 - une piqueuse plate semi-lourde ;
 - une machine à fourrure, une surjeteuse à 1 fil ;
 - dans une armoire, des machines à coudre domestiques et le petit
-  matériel.
+matériel.
 
 La cordonnerie :
 
 - l'équipement classique d'un atelier de cordonnerie ;
 - une machine à coudre de cordonnier, sans moteur, à pied-de-biche
-  marcheur orientable ;
+marcheur orientable ;
 - un banc de finition ;
 - des presses pour coller les semelles ;
 - une table centrale, à hauteur debout ;
@@ -57,3 +61,4 @@ Pour aider à l'atelier des matériaux souples, vous pouvez :
 - venir un jeudi soir ;
 - venir à la réunion mensuelle du conseil d'administration ;
 - écrire à [contact@lafab.org](mailto:contact@lafab.org).
+
