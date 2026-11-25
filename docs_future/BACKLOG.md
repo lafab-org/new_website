@@ -2,7 +2,7 @@
 
 - Écrire le modèle de menace (`specify-existing`).
 - Suspension de la reconstruction quotidienne : GitHub suspend la tâche planifiée après 60 jours sans activité sur le dépôt ; la réactiver automatiquement, ou passer à une offre payante.
-- Photos des ateliers : intégrer aux pages une sélection de photos (redimensionnées, avec texte alternatif) ; les pages métallerie et Répar'Action les recevront.
+- Photos des ateliers : ajouter des photos pour Répar'Action.
 - Pied de page : adresse, contact et liens utiles sur toutes les pages.
 - Ligne éditoriale : relire la page métallerie pour présenter La Fabrique comme un lieu où l'on participe, non comme un service.
 - Données structurées des évènements : balisage `schema.org/Event`, récurrence comprise, pour les moteurs de recherche.

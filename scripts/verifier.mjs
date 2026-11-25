@@ -422,14 +422,20 @@ function verifier() {
 
   // The photos of the content, each with its file, the folder of its
   // photos, and its fichier and description: the covers of the ateliers,
-  // events and articles, the illustrations of the events, the photos of the réalisations, and the images
+  // events and articles, the illustrations of the ateliers and events, the photos of the réalisations, and the images
   // the body of an article shows.
   const photos = [];
   const couverture = (p, dossier) => {
     const c = frontMatterData(p).couverture;
     if (c != null) photos.push({ p, dossier, fichier: asString(c?.fichier), description: asString(c?.description) });
   };
-  for (const p of pagesAtelier) couverture(p, "ateliers");
+  for (const p of pagesAtelier) {
+    couverture(p, "ateliers");
+    const liste = frontMatterData(p).illustrations;
+    for (const ph of Array.isArray(liste) ? liste : []) {
+      photos.push({ p, dossier: "ateliers", fichier: asString(ph?.fichier), description: asString(ph?.description) });
+    }
+  }
   for (const p of pages.filter(isEvent)) {
     couverture(p, "evenements");
     const liste = frontMatterData(p).illustrations;

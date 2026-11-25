@@ -7,6 +7,13 @@ catégories:
 couverture:
   fichier: /ateliers/photos/bois-atelier-2016.jpg
   description: Vue d'un atelier de menuiserie dans une travée blanche
+illustrations:
+  - fichier: /ateliers/photos/bois-degau.jpeg
+    description: Une raboteuse-dégauchisseuse verte dans l'atelier bois.
+  - fichier: /ateliers/photos/bois-presse-a-panneau.jpg
+    description: Un panneau de bois massif collé dans la presse à panneaux.
+  - fichier: /ateliers/photos/bois-scie-a-format.jpeg
+    description: La scie à format, avec son grand plateau coulissant.
 ---
 La menuiserie occupe les travées T2 et T3 de La Fabrique. On y scie, on y
 rabote, on y tourne et on y assemble le bois, pour réparer, fabriquer ou

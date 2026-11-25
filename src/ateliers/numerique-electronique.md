@@ -6,6 +6,13 @@ catégories:
 couverture:
   fichier: /ateliers/photos/num-impression3d.jpg
   description: Une impression 3D en cours de fonctionnement
+illustrations:
+  - fichier: /ateliers/photos/num-laser.jpg
+    description: La découpeuse laser orange et son poste de commande.
+  - fichier: /ateliers/photos/num-usinage-metal.jpg
+    description: La fraiseuse numérique en train de graver une plaque de métal.
+  - fichier: /ateliers/photos/num-ecran-usinage.jpg
+    description: Un écran affichant le logiciel de pilotage de la fraiseuse.
 ---
 L'atelier numérique et électronique occupe les cabanes C1 et C2 et la
 cabane laser de La Fabrique, dans le bâtiment. On y soude, on y imprime

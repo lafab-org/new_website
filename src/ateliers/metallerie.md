@@ -6,6 +6,11 @@ catégories:
 couverture:
   fichier: /ateliers/photos/metal-meuleuse.jpg
   description: Une personne utilisant une meuleuse.
+illustrations:
+  - fichier: /ateliers/photos/metal-forge.jpg
+    description: Une personne chauffe une pièce dans le feu de la forge.
+  - fichier: /ateliers/photos/metal-soudage-tig.jpg
+    description: Une personne masquée soude une pièce à la TIG.
 ---
 La métallerie occupe la travée T1 de La Fabrique. On y découpe, on y
 soude, on y plie et on y assemble le métal, pour réparer, fabriquer ou

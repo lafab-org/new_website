@@ -7,6 +7,9 @@ catégories:
 couverture:
   fichier: /ateliers/photos/msouple-couture-outils.jpg
   description: Des outils de couture
+illustrations:
+  - fichier: /ateliers/photos/msouple-banc-cordo.jpg
+    description: Le banc de cordonnerie, avec ses meules et ses brosses.
 ---
 L'atelier des matériaux souples occupe la cabane C3 de La Fabrique, dans
 le bâtiment. On y coud et on y répare le cuir et le tissu, pour réparer,
