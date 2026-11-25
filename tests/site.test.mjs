@@ -862,9 +862,10 @@ const listFiles = (page, key) => {
 test("an event or atelier page shows its illustrations after its body, each in a link to its photo, or nothing without", () => {
   // /ui/page-devenement/illustrations
   // /ui/page-datelier/illustrations
-  for (const pages of [markdown("evenements").filter(isEvent), markdown("ateliers")]) checkIllustrations(pages);
+  checkIllustrations(markdown("evenements").filter(isEvent), "Photos");
+  checkIllustrations(markdown("ateliers"), "L'atelier en images");
 });
-function checkIllustrations(pages) {
+function checkIllustrations(pages, subtitle) {
   const counts = pages.map((p) => descriptions(p, "illustrations").length);
   assert.ok(counts.some((n) => n > 1) && counts.includes(0), "no page with several illustrations and one without");
   for (const page of pages) {
@@ -877,6 +878,11 @@ function checkIllustrations(pages) {
     const shown = (next < 0 ? after : after.slice(0, next)).filter((i) => i.alt !== undefined);
     const expected = descriptions(page, "illustrations");
     assert.deepEqual(shown.map((i) => i.alt), expected, `${page}: illustrations after its body, in order`);
+    // The subtitle comes right before the gallery, and shows only with illustrations.
+    const first = after.findIndex((i) => i.alt !== undefined);
+    if (expected.length) {
+      assert.equal(after[first - 1]?.text, subtitle, `${page}: subtitle ${subtitle} before its illustrations`);
+    } else assert.ok(!list.some((i) => i.text === subtitle), `${page}: subtitle ${subtitle} without illustration`);
     const files = listFiles(page, "illustrations");
     const targets = shown.map((i) => {
       // The link may be relative: resolve it against the address of the page.
