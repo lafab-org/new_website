@@ -1,9 +1,12 @@
 ---
-title: "Le numérique et l'électronique"
-accroche: "Souder des circuits, imprimer en 3D et découper au laser."
-catégories: ["numérique-électronique"]
+title: Le numérique et l'électronique
+accroche: Souder des circuits, imprimer en 3D et découper au laser.
+catégories:
+  - numérique-électronique
+couverture:
+  fichier: /ateliers/photos/num-impression3d.jpg
+  description: Une impression 3D en cours de fonctionnement
 ---
-
 L'atelier numérique et électronique occupe les cabanes C1 et C2 et la
 cabane laser de La Fabrique, dans le bâtiment. On y soude, on y imprime
 en 3D et on y découpe au laser, pour réparer, fabriquer ou apprendre.
@@ -12,18 +15,18 @@ en 3D et on y découpe au laser, pour réparer, fabriquer ou apprendre.
 
 - la cabane C1 : l'atelier d'électronique ;
 - la cabane C2 : une salle avec une table de réunion, les imprimantes
-  3D et des ordinateurs en accès libre ;
+3D et des ordinateurs en accès libre ;
 - la cabane laser : la découpeuse laser.
 
 ## Le matériel
 
 - en C1 : des fers à souder, des multimètres, des alimentations, un
-  oscilloscope et du petit outillage ; des matériaux et des composants
-  à prix libre ;
+oscilloscope et du petit outillage ; des matériaux et des composants
+à prix libre ;
 - en C2 : trois imprimantes 3D Prusa i3 MK3, quelques ordinateurs en
-  accès libre ;
+accès libre ;
 - dans la cabane laser : une découpeuse laser à deux tubes CO2 (150 W
-  et 50 W), avec son ordinateur de travail.
+et 50 W), avec son ordinateur de travail.
 
 ## Les règles d'usage
 
@@ -44,3 +47,4 @@ Pour aider à l'atelier numérique et électronique, vous pouvez :
 - venir un jeudi soir ;
 - venir à la réunion mensuelle du conseil d'administration ;
 - écrire à [contact@lafab.org](mailto:contact@lafab.org).
+
