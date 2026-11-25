@@ -99,8 +99,9 @@ de l'atelier, s'il en a une, avec sa description pour texte
 alternatif.
 
 [ordre] Après le corps de la page, dans cet ordre :
-- [illustrations] s'il a des illustrations, une galerie qui les montre
-  dans leur ordre, chacune avec sa description pour texte alternatif et
+- [illustrations] s'il a des illustrations, le sous-titre
+  `L'atelier en images`, puis une galerie qui les montre dans leur
+  ordre, chacune avec sa description pour texte alternatif et
   en lien vers une copie agrandie de la photo ; sans illustration, rien ;
 - [prochaines-seances] la section /ui/prochaines-seances, pour les
   séances de la page ;
@@ -135,9 +136,9 @@ valeur :
 /ui/prochaines-seances, pour les séances de l'évènement.
 
 [illustrations] Après le corps de la page, s'il a des illustrations,
-une galerie qui les montre dans leur ordre, chacune avec sa description
-pour texte alternatif et en lien vers une copie agrandie de la photo.
-Sans illustration, rien.
+le sous-titre `Photos`, puis une galerie qui les montre dans leur
+ordre, chacune avec sa description pour texte alternatif et en lien
+vers une copie agrandie de la photo. Sans illustration, rien.
 
 ## Séance
 
